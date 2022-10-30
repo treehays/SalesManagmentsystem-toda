@@ -10,6 +10,7 @@ namespace SMS.menu
         IAttendantManager iAttendantManager = new AttendantManager();
         IProductManager iProductManager = new ProductManager();
         ITransactionManager iTransactionManager = new TransactionManager();
+        public int choice;
         public void RegisterAdminPage()
         {
             Console.WriteLine("Welcome...");
@@ -59,17 +60,25 @@ namespace SMS.menu
         }
         public void AdminSubMenu()
         {
-            int choice;
+            // int choice;
             // Console.Clear();
             Console.WriteLine("\nMain Menu >> Login >> Admin >>");
             Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
             Console.WriteLine("Enter 1 to Manage Attendant.\nEnter 2 to Manage Products \nEnter 3 to Update My Details. \nEnter 4 to View sales Records.\nEnter 5 to check Wallet. \nEnter 6 to Logout.\nEnter 0 to Close.");
-            while (!int.TryParse(Console.ReadLine(), out choice))
+
+            bool chk = false;
+            do
             {
-                // Console.Clear();
-                Console.WriteLine("Invalid Input\n");
-                AdminSubMenu();
-            }
+                chk = int.TryParse(Console.ReadLine(), out choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+
+            } while (!chk);
+            // while (!int.TryParse(Console.ReadLine(), out choice))
+            // {
+            //     // Console.Clear();
+            //     Console.WriteLine("Invalid Input\n");
+            //     AdminSubMenu();
+            // }
             switch (choice)
             {
                 case 0:
@@ -116,13 +125,20 @@ namespace SMS.menu
             Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
             Console.WriteLine("Enter 1 to Create Attendant.\nEnter 2 to View all attendants. \nEnter 3 to Delete Attendant.\nEnter 4 to Logout.\nEnter 0 to Close.");
 
-            int choice;
-            while (!int.TryParse(Console.ReadLine(), out choice))
+            bool chk = false;
+            do
             {
-                // Console.Clear();
-                Console.WriteLine("Invalid Input\n");
-                AdminSubMenu();
-            }
+                chk = int.TryParse(Console.ReadLine(), out choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+
+            } while (!chk);
+            // int choice;
+            // while (!int.TryParse(Console.ReadLine(), out choice))
+            // {
+            //     // Console.Clear();
+            //     Console.WriteLine("Invalid Input\n");
+            //     AdminSubMenu();
+            // }
             switch (choice)
             {
                 case 0:
@@ -186,13 +202,22 @@ namespace SMS.menu
             Console.WriteLine("\n...>> Admin >> Manage Product >>");
             Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
             Console.WriteLine("Enter 1 to Add a product1. \nEnter 3  to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
-            int choice;
-            while (!int.TryParse(Console.ReadLine(), out choice))
+
+            bool chk = false;
+            do
             {
-                // Console.Clear();
-                Console.WriteLine("Invalid Input\n");
-                ManageProductSubMenu();
-            }
+                chk = int.TryParse(Console.ReadLine(), out choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+
+            } while (!chk);
+
+            // int choice;
+            // while (!int.TryParse(Console.ReadLine(), out choice))
+            // {
+            //     // Console.Clear();
+            //     Console.WriteLine("Invalid Input\n");
+            //     ManageProductSubMenu();
+            // }
             switch (choice)
             {
                 case 0:

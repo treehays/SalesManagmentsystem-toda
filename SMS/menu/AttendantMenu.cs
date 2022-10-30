@@ -62,12 +62,19 @@ namespace SMS.menu
 
                 Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
                 Console.WriteLine("Enter 1 to Record Sales.\nEnter 2 to Update My Details. \nEnter 3 to View history.\nEnter 4 to Logout.\nEnter 0 to Close.");
-                while (!int.TryParse(Console.ReadLine(), out choice))
+                bool chk = false;
+                do
                 {
-                    // Console.Clear();
-                    Console.WriteLine("Invalid Input\n");
-                    AttendantSubMenu(attendant);
-                }
+                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    Console.WriteLine(chk ? "" : "Invalid Input.");
+
+                } while (!chk);
+                // while (!int.TryParse(Console.ReadLine(), out choice))
+                // {
+                //     // Console.Clear();
+                //     Console.WriteLine("Invalid Input\n");
+                //     AttendantSubMenu(attendant);
+                // }
                 if (choice == 1)
                 {
                     // Record Sales
@@ -130,7 +137,7 @@ namespace SMS.menu
             iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
         }
 
-        
+
         // public void ZZCustomerCart()
         // {
         //     Console.Write("Enter Porduct Barcode: ");

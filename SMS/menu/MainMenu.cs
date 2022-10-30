@@ -23,26 +23,13 @@ namespace SMS.menu
                 Console.WriteLine("\n>>Main Menu");
                 Console.WriteLine("Welcome..\nAZ Sales Management System. \nEnter valid option.");
                 Console.WriteLine("Enter 1 to Register.\nEnter 2 to Login.\n0 to Close.");
-                // trying
-                // int e;
                 bool chk = false;
                 do
                 {
-                    // Console.Write("Enter fifth number");
                     chk = int.TryParse(Console.ReadLine(), out choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                     
                 } while (!chk);
-
-
-
-                // while (!int.TryParse(Console.ReadLine(), out choice))
-                // {
-                //     // Console.Clear();
-                //     Console.WriteLine("Invalid Input\n");
-                //     AllMainMenu();
-                // }
-
                 if (choice == 1)
                 {
                     // Register
@@ -58,7 +45,7 @@ namespace SMS.menu
                 {
                     // Invalid Choice
                     // Console.Clear();
-                    Console.WriteLine("Invalid Input.\n");
+                    Console.Write("Invalid Input.");
                 }
             } while (choice != 0);
 
@@ -71,12 +58,21 @@ namespace SMS.menu
                 Console.WriteLine("\nMain Menu >> Register >>");
                 // Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back.");
                 Console.WriteLine("Enter 1 Go back to Main Menu. or \nEnter Your OneTime Registration Code for  Newly Employed Manager..");
-                while (!int.TryParse(Console.ReadLine(), out choice))
+                
+                bool chk = false;
+                do
                 {
-                    // Console.Clear();
-                    Console.WriteLine("Invalid Input\n");
-                    RegistrationMenu();
-                }
+                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    Console.WriteLine(chk ? "" : "Invalid Input.");
+                    
+                } while (!chk);
+                
+                // while (!int.TryParse(Console.ReadLine(), out choice))
+                // {
+                //     // Console.Clear();
+                //     Console.WriteLine("Invalid Input\n");
+                //     RegistrationMenu();
+                // }
                 if (choice == 2546)
                 {
                     // Admin
@@ -122,12 +118,19 @@ namespace SMS.menu
                 Console.WriteLine("\nMain Menu >> Login >> ");
                 Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back to Main Menu.\nEnter 0 to Close");
                 // Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back to Main Menu.\nEnter 0 to Close");
-                while (!int.TryParse(Console.ReadLine(), out choice))
+               bool chk = false;
+                do
                 {
-                    // Console.Clear();
-                    Console.WriteLine("Invalid Input\n");
-                    LoginMenu();
-                }
+                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    Console.WriteLine(chk ? "" : "Invalid Input.");
+                    
+                } while (!chk);
+                // while (!int.TryParse(Console.ReadLine(), out choice))
+                // {
+                //     // Console.Clear();
+                //     Console.WriteLine("Invalid Input\n");
+                //     LoginMenu();
+                // }
                 if (choice == 1)
                 {
                     // Admin
