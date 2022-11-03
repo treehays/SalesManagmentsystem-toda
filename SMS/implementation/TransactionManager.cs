@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Transactions;
 using SMS.interfaces;
 using SMS.model;
@@ -29,7 +33,7 @@ namespace SMS.implementation
                 {
                     streamWriter.WriteLine(transaction.WriteToFIle());
                 }
-                Console.WriteLine($"Transaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
+                Console.WriteLine($"\n__________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
             }
 
         }
@@ -81,15 +85,12 @@ namespace SMS.implementation
             }
             using (StreamReader streamReader = new StreamReader(transactionFilePath))
             {
-                while (streamReader.Peek() > -1)
+                while (streamReader.Peek() != -1)
                 {
                     string transactionManager = streamReader.ReadLine();
                     listOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
                 }
             }
         }
-        // public void GetTransaction(String barCode)
-        // {
-        // }
     }
 }

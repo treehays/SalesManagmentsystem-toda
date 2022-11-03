@@ -1,3 +1,4 @@
+using System;
 using SMS.interfaces;
 using SMS.implementation;
 using SMS.model;
@@ -12,17 +13,17 @@ namespace SMS.menu
         {
             Console.WriteLine("\nEnter Valid Details..");
             Console.WriteLine("\nRegister Attendant..");
-            Console.Write("First name: ");
+            Console.Write("\tFirst name: ");
             string firstName = Console.ReadLine();
-            Console.Write("Last name: ");
+            Console.Write("\tLast name: ");
             string lastName = Console.ReadLine();
-            Console.Write("Email: ");
+            Console.Write("\tEmail: ");
             string email = Console.ReadLine();
-            Console.Write("Phone Number: ");
+            Console.Write("\tPhone Number: ");
             string phoneNumber = Console.ReadLine();
-            Console.Write("pin: ");
+            Console.Write("\tpin: ");
             string pin = Console.ReadLine();
-            Console.Write("Post: ");
+            Console.Write("\tPost: ");
             string post = Console.ReadLine();
             iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
             // LoginAdminMenu();
@@ -31,15 +32,15 @@ namespace SMS.menu
         }
         public void DeleteProduct()
         {
-            Console.Write("Enter the Barcode of the Product to be deleted.");
+            Console.Write("\tEnter the Barcode of the Product to be deleted.");
             string customerId = Console.ReadLine();
         }
         public void LoginAttendantMenu()
         {
             Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
-            Console.Write("Staff ID: ");
+            Console.Write("\tStaff ID: ");
             string staffId = Console.ReadLine();
-            Console.Write("Pin: ");
+            Console.Write("\tPin: ");
             string pin = Console.ReadLine();
             Attendant attendant = iAttendantManager.Login(staffId, pin);
             if (attendant != null)
@@ -58,10 +59,9 @@ namespace SMS.menu
             do
             {
                 // Console.Clear();
-                Console.WriteLine("...Logged >> Attendant >>");
-
-                Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-                Console.WriteLine("Enter 1 to Record Sales.\nEnter 2 to Update My Details. \nEnter 3 to View history.\nEnter 4 to Logout.\nEnter 0 to Close.");
+                Console.WriteLine("\n...Logged >> Attendant >>");
+                Console.WriteLine("AZ Sales Management System. \nEnter valid option.");
+                Console.WriteLine("\tEnter 1 to Record Sales.\n\tEnter 2 to Update My Details. \n\tEnter 3 to View history.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
                 bool chk = false;
                 do
                 {

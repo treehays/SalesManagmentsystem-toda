@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using SMS.interfaces;
 using SMS.model;
 namespace SMS.implementation
@@ -92,7 +96,7 @@ namespace SMS.implementation
             }
             using (StreamReader streamReader = new StreamReader(productFilePath))
             {
-                while (streamReader.Peek() > -1)
+                while (streamReader.Peek() != -1)
                 {
                     string productManager = streamReader.ReadLine();
                     listOfProduct.Add(Product.ConvertToProduct(productManager));

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using SMS.interfaces;
 using SMS.model;
 namespace SMS.implementation
@@ -9,17 +13,17 @@ namespace SMS.implementation
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
             int id = listOfAttendant.Count() + 1;
-            string staffId = "AT" + new Random(id).Next(100000).ToString();
-            Attendant attendant = new Attendant(id, firstName, lastName, staffId, email, phoneNumber, pin, post);
-            //    Verifying Attendant of Email
-            if (GetAttendant(staffId, email) == null)
+            // string staffId = "AT" + new Random(id).Next(100000).ToString();
+            Attendant attendant = new Attendant(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            //    Verifying Attendant Email
+            if (GetAttendant(attendant.StaffId, email) == null)
             {
                 listOfAttendant.Add(attendant);
                 using (StreamWriter streamWriter = new StreamWriter(attendantFilePath, append: true))
                 {
                     streamWriter.WriteLine(attendant.WriteToFIle());
                 }
-                Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {staffId} and pint {pin}, \nKeep it Safe.");
+                Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {attendant.StaffId} and pint {pin}, \nKeep it Safe.");
             }
             else
             {
@@ -31,7 +35,7 @@ namespace SMS.implementation
         public void DeleteAttendant(string staffId)
         {
             Attendant attendant = GetAttendant(staffId);
-            if (attendant != null)
+            if (attendant.StaffId != null)
             {
                 Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
                 listOfAttendant.Remove(attendant);
@@ -122,10 +126,13 @@ namespace SMS.implementation
             }
             using (StreamReader streamReader = new StreamReader(attendantFilePath))
             {
-                while (streamReader.Peek() > -1)
+                while (streamReader.Peek() != -1)
                 {
-                    string attendantManager = streamReader.ReadLine();
-                    listOfAttendant.Add(Attendant.ConvertToAttendant(attendantManager));
+                    // if (streamReader.Peek() == -1)
+                    // {
+                        string attendantManager = streamReader.ReadLine();
+                        listOfAttendant.Add(Attendant.ConvertToAttendant(attendantManager));
+                    // }
                 }
             }
         }
