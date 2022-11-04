@@ -12,14 +12,14 @@ namespace SMS.implementation
         public string attendantFilePath = @"./Files/attendant.txt";
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
-            int id = listOfAttendant.Count() + 1;
+            var id = listOfAttendant.Count() + 1;
             // string staffId = "AT" + new Random(id).Next(100000).ToString();
-            Attendant attendant = new Attendant(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            var attendant = new Attendant(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
             //    Verifying Attendant Email
             if (GetAttendant(attendant.StaffId, email) == null)
             {
                 listOfAttendant.Add(attendant);
-                using (StreamWriter streamWriter = new StreamWriter(attendantFilePath, append: true))
+                using (var streamWriter = new StreamWriter(attendantFilePath, append: true))
                 {
                     streamWriter.WriteLine(attendant.WriteToFIle());
                 }
@@ -34,7 +34,7 @@ namespace SMS.implementation
         }
         public void DeleteAttendant(string staffId)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant.StaffId != null)
             {
                 Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
@@ -47,14 +47,7 @@ namespace SMS.implementation
         }
         public Attendant GetAttendant(string staffId)
         {
-            foreach (var item in listOfAttendant)
-            {
-                if (item.StaffId == staffId)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return listOfAttendant.FirstOrDefault(item => item.StaffId == staffId);
         }
         public Attendant GetAttendant(string staffId, string email)
         {
@@ -87,7 +80,7 @@ namespace SMS.implementation
         }
         public void UpdateAttendant(string staffId, string firstName, string lastName, string phoneNumber)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
                 attendant.FirstName = firstName;
@@ -109,7 +102,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(attendantFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(attendantFilePath, append: true))
+            using (var streamWriter = new StreamWriter(attendantFilePath, append: true))
             {
                 foreach (var item in listOfAttendant)
                 {
@@ -121,16 +114,16 @@ namespace SMS.implementation
         {
             if (!File.Exists(attendantFilePath))
             {
-                FileStream fileStream = new FileStream(attendantFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(attendantFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(attendantFilePath))
+            using (var streamReader = new StreamReader(attendantFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
                     // if (streamReader.Peek() == -1)
                     // {
-                        string attendantManager = streamReader.ReadLine();
+                        var attendantManager = streamReader.ReadLine();
                         listOfAttendant.Add(Attendant.ConvertToAttendant(attendantManager));
                     // }
                 }

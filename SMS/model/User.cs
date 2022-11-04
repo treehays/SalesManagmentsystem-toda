@@ -23,10 +23,10 @@ namespace SMS.model
         }
          public static string GenerateRandomId()
         {
-            string alphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
-            int r1 = new Random().Next(25);
-            int r2 = new Random().Next(25);
-            string staffId = $"A{alphabet[r1]}{alphabet[r2]}" + new Random().Next(1100000).ToString();
+            var alphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
+            var r1 = new Random().Next(25);
+            var r2 = new Random().Next(25);
+            var staffId = $"A{alphabet[r1]}{alphabet[r2]}" + new Random().Next(1100000).ToString();
             return staffId;
         }
     }

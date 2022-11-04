@@ -31,7 +31,7 @@ namespace SMS.model
 
         public static Transactiona ConvertToTransaction(string transactionAllFromText)
         {
-            string[] transactionConvert = transactionAllFromText.Split("%%%%%");
+            var transactionConvert = transactionAllFromText.Split("%%%%%");
             return new Transactiona(int.Parse(transactionConvert[0]), transactionConvert[1], transactionConvert[2], int.Parse(transactionConvert[3]), double.Parse(transactionConvert[4]), transactionConvert[5], DateTime.Parse(transactionConvert[6]), double.Parse(transactionConvert[7]));
         }
     }

@@ -15,21 +15,21 @@ namespace SMS.implementation
         IProductManager iProductManager = new ProductManager();
         public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
         {
-            Product product = iProductManager.GetProduct(barCode);
-            int id = listOfTransaction.Count() + 1;
-            string receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
-            double total = product.Price * quantity;
-            double xpectedChange = cashTender - total;
-            DateTime dateTime = DateTime.Now;
+            var product = iProductManager.GetProduct(barCode);
+            var id = listOfTransaction.Count() + 1;
+            var receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
+            var total = product.Price * quantity;
+            var xpectedChange = cashTender - total;
+            var dateTime = DateTime.Now;
             if (xpectedChange < 0)
             {
                 Console.WriteLine($"You can't pay lower than {total}");
             }
             else
             {
-                Transactiona transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
+                var transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
                 listOfTransaction.Add(transaction);
-                using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+                using (var streamWriter = new StreamWriter(transactionFilePath, append: true))
                 {
                     streamWriter.WriteLine(transaction.WriteToFIle());
                 }
@@ -68,7 +68,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(transactionFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+            using (var streamWriter = new StreamWriter(transactionFilePath, append: true))
             {
                 foreach (var item in listOfTransaction)
                 {
@@ -80,14 +80,14 @@ namespace SMS.implementation
         {
             if (!File.Exists(transactionFilePath))
             {
-                FileStream fileStream = new FileStream(transactionFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(transactionFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(transactionFilePath))
+            using (var streamReader = new StreamReader(transactionFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
-                    string transactionManager = streamReader.ReadLine();
+                    var transactionManager = streamReader.ReadLine();
                     listOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
                 }
             }

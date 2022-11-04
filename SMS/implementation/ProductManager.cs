@@ -12,12 +12,12 @@ namespace SMS.implementation
         public string productFilePath = @"./Files/product.txt";
         public void CreateProduct(string barCode, string productName, double price, int productQuantity)
         {
-            int id = listOfProduct.Count() + 1;
-            Product product = new Product(id, barCode, productName, price, productQuantity);
+            var id = listOfProduct.Count() + 1;
+            var product = new Product(id, barCode, productName, price, productQuantity);
             if (GetProduct(barCode) == null)
             {
                 listOfProduct.Add(product);
-                using (StreamWriter streamWriter = new StreamWriter(productFilePath, append: true))
+                using (var streamWriter = new StreamWriter(productFilePath, append: true))
                 {
                     streamWriter.WriteLine(product.WriteToFIle());
                 }
@@ -31,7 +31,7 @@ namespace SMS.implementation
         }
         public void DeleteProduct(string barCode)
         {
-            Product product = GetProduct(barCode);
+            var product = GetProduct(barCode);
             if (product != null)
             {
                 Console.WriteLine($"{product.ProductName} Successfully deleted. ");
@@ -57,7 +57,7 @@ namespace SMS.implementation
         }
         public void UpdateProduct(string barCode, string productName, double price)
         {
-            Product product = GetProduct(barCode);
+            var product = GetProduct(barCode);
             if (product != null)
             {
                 product.BarCode = barCode;
@@ -79,7 +79,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(productFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(productFilePath, append: true))
+            using (var streamWriter = new StreamWriter(productFilePath, append: true))
             {
                 foreach (var item in listOfProduct)
                 {
@@ -91,14 +91,14 @@ namespace SMS.implementation
         {
             if (!File.Exists(productFilePath))
             {
-                FileStream fileStream = new FileStream(productFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(productFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(productFilePath))
+            using (var streamReader = new StreamReader(productFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
-                    string productManager = streamReader.ReadLine();
+                    var productManager = streamReader.ReadLine();
                     listOfProduct.Add(Product.ConvertToProduct(productManager));
                 }
             }

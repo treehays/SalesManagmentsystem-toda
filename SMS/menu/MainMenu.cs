@@ -31,7 +31,7 @@ namespace SMS.menu
 ################################################################################");
                 Console.WriteLine("\tHome>>");
                 Console.WriteLine("\tEnter 1 to Register.\n\tEnter 2 to Login.\n\tEnter 0 to Close.");
-                bool chk = false;
+                var chk = false;
                 do
                 {
                     Console.Write("Enter Operation No: ");
@@ -64,7 +64,7 @@ namespace SMS.menu
             {
                 Console.WriteLine("\nHome >> Register >>");
                 Console.WriteLine("\tEnter 1 Go back to Go Home. or \n\tEnter Your OneTime Registration Code for  Newly Employed Manager..");
-                bool chk = false;
+                var chk = false;
                 do
                 {
                     Console.Write("Enter Operation No: ");
@@ -75,7 +75,7 @@ namespace SMS.menu
                 if (choice == 2546)
                 {
                     // Admin
-                    AdminMenu adminMenu = new AdminMenu();
+                    var adminMenu = new AdminMenu();
                     adminMenu.RegisterAdminPage();
                 }
                 // else if (choice == 2)
@@ -115,7 +115,7 @@ namespace SMS.menu
             {
                 Console.WriteLine("\n\tHome>> Login >> ");
                 Console.WriteLine("\tEnter 1 for Admin.\n\tEnter 2 for Attendant. \n\tEnter 3 for Customer. \n\tEnter 4 to go back to Main Menu.\n\tEnter 0 to Close");
-                bool chk = false;
+                var chk = false;
                 do
                 {
                     Console.Write("Enter Operation No: ");
@@ -126,14 +126,14 @@ namespace SMS.menu
                 {
                     // Admin
                     Console.WriteLine("\nHome >> Login >> Admin");
-                    AdminMenu adminMenu = new AdminMenu();
+                    var adminMenu = new AdminMenu();
                     adminMenu.LoginAdminMenu();
                 }
                 else if (choice == 2)
                 {
                     // Attendant
                     Console.WriteLine("\nMain Menu >> Login >> Attendant");
-                    AttendantMenu attendantMenu = new AttendantMenu();
+                    var attendantMenu = new AttendantMenu();
                     attendantMenu.LoginAttendantMenu();
                 }
                 else if (choice == 3)

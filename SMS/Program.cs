@@ -1,7 +1,7 @@
 ﻿using System;
 using SMS.implementation;
 using SMS.menu;
-
+// using MySql.Data.MySqlCLient;
 // Connections
 namespace SMS
 {
@@ -9,12 +9,10 @@ namespace SMS
     {
         static void Main(string[] args)
         {
-            AdminManager adminManager = new AdminManager();
+            var adminManager = new AdminManager();
             adminManager.ReadFromFile();
-            MainMenu mainMenu = new MainMenu();
+            var mainMenu = new MainMenu();
             mainMenu.AllMainMenu();
-
-
         }
         // public string GenerateRandomId()
         // {

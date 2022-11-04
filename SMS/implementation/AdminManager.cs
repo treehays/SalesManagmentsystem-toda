@@ -25,9 +25,9 @@ namespace SMS.implementation
             }
             // string staffId = "AZ" + new Random(new Random().Next(1000)).Next(1100000).ToString();
 
-                Admin admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+                var admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
                 listOfAdmin.Add(admin);
-                using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: true))
+                using (var streamWriter = new StreamWriter(adminFilePath, append: true))
                 {
                     streamWriter.WriteLine(admin.WriteToFIle());
                 }
@@ -36,7 +36,7 @@ namespace SMS.implementation
         }
         public void DeleteAdmin(string staffId)
         {
-            Admin admin = GetAdmin(staffId);
+            var admin = GetAdmin(staffId);
             if (admin != null)
             {
                 Console.WriteLine($"{admin.FirstName} {admin.LastName} Successfully deleted. ");
@@ -83,7 +83,7 @@ namespace SMS.implementation
         }
         public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber)
         {
-            Admin admin = GetAdmin(staffId);
+            var admin = GetAdmin(staffId);
             if (admin != null)
             {
                 admin.FirstName = firstName;
@@ -98,7 +98,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(adminFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: true))
+            using (var streamWriter = new StreamWriter(adminFilePath, append: true))
             {
                 foreach (var item in listOfAdmin)
                 {

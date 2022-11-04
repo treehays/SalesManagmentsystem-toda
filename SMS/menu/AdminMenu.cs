@@ -17,37 +17,37 @@ namespace SMS.menu
             Console.WriteLine("\n\tHome >> Register >> Admin");
             // Console.WriteLine("Welcome...");
             Console.Write("\tFirst name: ");
-            string firstName = Console.ReadLine();
+            var firstName = Console.ReadLine();
             Console.Write("\tLast name: ");
-            string lastName = Console.ReadLine();
+            var lastName = Console.ReadLine();
             Console.Write("\tEmail: ");
-            string email = Console.ReadLine();
+            var email = Console.ReadLine();
             Console.Write("\tPhone Number: ");
-            string phoneNumber = Console.ReadLine();
+            var phoneNumber = Console.ReadLine();
             Console.Write("\tpin: ");
-            string pin = Console.ReadLine();
+            var pin = Console.ReadLine();
             Console.Write("\tPost: ");
-            string post = Console.ReadLine();
+            var post = Console.ReadLine();
             iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
             // LoginAdminMenu();
-            MainMenu mainMenu = new MainMenu();
+            var mainMenu = new MainMenu();
             mainMenu.LoginMenu();
         }
         public void DeleteAttendantMenu()
         {
             Console.Write("Enter Staff ID of the Attendant.");
-            string staffId = Console.ReadLine();
+            var staffId = Console.ReadLine();
             iAttendantManager.DeleteAttendant(staffId);
         }
         public void LoginAdminMenu()
         {
             Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
             Console.Write("\tStaff ID: ");
-            string staffId = Console.ReadLine();
+            var staffId = Console.ReadLine();
             Console.Write("\tPin: ");
-            string pin = Console.ReadLine();
+            var pin = Console.ReadLine();
             // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
-            Admin admin = iAdminManager.Login(staffId, pin);
+            var admin = iAdminManager.Login(staffId, pin);
             if (admin != null)
             {
                 Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
@@ -56,7 +56,7 @@ namespace SMS.menu
             else
             {
                 Console.WriteLine($"Wrong Staff ID or Password!.");
-                MainMenu mainMenu = new MainMenu();
+                var mainMenu = new MainMenu();
                 mainMenu.LoginMenu();
             }
         }
@@ -76,7 +76,7 @@ namespace SMS.menu
             Console.WriteLine("\nHome >> Login >> Admin >>");
             // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
             Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products \n\tEnter 3 to Update My Details. \n\tEnter 4 to View sales Records.\n\tEnter 5 to check Wallet. \n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
-            bool chk = false;
+            var chk = false;
             do
             {
                 Console.Write("Enter Operation No: ");
@@ -118,7 +118,7 @@ namespace SMS.menu
                     break;
                 case 6:
                     // logout
-                    MainMenu mainMenu = new MainMenu();
+                    var mainMenu = new MainMenu();
                     mainMenu.LoginMenu();
                     break;
                 default:
@@ -131,7 +131,7 @@ namespace SMS.menu
             Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
             // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
             Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
-            bool chk = false;
+            var chk = false;
             do
             {
                 Console.Write("Enter Operation No: ");
@@ -146,7 +146,7 @@ namespace SMS.menu
                 // break;
                 case 1:
                     // Create Attendant
-                    AttendantMenu attendantMenu = new AttendantMenu();
+                    var attendantMenu = new AttendantMenu();
                     attendantMenu.RegisterAttendantPage();
                     AdminSubMenu();
                     break;
@@ -161,7 +161,7 @@ namespace SMS.menu
                     break;
                 case 4:
                     // logout
-                    MainMenu mainMenu = new MainMenu();
+                    var mainMenu = new MainMenu();
                     mainMenu.LoginMenu();
                     break;
                 default:
@@ -172,15 +172,15 @@ namespace SMS.menu
         public void DeleteProductMenu()
         {
             Console.Write("Enter Product BarCode: ");
-            string barCode = Console.ReadLine();
+            var barCode = Console.ReadLine();
             iProductManager.DeleteProduct(barCode);
         }
         public void AddProduct()
         {
             Console.Write("Product Name: ");
-            string productName = Console.ReadLine();
+            var productName = Console.ReadLine();
             Console.Write("Barcode(Product ID): ");
-            string barCode = Console.ReadLine();
+            var barCode = Console.ReadLine();
             Console.Write("Price: ");
             double price;
             while (!double.TryParse(Console.ReadLine(), out price))
@@ -202,7 +202,7 @@ namespace SMS.menu
             Console.WriteLine("...>> Admin >> Manage Product >>");
             Console.WriteLine("Enter 1 to Add a product1. \nEnter 3  to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
 
-            bool chk = false;
+            var chk = false;
             do
             {
                 chk = int.TryParse(Console.ReadLine(), out choice);
@@ -253,7 +253,7 @@ namespace SMS.menu
                     break;
                 case 6:
                     // logout
-                    MainMenu mainMenu = new MainMenu();
+                    var mainMenu = new MainMenu();
                     mainMenu.LoginMenu();
                     break;
                 default:

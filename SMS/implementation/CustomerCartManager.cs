@@ -11,9 +11,9 @@ namespace SMS.implementation
         IProductManager iProductManager = new ProductManager();
         public void AddToCart(string barCode, int quantity)
         {
-            Product product = iProductManager.GetProduct(barCode);
+            var product = iProductManager.GetProduct(barCode);
 
-            CustomerCart customerCart = new CustomerCart(barCode, quantity);
+            var customerCart = new CustomerCart(barCode, quantity);
             listOfCustomerCart.Add(customerCart);
         }
 
