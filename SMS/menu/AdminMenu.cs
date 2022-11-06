@@ -1,17 +1,15 @@
-using System;
 using SMS.implementation;
 using SMS.interfaces;
-using SMS.model;
 
 namespace SMS.menu
 {
     public class AdminMenu
     {
-        IAdminManager iAdminManager = new AdminManager();
-        IAttendantManager iAttendantManager = new AttendantManager();
-        IProductManager iProductManager = new ProductManager();
-        ITransactionManager iTransactionManager = new TransactionManager();
-        public int choice;
+        IAdminManager _iAdminManager = new AdminManager();
+        IAttendantManager _iAttendantManager = new AttendantManager();
+        IProductManager _iProductManager = new ProductManager();
+        ITransactionManager _iTransactionManager = new TransactionManager();
+        private int _choice;
         public void RegisterAdminPage()
         {
             Console.WriteLine("\n\tHome >> Register >> Admin");
@@ -28,8 +26,7 @@ namespace SMS.menu
             var pin = Console.ReadLine();
             Console.Write("\tPost: ");
             var post = Console.ReadLine();
-            iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
-            // LoginAdminMenu();
+            _iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
             var mainMenu = new MainMenu();
             mainMenu.LoginMenu();
         }
@@ -37,7 +34,7 @@ namespace SMS.menu
         {
             Console.Write("Enter Staff ID of the Attendant.");
             var staffId = Console.ReadLine();
-            iAttendantManager.DeleteAttendant(staffId);
+            _iAttendantManager.DeleteAttendant(staffId);
         }
         public void LoginAdminMenu()
         {
@@ -47,7 +44,7 @@ namespace SMS.menu
             Console.Write("\tPin: ");
             var pin = Console.ReadLine();
             // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
-            var admin = iAdminManager.Login(staffId, pin);
+            var admin = _iAdminManager.Login(staffId, pin);
             if (admin != null)
             {
                 Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
@@ -80,11 +77,11 @@ namespace SMS.menu
             do
             {
                 Console.Write("Enter Operation No: ");
-                chk = int.TryParse(Console.ReadLine(), out choice);
+                chk = int.TryParse(Console.ReadLine(), out _choice);
                 Console.WriteLine(chk ? "" : "Invalid Input.");
 
             } while (!chk);
-            switch (choice)
+            switch (_choice)
             {
                 case 0:
                     System.Console.WriteLine("Closed.");
@@ -106,14 +103,14 @@ namespace SMS.menu
                     // View Sales Records
                     Console.WriteLine("\nID\t TRANS. DATE \tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
 
-                    Console.WriteLine($"Current Wallet Ballance: {iTransactionManager.GetAllTransactionsAdmin()}");
+                    Console.WriteLine($"Current Wallet Balance: {_iTransactionManager.GetAllTransactionsAdmin()}");
                     // iTransactionManager.GetAllTransactionsAdmin();
                     AdminSubMenu();
                     break;
                 case 5:
                     //Check Balance
 
-                    Console.WriteLine($"Booked Balance: {iTransactionManager.CalculateTotalSales()}");
+                    Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
                     AdminSubMenu();
                     break;
                 case 6:
@@ -135,10 +132,10 @@ namespace SMS.menu
             do
             {
                 Console.Write("Enter Operation No: ");
-                chk = int.TryParse(Console.ReadLine(), out choice);
+                chk = int.TryParse(Console.ReadLine(), out _choice);
                 Console.WriteLine(chk ? "" : "Invalid Input.");
             } while (!chk);
-            switch (choice)
+            switch (_choice)
             {
                 case 0:
                     Console.WriteLine("Closed.");
@@ -152,7 +149,7 @@ namespace SMS.menu
                     break;
                 case 2:
                     Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
-                    iAttendantManager.ViewAllAttendants();
+                    _iAttendantManager.ViewAllAttendants();
                     AdminSubMenu();
                     break;
                 case 3:
@@ -173,7 +170,7 @@ namespace SMS.menu
         {
             Console.Write("Enter Product BarCode: ");
             var barCode = Console.ReadLine();
-            iProductManager.DeleteProduct(barCode);
+            _iProductManager.DeleteProduct(barCode);
         }
         public void AddProduct()
         {
@@ -189,12 +186,12 @@ namespace SMS.menu
             }
             Console.Write("Quantity: ");
 
-            int ProductQuantity;
-            while (!int.TryParse(Console.ReadLine(), out ProductQuantity))
+            int productQuantity;
+            while (!int.TryParse(Console.ReadLine(), out productQuantity))
             {
                 System.Console.WriteLine("wrong input.. Try again.");
             }
-            iProductManager.CreateProduct(barCode, productName, price, ProductQuantity);
+            _iProductManager.CreateProduct(barCode, productName, price, productQuantity);
         }
         public void ManageProductSubMenu()
         {
@@ -205,7 +202,7 @@ namespace SMS.menu
             var chk = false;
             do
             {
-                chk = int.TryParse(Console.ReadLine(), out choice);
+                chk = int.TryParse(Console.ReadLine(), out _choice);
                 Console.WriteLine(chk ? "" : "Invalid Input.");
 
             } while (!chk);
@@ -217,7 +214,7 @@ namespace SMS.menu
             //     Console.WriteLine("Invalid Input\n");
             //     ManageProductSubMenu();
             // }
-            switch (choice)
+            switch (_choice)
             {
                 case 0:
                     System.Console.WriteLine("Closed.");
@@ -239,7 +236,7 @@ namespace SMS.menu
                     // View All products
                     // iAdminManager.DeleteAdmin();
                     Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
-                    iProductManager.ViewAllProduct();
+                    _iProductManager.ViewAllProduct();
                     ManageProductSubMenu();
 
                     break;

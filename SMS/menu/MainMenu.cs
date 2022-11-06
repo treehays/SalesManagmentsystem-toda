@@ -6,7 +6,7 @@ namespace SMS.menu
 {
     public class MainMenu
     {
-        public int choice;
+        public int Choice;
         public void AllMainMenu()
         {
             IAdminManager adminManager = new AdminManager();
@@ -20,7 +20,6 @@ namespace SMS.menu
             do
             {
                 // Console.Clear();
-                // Console.WriteLine("\n>>Main Menu");
                 Console.WriteLine(@"
 ################################################################################
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
@@ -35,28 +34,23 @@ namespace SMS.menu
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out Choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (choice == 1)
+                if (Choice == 1)
                 {
-                    // Register
                     RegistrationMenu();
                 }
-                else if (choice == 2)
+                else if (Choice == 2)
                 {
-                    // Login
                     Console.WriteLine("\nMain Menu >> Login >> ");
                     LoginMenu();
                 }
                 else
                 {
-                    // Invalid Choice
-                    // Console.Clear();
                     Console.Write("Invalid Input.");
                 }
-            } while (choice != 0);
-
+            } while (Choice != 0);
         }
         public void RegistrationMenu()
         {
@@ -68,46 +62,26 @@ namespace SMS.menu
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out Choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
 
                 } while (!chk);
-                if (choice == 2546)
+                if (Choice == 2546)
                 {
-                    // Admin
-                    var adminMenu = new AdminMenu();
+                                        var adminMenu = new AdminMenu();
                     adminMenu.RegisterAdminPage();
                 }
-                // else if (choice == 2)
-                // // {
-                // //     // Attendant
-                // //     Console.WriteLine("\nMain Menu >> Register >> Attendant >>");
-                // //     AttendantMenu attendantMenu = new AttendantMenu();
-                // //     attendantMenu.RegisterAttendantPage();
-                // // }
-                // // else if (choice == 3)
-                // // {
-                // //     /*
-                // //     // Customer
-                // //     Console.WriteLine("\nMain Menu >> Register >> Customer >>");
-                // //     CustomerMenu customerMenu = new CustomerMenu();
-                // //     customerMenu.RegisterCustomerPage();
-                // //     */
-                // // }
-                else if (choice == 1)
+                else if (Choice == 1)
                 {
-                    // Go Back
                     AllMainMenu();
                 }
                 else
                 {
-                    // Invalid Choice
-                    // Console.Clear();
                     Console.WriteLine("Invalid Input.\n");
                     RegistrationMenu();
                 }
 
-            } while (choice != 0);
+            } while (Choice != 0);
         }
         public void LoginMenu()
         {
@@ -119,24 +93,22 @@ namespace SMS.menu
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out Choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (choice == 1)
+                if (Choice == 1)
                 {
-                    // Admin
                     Console.WriteLine("\nHome >> Login >> Admin");
                     var adminMenu = new AdminMenu();
                     adminMenu.LoginAdminMenu();
                 }
-                else if (choice == 2)
+                else if (Choice == 2)
                 {
-                    // Attendant
                     Console.WriteLine("\nMain Menu >> Login >> Attendant");
                     var attendantMenu = new AttendantMenu();
                     attendantMenu.LoginAttendantMenu();
                 }
-                else if (choice == 3)
+                else if (Choice == 3)
                 {
                     /* OUT OFF THE PROGRAM FOR SUSTOMER
                     // Customer
@@ -145,20 +117,17 @@ namespace SMS.menu
                     customerMenu.LoginCUstomerMenu();
                     */
                 }
-                else if (choice == 4)
+                else if (Choice == 4)
                 {
-                    // Go Back
                     AllMainMenu();
                 }
                 else
                 {
-                    // Invalid Choice
-                    // Console.Clear();
                     Console.WriteLine("Invalid Input.\n");
                     LoginMenu();
                 }
 
-            } while (choice != 0);
+            } while (Choice != 0);
             Console.WriteLine();
         }
     }

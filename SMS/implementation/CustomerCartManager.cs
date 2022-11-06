@@ -7,14 +7,14 @@ namespace SMS.implementation
 {
     public class CustomerCartManager : ICustomerCartManager
     {
-        List<CustomerCart> listOfCustomerCart = new List<CustomerCart>();
-        IProductManager iProductManager = new ProductManager();
+        List<CustomerCart> _listOfCustomerCart = new List<CustomerCart>();
+        IProductManager _iProductManager = new ProductManager();
         public void AddToCart(string barCode, int quantity)
         {
-            var product = iProductManager.GetProduct(barCode);
+            var product = _iProductManager.GetProduct(barCode);
 
             var customerCart = new CustomerCart(barCode, quantity);
-            listOfCustomerCart.Add(customerCart);
+            _listOfCustomerCart.Add(customerCart);
         }
 
         public void RemoveFromCart(string barCode)

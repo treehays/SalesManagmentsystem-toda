@@ -6,9 +6,9 @@ namespace SMS.menu
 {
     public class AttendantMenu
     {
-        IAttendantManager iAttendantManager = new AttendantManager();
-        ITransactionManager iTransactionManager = new TransactionManager();
-        IProductManager iProductManager = new ProductManager();
+        IAttendantManager _iAttendantManager = new AttendantManager();
+        ITransactionManager _iTransactionManager = new TransactionManager();
+        IProductManager _iProductManager = new ProductManager();
         public void RegisterAttendantPage()
         {
             Console.WriteLine("\nEnter Valid Details..");
@@ -25,7 +25,7 @@ namespace SMS.menu
             var pin = Console.ReadLine();
             Console.Write("\tPost: ");
             var post = Console.ReadLine();
-            iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
+            _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
             // LoginAdminMenu();
             var adminMenu = new AdminMenu();
             adminMenu.AdminSubMenu();
@@ -42,7 +42,7 @@ namespace SMS.menu
             var staffId = Console.ReadLine();
             Console.Write("\tPin: ");
             var pin = Console.ReadLine();
-            var attendant = iAttendantManager.Login(staffId, pin);
+            var attendant = _iAttendantManager.Login(staffId, pin);
             if (attendant != null)
             {
                 Console.WriteLine($"Welcome {attendant.FirstName}, you've successfully Logged in!");
@@ -67,14 +67,7 @@ namespace SMS.menu
                 {
                     chk = int.TryParse(Console.ReadLine(), out choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
-
                 } while (!chk);
-                // while (!int.TryParse(Console.ReadLine(), out choice))
-                // {
-                //     // Console.Clear();
-                //     Console.WriteLine("Invalid Input\n");
-                //     AttendantSubMenu(attendant);
-                // }
                 if (choice == 1)
                 {
                     // Record Sales
@@ -91,7 +84,7 @@ namespace SMS.menu
                     var lastName = Console.ReadLine();
                     Console.Write("Phone Number: ");
                     var phoneNumber = Console.ReadLine();
-                    iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
+                    _iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
                 }
                 else if (choice == 3)
                 {
@@ -99,7 +92,7 @@ namespace SMS.menu
                     // View Sales Sales Records
                     Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
 
-                    iTransactionManager.GetAllTransactions();
+                    _iTransactionManager.GetAllTransactions();
                 }
                 else if (choice == 4)
                 {
@@ -126,7 +119,7 @@ namespace SMS.menu
             {
                 System.Console.WriteLine("wrong input.. Try again.");
             }
-            var product = iProductManager.GetProduct(barCode);
+            var product = _iProductManager.GetProduct(barCode);
             Console.WriteLine($"Amount to be Paid: {quantity * product.Price}");
             Console.Write("Cash Tender: ");
             double cashTender;
@@ -134,7 +127,7 @@ namespace SMS.menu
             {
                 System.Console.WriteLine("wrong input.. Try again.");
             }
-            iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
+            _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
         }
 
 

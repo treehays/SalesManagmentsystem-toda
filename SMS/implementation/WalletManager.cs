@@ -5,7 +5,7 @@ namespace SMS.implementation
 {
     public class WalletManager : IWalletManager
     {
-        ITransactionManager transactionManager = new TransactionManager();
+        ITransactionManager _transactionManager = new TransactionManager();
         public double CalculateRemainingBalance()
         {
             throw new NotImplementedException();
@@ -18,7 +18,7 @@ namespace SMS.implementation
 
         public void GetTotalWalletTransaction()
         {
-            foreach (var item in TransactionManager.listOfTransaction)
+            foreach (var item in TransactionManager.ListOfTransaction)
             {
                 Console.WriteLine($"Staff Id: {item.Id} {item.CustomerId} {item.BarCode} {item.ReceiptNo} ");
             }
