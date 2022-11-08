@@ -22,14 +22,14 @@ namespace SMS.implementation
             }
             // string staffId = "AZ" + new Random(new Random().Next(1000)).Next(1100000).ToString();
 
-                var admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
-                ListOfAdmin.Add(admin);
-                using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
-                {
-                    streamWriter.WriteLine(admin.WriteToFIle());
-                }
-                Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
-            
+            var admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            ListOfAdmin.Add(admin);
+            using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
+            {
+                streamWriter.WriteLine(admin.WriteToFIle());
+            }
+            Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
+
         }
         public void DeleteAdmin(string staffId)
         {
@@ -120,6 +120,10 @@ namespace SMS.implementation
                     ListOfAdmin.Add(Admin.ConvertToAdmin(adminManager));
                 }
             }
+        }
+        public void CreateDataBaseTable()
+        {
+
         }
     }
 }
