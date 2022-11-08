@@ -1,6 +1,3 @@
-using System;
-using System.Transactions;
-
 namespace SMS.model
 {
     public class Transactiona

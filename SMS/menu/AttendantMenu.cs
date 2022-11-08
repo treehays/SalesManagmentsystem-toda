@@ -1,7 +1,7 @@
-using System;
-using SMS.interfaces;
 using SMS.implementation;
+using SMS.interfaces;
 using SMS.model;
+
 namespace SMS.menu
 {
     public class AttendantMenu
@@ -33,7 +33,8 @@ namespace SMS.menu
         public void DeleteProduct()
         {
             Console.Write("\tEnter the Barcode of the Product to be deleted.");
-            var customerId = Console.ReadLine();
+            var barCode = Console.ReadLine();
+            _iProductManager.DeleteProduct(barCode);
         }
         public void LoginAttendantMenu()
         {
@@ -50,7 +51,7 @@ namespace SMS.menu
             }
             else
             {
-                Console.WriteLine($"Wrong Email or Password!.");
+                Console.WriteLine("Wrong Email or Password!.");
             }
         }
         public void AttendantSubMenu(Attendant attendant)
@@ -62,7 +63,7 @@ namespace SMS.menu
                 Console.WriteLine("\n...Logged >> Attendant >>");
                 Console.WriteLine("AZ Sales Management System. \nEnter valid option.");
                 Console.WriteLine("\tEnter 1 to Record Sales.\n\tEnter 2 to Update My Details. \n\tEnter 3 to View history.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
-                var chk = false;
+                bool chk;
                 do
                 {
                     chk = int.TryParse(Console.ReadLine(), out choice);
@@ -107,8 +108,9 @@ namespace SMS.menu
         {
             // Customer Details
             Console.WriteLine("...Logged >> Attendant >> Payment Page");
-            var dateTime = new DateTime();
+            /*
             dateTime = DateTime.UtcNow;
+*/
             Console.Write("CustomerName: ");
             var customerId = Console.ReadLine();
             Console.Write("Enter Product Barcode: ");
@@ -117,7 +119,7 @@ namespace SMS.menu
             int quantity;
             while (!int.TryParse(Console.ReadLine(), out quantity))
             {
-                System.Console.WriteLine("wrong input.. Try again.");
+                Console.WriteLine("wrong input.. Try again.");
             }
             var product = _iProductManager.GetProduct(barCode);
             Console.WriteLine($"Amount to be Paid: {quantity * product.Price}");
@@ -125,7 +127,7 @@ namespace SMS.menu
             double cashTender;
             while (!double.TryParse(Console.ReadLine(), out cashTender))
             {
-                System.Console.WriteLine("wrong input.. Try again.");
+                Console.WriteLine("wrong input.. Try again.");
             }
             _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
         }

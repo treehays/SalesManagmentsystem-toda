@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using SMS.interfaces;
 using SMS.model;
+
 namespace SMS.implementation
 {
     public class ProductManager : IProductManager

@@ -1,4 +1,3 @@
-using System;
 using SMS.interfaces;
 
 namespace SMS.implementation

@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using SMS.interfaces;
 using SMS.model;
-using SMS.implementation;
 
 namespace SMS.implementation
 {
@@ -19,12 +17,12 @@ namespace SMS.implementation
 
         public void RemoveFromCart(string barCode)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void UpdateCart(string barCode, int quantity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

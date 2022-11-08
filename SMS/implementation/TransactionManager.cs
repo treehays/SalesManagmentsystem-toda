@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Transactions;
 using SMS.interfaces;
 using SMS.model;
+
 namespace SMS.implementation
 {
     public class TransactionManager : ITransactionManager
@@ -17,7 +13,7 @@ namespace SMS.implementation
         {
             var product = _iProductManager.GetProduct(barCode);
             var id = ListOfTransaction.Count() + 1;
-            var receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
+            var receiptNo = "ref" + new Random(id).Next(2323, 1000000);
             var total = product.Price * quantity;
             var xpectedChange = cashTender - total;
             var dateTime = DateTime.Now;

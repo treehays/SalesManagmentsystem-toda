@@ -1,8 +1,7 @@
-﻿using System;
-using SMS.implementation;
+﻿using SMS.implementation;
 using SMS.menu;
-// using MySql.Data.MySqlCLient;
-// Connections
+using MySql.Data.MySqlClient;
+
 namespace SMS
 {
     class Program

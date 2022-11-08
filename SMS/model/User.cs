@@ -1,5 +1,3 @@
-using System;
-
 namespace SMS.model
 {
     public class User
@@ -26,7 +24,7 @@ namespace SMS.model
             var alphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
             var r1 = new Random().Next(25);
             var r2 = new Random().Next(25);
-            var staffId = $"A{alphabet[r1]}{alphabet[r2]}" + new Random().Next(1100000).ToString();
+            var staffId = $"A{alphabet[r1]}{alphabet[r2]}" + new Random().Next(1100000);
             return staffId;
         }
     }

@@ -52,7 +52,7 @@ namespace SMS.menu
             }
             else
             {
-                Console.WriteLine($"Wrong Staff ID or Password!.");
+                Console.WriteLine("Wrong Staff ID or Password!.");
                 var mainMenu = new MainMenu();
                 mainMenu.LoginMenu();
             }
@@ -73,7 +73,7 @@ namespace SMS.menu
             Console.WriteLine("\nHome >> Login >> Admin >>");
             // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
             Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products \n\tEnter 3 to Update My Details. \n\tEnter 4 to View sales Records.\n\tEnter 5 to check Wallet. \n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
-            var chk = false;
+            bool chk;
             do
             {
                 Console.Write("Enter Operation No: ");
@@ -84,7 +84,7 @@ namespace SMS.menu
             switch (_choice)
             {
                 case 0:
-                    System.Console.WriteLine("Closed.");
+                    Console.WriteLine("Closed.");
                     break;
                 case 1:
                     // Manage Attendant
@@ -128,7 +128,7 @@ namespace SMS.menu
             Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
             // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
             Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
-            var chk = false;
+            bool chk;
             do
             {
                 Console.Write("Enter Operation No: ");
@@ -182,14 +182,14 @@ namespace SMS.menu
             double price;
             while (!double.TryParse(Console.ReadLine(), out price))
             {
-                System.Console.WriteLine("wrong input.. Try again.");
+                Console.WriteLine("wrong input.. Try again.");
             }
             Console.Write("Quantity: ");
 
             int productQuantity;
             while (!int.TryParse(Console.ReadLine(), out productQuantity))
             {
-                System.Console.WriteLine("wrong input.. Try again.");
+                Console.WriteLine("wrong input.. Try again.");
             }
             _iProductManager.CreateProduct(barCode, productName, price, productQuantity);
         }
@@ -199,7 +199,7 @@ namespace SMS.menu
             Console.WriteLine("...>> Admin >> Manage Product >>");
             Console.WriteLine("Enter 1 to Add a product1. \nEnter 3  to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
 
-            var chk = false;
+            bool chk;
             do
             {
                 chk = int.TryParse(Console.ReadLine(), out _choice);
@@ -217,7 +217,7 @@ namespace SMS.menu
             switch (_choice)
             {
                 case 0:
-                    System.Console.WriteLine("Closed.");
+                    Console.WriteLine("Closed.");
                     return;
                 // break;
                 case 1:

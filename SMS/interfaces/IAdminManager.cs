@@ -1,4 +1,5 @@
 using SMS.model;
+
 namespace SMS.interfaces
 {
     public interface IAdminManager
