@@ -35,7 +35,7 @@ namespace SMS.implementation
                 using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    string queryCreateAdmin = $"Insert into staffs (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                    string queryCreateAdmin = $"Insert into admin (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
                     var command = new MySqlCommand(queryCreateAdmin, connection);
                     command.ExecuteNonQuery();
                 }

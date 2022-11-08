@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using SMS.interfaces;
 using SMS.model;
 
@@ -6,9 +7,11 @@ namespace SMS.implementation
     public class TransactionManager : ITransactionManager
     {
         // public string TransactionFilePath = @"./Files/transaction.txt";
-        public int i =0;
+        public int i = 0;
         public static List<Transactiona> ListOfTransaction = new List<Transactiona>();
         // public static List<Transactiona> listOfCart = new List<Transactiona>();
+        static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+        MySqlConnection connection = new MySqlConnection(connString);
         IProductManager _iProductManager = new ProductManager();
         public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
         {
@@ -24,12 +27,23 @@ namespace SMS.implementation
             }
             else
             {
-                var transaction = new Transactiona( receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
+                var transaction = new Transactiona(receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
                 ListOfTransaction.Add(transaction);
                 // using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
                 // {
                 //     streamWriter.WriteLine(transaction.WriteToFIle());
                 // }
+                try
+                {
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        connection.Open();
+                        string queryCreateTransaction = $"Insert into transaction (receiptNo,barCode,quantity,total,customerId,dateTime,cashTender) values ('{receiptNo}','{barCode}','{quantity}','{total}','{customerId}','{dateTime}','{cashTender}')";
+                        var command = new MySqlCommand(queryCreateTransaction, connection);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex) { }
                 Console.WriteLine($"\n__________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
             }
 
@@ -49,7 +63,7 @@ namespace SMS.implementation
 
             foreach (var item in ListOfTransaction)
             {
-                
+
                 Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
             }
         }

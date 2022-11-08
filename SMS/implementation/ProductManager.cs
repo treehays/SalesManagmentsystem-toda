@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using SMS.interfaces;
 using SMS.model;
 
@@ -5,6 +6,8 @@ namespace SMS.implementation
 {
     public class ProductManager : IProductManager
     {
+        static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+        MySqlConnection connection = new MySqlConnection(connString);
         public static List<Product> ListOfProduct = new List<Product>();
         // public string ProductFilePath = @"./Files/product.txt";
         public void CreateProduct(string barCode, string productName, double price, int productQuantity)
@@ -18,6 +21,17 @@ namespace SMS.implementation
                 // {
                 //     streamWriter.WriteLine(product.WriteToFIle());
                 // }
+                try
+                {
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        connection.Open();
+                        string queryCreateProduction = $"Insert into attendant (barCode,productName,price,productQuantity) values ('{barCode}','{productName}','{price}','{productQuantity}')";
+                        var command = new MySqlCommand(queryCreateProduction, connection);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex) { }
 
                 Console.WriteLine($"Product Added Successfully. \nThere are total of {id} product's in the store.");
             }

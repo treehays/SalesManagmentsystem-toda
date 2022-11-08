@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using SMS.interfaces;
 using SMS.model;
 
@@ -7,11 +8,14 @@ namespace SMS.implementation
     {
         public static List<Attendant> ListOfAttendant = new List<Attendant>();
         // public string AttendantFilePath = @"./Files/attendant.txt";
+        static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+        MySqlConnection connection = new MySqlConnection(connString);
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
             // var id = ListOfAttendant.Count() + 1;
             // string staffId = "AT" + new Random(id).Next(100000).ToString();
-            var attendant = new Attendant(User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            string staffId = User.GenerateRandomId();
+            var attendant = new Attendant(staffId, firstName, lastName, email, phoneNumber, pin, post);
             //    Verifying Attendant Email
             if (GetAttendant(attendant.StaffId, email) == null)
             {
@@ -20,6 +24,18 @@ namespace SMS.implementation
                 // {
                 //     streamWriter.WriteLine(attendant.WriteToFIle());
                 // }
+
+                try
+                {
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        connection.Open();
+                        string queryCreateAttendant = $"Insert into attendant (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                        var command = new MySqlCommand(queryCreateAttendant, connection);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex) { }
                 Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {attendant.StaffId} and pint {pin}, \nKeep it Safe.");
             }
             else
