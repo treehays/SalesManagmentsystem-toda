@@ -12,10 +12,10 @@ namespace SMS.menu
             IAttendantManager attendantManager = new AttendantManager();
             IProductManager productManager = new ProductManager();
             ITransactionManager transactionManager = new TransactionManager();
-            adminManager.ReadFromFile();
-            attendantManager.ReadFromFile();
-            productManager.ReadFromFile();
-            transactionManager.ReadFromFile();
+            // adminManager.ReadFromFile();
+            // attendantManager.ReadFromFile();
+            // productManager.ReadFromFile();
+            // transactionManager.ReadFromFile();
             do
             {
                 // Console.Clear();

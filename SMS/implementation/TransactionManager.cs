@@ -5,7 +5,8 @@ namespace SMS.implementation
 {
     public class TransactionManager : ITransactionManager
     {
-        public string TransactionFilePath = @"./Files/transaction.txt";
+        // public string TransactionFilePath = @"./Files/transaction.txt";
+        public int i =0;
         public static List<Transactiona> ListOfTransaction = new List<Transactiona>();
         // public static List<Transactiona> listOfCart = new List<Transactiona>();
         IProductManager _iProductManager = new ProductManager();
@@ -23,12 +24,12 @@ namespace SMS.implementation
             }
             else
             {
-                var transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
+                var transaction = new Transactiona( receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
                 ListOfTransaction.Add(transaction);
-                using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
-                {
-                    streamWriter.WriteLine(transaction.WriteToFIle());
-                }
+                // using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
+                // {
+                //     streamWriter.WriteLine(transaction.WriteToFIle());
+                // }
                 Console.WriteLine($"\n__________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
             }
 
@@ -48,7 +49,8 @@ namespace SMS.implementation
 
             foreach (var item in ListOfTransaction)
             {
-                Console.WriteLine($"{item.Id}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
+                
+                Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
             }
         }
 
@@ -57,36 +59,36 @@ namespace SMS.implementation
             double cumulativeSum = 0;
             foreach (var item in ListOfTransaction)
             {
-                Console.WriteLine($"{item.Id}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");
+                Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");
             }
             return cumulativeSum;
         }
-        public void ReWriteToFile()
-        {
-            File.WriteAllText(TransactionFilePath, string.Empty);
-            using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
-            {
-                foreach (var item in ListOfTransaction)
-                {
-                    streamWriter.WriteLine(item.WriteToFIle());
-                }
-            }
-        }
-        public void ReadFromFile()
-        {
-            if (!File.Exists(TransactionFilePath))
-            {
-                var fileStream = new FileStream(TransactionFilePath, FileMode.CreateNew);
-                fileStream.Close();
-            }
-            using (var streamReader = new StreamReader(TransactionFilePath))
-            {
-                while (streamReader.Peek() != -1)
-                {
-                    var transactionManager = streamReader.ReadLine();
-                    ListOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
-                }
-            }
-        }
+        // public void ReWriteToFile()
+        // {
+        //     File.WriteAllText(TransactionFilePath, string.Empty);
+        //     using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
+        //     {
+        //         foreach (var item in ListOfTransaction)
+        //         {
+        //             streamWriter.WriteLine(item.WriteToFIle());
+        //         }
+        //     }
+        // }
+        // public void ReadFromFile()
+        // {
+        //     if (!File.Exists(TransactionFilePath))
+        //     {
+        //         var fileStream = new FileStream(TransactionFilePath, FileMode.CreateNew);
+        //         fileStream.Close();
+        //     }
+        //     using (var streamReader = new StreamReader(TransactionFilePath))
+        //     {
+        //         while (streamReader.Peek() != -1)
+        //         {
+        //             var transactionManager = streamReader.ReadLine();
+        //             ListOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
+        //         }
+        //     }
+        // }
     }
 }

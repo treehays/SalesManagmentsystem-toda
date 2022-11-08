@@ -9,7 +9,7 @@ namespace SMS.interfaces
         void GetAllTransactions();
         double GetAllTransactionsAdmin();
         double CalculateTotalSales();
-        void ReadFromFile();
-        void ReWriteToFile();
+        // void ReadFromFile();
+        // void ReWriteToFile();
     }
 }

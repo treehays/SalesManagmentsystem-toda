@@ -9,7 +9,7 @@ namespace SMS.interfaces
         void UpdateProduct(string barCode, string productName, double price);
         void DeleteProduct(string barCode);
         void ViewAllProduct();
-        void ReadFromFile();
-        void ReWriteToFile();
+        // void ReadFromFile();
+        // void ReWriteToFile();
     }
 }

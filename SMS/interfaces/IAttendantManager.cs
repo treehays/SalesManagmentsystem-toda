@@ -12,7 +12,7 @@ namespace SMS.interfaces
         Attendant Login(string staffId, string pin);
         void ViewAttendant(string staffId);
         void ViewAllAttendants();
-        void ReadFromFile();
-        void ReWriteToFile();
+        // void ReadFromFile();
+        // void ReWriteToFile();
     }
 }

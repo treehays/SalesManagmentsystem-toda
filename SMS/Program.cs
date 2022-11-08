@@ -9,7 +9,8 @@ namespace SMS
         static void Main(string[] args)
         {
             var adminManager = new AdminManager();
-            adminManager.ReadFromFile();
+            // adminManager.ReadFromFile();
+            adminManager.CreateDataBaseTable();
             var mainMenu = new MainMenu();
             mainMenu.AllMainMenu();
         }

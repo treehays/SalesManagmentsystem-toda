@@ -19,7 +19,7 @@ namespace SMS.implementation
         {
             foreach (var item in TransactionManager.ListOfTransaction)
             {
-                Console.WriteLine($"Staff Id: {item.Id} {item.CustomerId} {item.BarCode} {item.ReceiptNo} ");
+                Console.WriteLine($"Staff Id:  {item.CustomerId} {item.BarCode} {item.ReceiptNo} ");
             }
         }
     }

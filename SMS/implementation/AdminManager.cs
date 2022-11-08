@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using SMS.interfaces;
 using SMS.model;
 
@@ -7,27 +8,39 @@ namespace SMS.implementation
     {
         ITransactionManager _iTransactionManager = new TransactionManager();
         public static List<Admin> ListOfAdmin = new List<Admin>();
-        public string AdminFilePath = @"./Files/admin.txt";
-        public string FileDirect = @"./Files";
+        // public string AdminFilePath = @"./Files/admin.txt";
+        // public string FileDirect = @"./Files";
+        static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+        MySqlConnection connection = new MySqlConnection(connString);
         public void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
-            int id;
-            if (ListOfAdmin != null)
-            {
-                id = ListOfAdmin.Count() + 1;
-            }
-            else
-            {
-                id = 1;
-            }
-            // string staffId = "AZ" + new Random(new Random().Next(1000)).Next(1100000).ToString();
-
-            var admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            // int id = 0;
+            // if (ListOfAdmin != null)
+            // {
+            //     id = ListOfAdmin.Count() + 1;
+            // }
+            // else
+            // {
+            //     id = 1;
+            // }
+            var staffId = User.GenerateRandomId();
+            var admin = new Admin(User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
             ListOfAdmin.Add(admin);
-            using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
+            // using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
+            // {
+            //     streamWriter.WriteLine(admin.WriteToFIle());
+            // }
+            try
             {
-                streamWriter.WriteLine(admin.WriteToFIle());
+                using (var connection = new MySqlConnection(connString))
+                {
+                    connection.Open();
+                    string queryCreateAdmin = $"Insert into staffs (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                    var command = new MySqlCommand(queryCreateAdmin, connection);
+                    command.ExecuteNonQuery();
+                }
             }
+            catch (Exception ex) { }
             Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
 
         }
@@ -38,7 +51,7 @@ namespace SMS.implementation
             {
                 Console.WriteLine($"{admin.FirstName} {admin.LastName} Successfully deleted. ");
                 ListOfAdmin.Remove(admin);
-                ReWriteToFile();
+                // ReWriteToFile();
             }
             else
             {
@@ -92,37 +105,84 @@ namespace SMS.implementation
                 Console.WriteLine("User not found.");
             }
         }
-        public void ReWriteToFile()
-        {
-            File.WriteAllText(AdminFilePath, string.Empty);
-            using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
-            {
-                foreach (var item in ListOfAdmin)
-                {
-                    streamWriter.WriteLine(item.WriteToFIle());
-                }
-            }
-        }
-        public void ReadFromFile()
-        {
-            if (!Directory.Exists(FileDirect)) Directory.CreateDirectory(FileDirect);
+        // public void ReWriteToFile()
+        // {
+        //     File.WriteAllText(AdminFilePath, string.Empty);
+        //     using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
+        //     {
+        //         foreach (var item in ListOfAdmin)
+        //         {
+        //             streamWriter.WriteLine(item.WriteToFIle());
+        //         }
+        //     }
+        // }
+        // public void ReadFromFile()
+        // {
+        //     if (!Directory.Exists(FileDirect)) Directory.CreateDirectory(FileDirect);
 
-            if (!File.Exists(AdminFilePath))
-            {
-                var fileStream = new FileStream(AdminFilePath, FileMode.CreateNew);
-                fileStream.Close();
-            }
-            using (var streamReader = new StreamReader(AdminFilePath))
-            {
-                while (streamReader.Peek() != -1)
-                {
-                    var adminManager = streamReader.ReadLine();
-                    ListOfAdmin.Add(Admin.ConvertToAdmin(adminManager));
-                }
-            }
-        }
+        //     if (!File.Exists(AdminFilePath))
+        //     {
+        //         var fileStream = new FileStream(AdminFilePath, FileMode.CreateNew);
+        //         fileStream.Close();
+        //     }
+        //     using (var streamReader = new StreamReader(AdminFilePath))
+        //     {
+        //         while (streamReader.Peek() != -1)
+        //         {
+        //             var adminManager = streamReader.ReadLine();
+        //             ListOfAdmin.Add(Admin.ConvertToAdmin(adminManager));
+        //         }
+        //     }
+        // }
         public void CreateDataBaseTable()
         {
+            // var AdminQuery = "CREATE TABLE IF NOT EXISTS admin (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
+            // try
+            // {
+            //     using (MySqlCommand command = new MySqlCommand(AdminQuery, connection))
+            //     {
+            //         connection.Open();
+            //         var result = command.ExecuteNonQuery();
+            //     }
+            // }
+            // catch (Exception ex) { }
+
+
+            // var AttendantQuery = "CREATE TABLE IF NOT EXISTS attendant (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
+            // try
+            // {
+            //     using (MySqlCommand command = new MySqlCommand(AttendantQuery, connection))
+            //     {
+            //         connection.Open();
+            //         var result = command.ExecuteNonQuery();
+            //     }
+            // }
+            // catch (Exception ex) { }
+
+
+            // var ProductQuery = "CREATE TABLE IF NOT EXISTS product (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
+            // try
+            // {
+            //     using (MySqlCommand command = new MySqlCommand(ProductQuery, connection))
+            //     {
+            //         connection.Open();
+            //         var result = command.ExecuteNonQuery();
+            //     }
+            // }
+            // catch (Exception ex) { }
+
+
+            // var TransactionQuery = "CREATE TABLE IF NOT EXISTS transaction (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
+            // try
+            // {
+            //     using (MySqlCommand command = new MySqlCommand(TransactionQuery, connection))
+            //     {
+            //         connection.Open();
+            //         var result = command.ExecuteNonQuery();
+            //     }
+            // }
+            // catch (Exception ex) { }
+
 
         }
     }

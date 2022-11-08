@@ -10,8 +10,8 @@ namespace SMS.interfaces
         void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber);
         void DeleteAdmin(string staffId);
         Admin Login(string staffId, string pin);
-        void ReadFromFile ();
-        void ReWriteToFile();
+        // void ReadFromFile ();
+        // void ReWriteToFile();
 
     }
 }
