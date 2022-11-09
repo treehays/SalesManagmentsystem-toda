@@ -7,7 +7,7 @@ namespace SMS.implementation
     public class AdminManager : IAdminManager
     {
         ITransactionManager _iTransactionManager = new TransactionManager();
-        public static List<Admin> ListOfAdmin = new List<Admin>();
+        // public static List<Admin> ListOfAdmin = new List<Admin>();
         // public string AdminFilePath = @"./Files/admin.txt";
         // public string FileDirect = @"./Files";
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
@@ -25,38 +25,37 @@ namespace SMS.implementation
             // }
             var staffId = User.GenerateRandomId();
             var admin = new Admin(User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
-            ListOfAdmin.Add(admin);
+            // ListOfAdmin.Add(admin);
             // using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
             // {
             //     streamWriter.WriteLine(admin.WriteToFIle());
             // }
+            
             try
             {
                 using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    string queryCreateAdmin = $"Insert into admin (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                    var queryCreateAdmin =
+                        $"Insert into admin (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
                     var command = new MySqlCommand(queryCreateAdmin, connection);
                     command.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+
             Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
 
         }
         public void DeleteAdmin(string staffId)
         {
             var admin = GetAdmin(staffId);
-            if (admin != null)
-            {
-                Console.WriteLine($"{admin.FirstName} {admin.LastName} Successfully deleted. ");
-                ListOfAdmin.Remove(admin);
-                // ReWriteToFile();
-            }
-            else
-            {
-                Console.WriteLine("User not found.");
-            }
+            Console.WriteLine(admin != null
+                ? $"{admin.FirstName} {admin.LastName} Successfully deleted. "
+                : "User not found.");
         }
         public Admin GetAdmin(string staffId)
         {
@@ -64,34 +63,22 @@ namespace SMS.implementation
             Admin admin = null;
             try
             {
-                using (MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
+                using (var command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
-                        if (reader["staffId"].ToString().ToUpper() == staffId.ToUpper())
-                        {
-                            connection.Close();
-                            return admin;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            return null;
-                        }
+                        admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
                         // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
                     }
                 }
             }
             catch (System.Exception)
             {
-                return null;
+                // return null;
             }
-
-
-
+            return admin.ToString().ToUpper() == staffId.ToUpper() ? admin : null;
             // foreach (var item in ListOfAdmin)
             // {
             //     if (item.StaffId == staffId)
@@ -99,13 +86,13 @@ namespace SMS.implementation
             //         return item;
             //     }
             // }
-            return null;
+            // return null;
         }
         public void GetAllAdmin()
         {
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From admin", connection))
+                using (var command = new MySqlCommand("select * From admin", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -116,7 +103,9 @@ namespace SMS.implementation
                 }
             }
             catch (System.Exception)
-            { }
+            {
+                // ignored
+            }
 
             // foreach (var item in ListOfAdmin)
             // {
@@ -125,13 +114,14 @@ namespace SMS.implementation
         }
         public Admin GetAdmin(string staffId, string email)
         {
-            foreach (var item in ListOfAdmin)
-            {
-                if (item.StaffId == staffId || item.Email == email)
-                {
-                    return item;
-                }
-            }
+            
+            // foreach (var item in ListOfAdmin)
+            // {
+            //     if (item.StaffId == staffId || item.Email == email)
+            //     {
+            //         return item;
+            //     }
+            // }
             return null;
         }
         // public Admin Login(string staffId, string pin)
@@ -162,7 +152,7 @@ namespace SMS.implementation
             Admin admin = null;
             try
             {
-                using (MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
+                using (var command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
                 {
                     var reader = command.ExecuteReader();
                     connection.Open();
@@ -249,18 +239,36 @@ namespace SMS.implementation
         // }
         public void CreateDataBaseTable()
         {
-            // var AdminQuery = "CREATE TABLE IF NOT EXISTS admin (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
+            // staffId, firstName, lastName, email, phoneNumber, pin, post
+            // var AdminQuery = "CREATE TABLE attendant (ID int auto_increment NOT NULL, StaffId VARCHAR (25) NOT NULL UNIQUE ,FirstName varchar(255) NOT NULL , LastName varchar(255) NOT NULL , Email varchar(100) NOT NULL UNIQUE, PhoneNumber VARCHAR (25) NOT NULL UNIQUE, Pin VARCHAR (50) DEFAULT '0000', Post VARCHAR (50) DEFAULT 'Attendant', primary Key(id,StaffId))";
             // try
             // {
-            //     using (MySqlCommand command = new MySqlCommand(AdminQuery, connection))
+            //     using (var command = new MySqlCommand(AdminQuery, connection))
             //     {
             //         connection.Open();
             //         var result = command.ExecuteNonQuery();
             //     }
             // }
-            // catch (Exception ex) { }
+            // catch (Exception ex)
+            // {
+            //     // ignored
+            // }
 
 
+            var AdminQuery = "CREATE TABLE Transaction (ID int auto_increment NOT NULL, Barcode VARCHAR (50) NOT NULL UNIQUE, productname varchar(255) NOT NULL , price DECIMAL(15,2) NOT NULL , productquantity int NOT NULL , primary Key(id, Barcode))";
+            try
+            {
+                using (var command = new MySqlCommand(AdminQuery, connection))
+                {
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+            
             // var AttendantQuery = "CREATE TABLE IF NOT EXISTS attendant (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
             // try
             // {

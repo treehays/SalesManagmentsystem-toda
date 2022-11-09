@@ -26,7 +26,7 @@ namespace SMS.implementation
                     using (var connection = new MySqlConnection(connString))
                     {
                         connection.Open();
-                        string queryCreateProduction = $"Insert into attendant (barCode,productName,price,productQuantity) values ('{barCode}','{productName}','{price}','{productQuantity}')";
+                        var queryCreateProduction = $"Insert into attendant (barCode,productName,price,productQuantity) values ('{barCode}','{productName}','{price}','{productQuantity}')";
                         var command = new MySqlCommand(queryCreateProduction, connection);
                         command.ExecuteNonQuery();
                     }
@@ -84,7 +84,7 @@ namespace SMS.implementation
         {
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From product", connection))
+                using (var command = new MySqlCommand("select * From product", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();

@@ -38,7 +38,7 @@ namespace SMS.implementation
                     using (var connection = new MySqlConnection(connString))
                     {
                         connection.Open();
-                        string queryCreateTransaction = $"Insert into transaction (receiptNo,barCode,quantity,total,customerId,dateTime,cashTender) values ('{receiptNo}','{barCode}','{quantity}','{total}','{customerId}','{dateTime}','{cashTender}')";
+                        var queryCreateTransaction = $"Insert into transaction (receiptNo,barCode,quantity,total,customerId,dateTime,cashTender) values ('{receiptNo}','{barCode}','{quantity}','{total}','{customerId}','{dateTime}','{cashTender}')";
                         var command = new MySqlCommand(queryCreateTransaction, connection);
                         command.ExecuteNonQuery();
                     }
@@ -63,7 +63,7 @@ namespace SMS.implementation
             Console.WriteLine("\nID\t\tTRANS. DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From transaction", connection))
+                using (var command = new MySqlCommand("select * From transaction", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -91,7 +91,7 @@ namespace SMS.implementation
         {
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From staffs", connection))
+                using (var command = new MySqlCommand("select * From staffs", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();

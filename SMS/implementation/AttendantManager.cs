@@ -12,9 +12,9 @@ namespace SMS.implementation
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
             // int id = listOfAttendant.Count() + 1;
-            string staffId = User.GenerateRandomId();
+            var staffId = User.GenerateRandomId();
             // string staffId = "AT" + new Random(id).Next(100000).ToString();
-            Attendant attendant = new Attendant(staffId, firstName, lastName, email, phoneNumber, pin, post);
+            var attendant = new Attendant(staffId, firstName, lastName, email, phoneNumber, pin, post);
             //    Verifying Attendant Email
             if (GetAttendant(attendant.StaffId, email) == null)
             {
@@ -24,7 +24,7 @@ namespace SMS.implementation
                     using (var connection = new MySqlConnection(connString))
                     {
                         connection.Open();
-                        string queryCreateAttendant = $"Insert into attendant (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                        var queryCreateAttendant = $"Insert into attendant (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
                         var command = new MySqlCommand(queryCreateAttendant, connection);
                         command.ExecuteNonQuery();
                     }
@@ -45,7 +45,7 @@ namespace SMS.implementation
         }
         public void DeleteAttendant(string staffId)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
                 Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
@@ -82,7 +82,7 @@ namespace SMS.implementation
         {
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From staffs", connection))
+                using (var command = new MySqlCommand("select * From staffs", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -104,12 +104,12 @@ namespace SMS.implementation
         {
             try
             {
-                MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection);
+                var command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection);
                 var reader = command.ExecuteReader();
                 connection.Open();
                 while (reader.Read())
                 {
-                    Attendant attendant = new Attendant(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                    var attendant = new Attendant(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
                     if (reader["staffId"].ToString().ToUpper() == staffId.ToUpper() && reader["pin"].ToString() == pin)
                     {
                         connection.Close();
@@ -141,7 +141,7 @@ namespace SMS.implementation
         }
         public void UpdateAttendant(string staffId, string firstName, string lastName, string phoneNumber)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
                 attendant.FirstName = firstName;
@@ -158,7 +158,7 @@ namespace SMS.implementation
 
             try
             {
-                using (MySqlCommand command = new MySqlCommand("select * From attendant", connection))
+                using (var command = new MySqlCommand("select * From attendant", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();

@@ -6,13 +6,13 @@ namespace SMS
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var adminManager = new AdminManager();
             // adminManager.ReadFromFile();
             adminManager.CreateDataBaseTable();
-            var mainMenu = new MainMenu();
-            mainMenu.AllMainMenu();
+            // var mainMenu = new MainMenu();
+            // mainMenu.AllMainMenu();
         }
         // public string GenerateRandomId()
         // {
