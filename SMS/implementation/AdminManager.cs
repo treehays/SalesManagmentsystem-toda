@@ -255,19 +255,19 @@ namespace SMS.implementation
             // }
 
 
-            var AdminQuery = "CREATE TABLE Transaction (ID int auto_increment NOT NULL, Barcode VARCHAR (50) NOT NULL UNIQUE, productname varchar(255) NOT NULL , price DECIMAL(15,2) NOT NULL , productquantity int NOT NULL , primary Key(id, Barcode))";
-            try
-            {
-                using (var command = new MySqlCommand(AdminQuery, connection))
-                {
-                    connection.Open();
-                    var result = command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                // ignored
-            }
+            // var AdminQuery = "CREATE TABLE Transaction (ID int auto_increment NOT NULL, Barcode VARCHAR (50) NOT NULL UNIQUE, productname varchar(255) NOT NULL , price DECIMAL(15,2) NOT NULL , productquantity int NOT NULL , primary Key(id, Barcode))";
+            // try
+            // {
+            //     using (var command = new MySqlCommand(AdminQuery, connection))
+            //     {
+            //         connection.Open();
+            //         var result = command.ExecuteNonQuery();
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     // ignored
+            // }
             
             // var AttendantQuery = "CREATE TABLE IF NOT EXISTS attendant (ID int auto_increment, Name varchar(255),Position VARCHAR (250) DEFAULT 'worker', Email varchar(255),Age int ,PhoneNumber VARCHAR (100) UNIQUE, primary Key(id))";
             // try
