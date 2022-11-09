@@ -82,11 +82,27 @@ namespace SMS.implementation
         }
         public void ViewAllProduct()
         {
-            int i = 0;
-            foreach (var item in ListOfProduct)
+            try
             {
-                Console.WriteLine($"{i++}\t{item.ProductName}\t{item.BarCode}\t{item.Price}\t{item.ProductQuantity}");
+                using (MySqlCommand command = new MySqlCommand("select * From product", connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
+                }
             }
+            catch (System.Exception)
+            { }
+
+
+            // int i = 0;
+            // foreach (var item in ListOfProduct)
+            // {
+            //     Console.WriteLine($"{i++}\t{item.ProductName}\t{item.BarCode}\t{item.Price}\t{item.ProductQuantity}");
+            // }
         }
         // public void ReWriteToFile()
         // {

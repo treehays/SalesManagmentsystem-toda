@@ -59,22 +59,56 @@ namespace SMS.implementation
         }
         public void GetAllTransactions()
         {
+
             Console.WriteLine("\nID\t\tTRANS. DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
-
-            foreach (var item in ListOfTransaction)
+            try
             {
-
-                Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
+                using (MySqlCommand command = new MySqlCommand("select * From transaction", connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
+                }
             }
+            catch (System.Exception)
+            { }
+
+
+
+
+
+            // foreach (var item in ListOfTransaction)
+            // {
+
+            //     Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
+            // }
         }
 
         public double GetAllTransactionsAdmin()
         {
-            double cumulativeSum = 0;
-            foreach (var item in ListOfTransaction)
+            try
             {
-                Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");
+                using (MySqlCommand command = new MySqlCommand("select * From staffs", connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
+                }
             }
+            catch (System.Exception)
+            { }
+
+            double cumulativeSum = 0;
+            // foreach (var item in ListOfTransaction)
+            // {
+            //     Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");
+            // }
             return cumulativeSum;
         }
         // public void ReWriteToFile()

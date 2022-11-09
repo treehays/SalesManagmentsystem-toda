@@ -60,14 +60,68 @@ namespace SMS.implementation
         }
         public Admin GetAdmin(string staffId)
         {
-            foreach (var item in ListOfAdmin)
+
+            Admin admin = null;
+            try
             {
-                if (item.StaffId == staffId)
+                using (MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
                 {
-                    return item;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                        if (reader["staffId"].ToString().ToUpper() == staffId.ToUpper())
+                        {
+                            connection.Close();
+                            return admin;
+                        }
+                        else
+                        {
+                            connection.Close();
+                            return null;
+                        }
+                        // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
                 }
             }
+            catch (System.Exception)
+            {
+                return null;
+            }
+
+
+
+            // foreach (var item in ListOfAdmin)
+            // {
+            //     if (item.StaffId == staffId)
+            //     {
+            //         return item;
+            //     }
+            // }
             return null;
+        }
+        public void GetAllAdmin()
+        {
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand("select * From admin", connection))
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
+                }
+            }
+            catch (System.Exception)
+            { }
+
+            // foreach (var item in ListOfAdmin)
+            // {
+            //     System.Console.WriteLine(item.Email);
+            // }
         }
         public Admin GetAdmin(string staffId, string email)
         {
@@ -80,17 +134,76 @@ namespace SMS.implementation
             }
             return null;
         }
+        // public Admin Login(string staffId, string pin)
+        // {
+        //     Admin admin = null;
+        //     try
+        //     {
+        //         using (MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
+        //         {
+        //             var reader = command.ExecuteReader();
+        //             connection.Open();
+        //             while (reader.Read())
+        //             {
+        //                 admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+        //                 if (reader["staffId"].ToString().ToUpper() == staffId.ToUpper() && reader["pin"].ToString() == pin)
+        //                 {
+        //                     return admin;
+        //                 }
+        //                 else
+        //                 {
+        //                     return null;
+        //                 }
+        //                 // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+        //             }
+
         public Admin Login(string staffId, string pin)
         {
-            foreach (var item in ListOfAdmin)
+            Admin admin = null;
+            try
             {
-                if (item.StaffId == staffId.ToUpper() && item.Pin == pin)
+                using (MySqlCommand command = new MySqlCommand($"select * From staffs WHERE staffId = {staffId}", connection))
                 {
-                    return item;
+                    var reader = command.ExecuteReader();
+                    connection.Open();
+                    while (reader.Read())
+                    {
+                        admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                        // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                    }
                 }
             }
-            return null;
+            catch (System.Exception)
+            {
+
+            }
+
+            if (admin.Email.ToUpper() == staffId.ToUpper() && admin.Pin.ToString() == pin)
+            {
+                return admin;
+            }
+            else
+            {
+                return null;
+            }
+            // foreach (var item in ListOfAdmin)
+            // {
+            //     if (item.StaffId == staffId.ToUpper() && item.Pin == pin)
+            //     {
+            //         return item;
+            //     }
+            // }
         }
+
+
+
+        // foreach (var item in ListOfAdmin)
+        // {
+        //     if (item.StaffId == staffId.ToUpper() && item.Pin == pin)
+        //     {
+        //         return item;
+        //     }
+        // }
         public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber)
         {
             var admin = GetAdmin(staffId);
