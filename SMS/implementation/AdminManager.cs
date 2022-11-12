@@ -66,6 +66,7 @@ namespace SMS.implementation
             {
                 using (var command = new MySqlCommand($"select * From admin WHERE staffId = '{staffId}'", connection))
                 {
+                    connection.Close();
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())

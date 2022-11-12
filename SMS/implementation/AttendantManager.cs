@@ -5,7 +5,7 @@ namespace SMS.implementation
 {
     public class AttendantManager : IAttendantManager
     {
-        public static List<Attendant> listOfAttendant = new List<Attendant>();
+        // public static List<Attendant> listOfAttendant = new List<Attendant>();
         // public string attendantFilePath = @"./Files/attendant.txt";
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
         MySqlConnection connection = new MySqlConnection(connString);
@@ -71,8 +71,9 @@ namespace SMS.implementation
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From attendant WHERE staffId = '{staffId}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From attendant WHERE staffId = '{staffId}'", connection))
                 {
+                    connection.Close();
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
@@ -84,6 +85,7 @@ namespace SMS.implementation
             }
             catch (System.Exception ex)
             {
+                System.Console.WriteLine("this");
                 System.Console.WriteLine(ex.Message);
                 // return null;
             }
@@ -94,7 +96,7 @@ namespace SMS.implementation
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From attendant WHERE email = '{email}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From attendant WHERE email = '{email}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -116,7 +118,7 @@ namespace SMS.implementation
         {
             try
             {
-                using (var command = new MySqlCommand("select * From attendant", connection))
+                using (var command = new MySqlCommand("SELECT * From attendant", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -141,7 +143,7 @@ namespace SMS.implementation
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From attendant WHERE StaffId = '{staffId}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From attendant WHERE StaffId = '{staffId}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -193,7 +195,7 @@ namespace SMS.implementation
 
             try
             {
-                using (var command = new MySqlCommand("select * From attendant", connection))
+                using (var command = new MySqlCommand("SELECT * From attendant", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();

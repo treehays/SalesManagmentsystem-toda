@@ -13,16 +13,18 @@ namespace SMS
             // var adminManager = new AdminManager();
             // adminManager.ReadFromFile();
             // adminManager.CreateDataBaseTable();
-            // var mainMenu = new MainMenu();
-            // mainMenu.AllMainMenu();
+            var mainMenu = new MainMenu();
+            mainMenu.AllMainMenu();
             // var adminMenu = new AdminMenu();
             // adminMenu.LoginAdminMenu(); 
-            string staffId = "AUI988844";
-            string firstName = "ChangedFirst";
-            string lastName = "ChangedLast";
-            string phoneNumber = "909898989";
-            var adminManager = new AdminManager();
-            adminManager.UpdateAdmin(staffId,firstName,lastName,phoneNumber);
+            
+            // string staffId = "AUI988844";
+            // string firstName = "ChangedFirst";
+            // string lastName = "ChangedLast";
+            // string phoneNumber = "909898989";
+            // var adminManager = new AdminManager();
+            // adminManager.UpdateAdmin(staffId,firstName,lastName,phoneNumber);
+            
             // adminManager.GetAllAdmin();
             // System.Console.WriteLine("enter staff id: ");
             // string staffId ="AXY344973";// Console.ReadLine();
