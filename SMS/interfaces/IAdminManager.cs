@@ -12,6 +12,5 @@ namespace SMS.interfaces
         void DeleteAdmin(string staffId);
         Admin Login(string staffId, string pin);
         void CreateDataBaseTable();
-
     }
 }

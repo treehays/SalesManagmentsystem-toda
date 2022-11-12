@@ -9,7 +9,6 @@ namespace SMS.implementation
         {
             throw new NotImplementedException();
         }
-
         public void CreateWallet()
         {
             throw new NotImplementedException();
@@ -17,10 +16,7 @@ namespace SMS.implementation
 
         public void GetTotalWalletTransaction()
         {
-            foreach (var item in TransactionManager.ListOfTransaction)
-            {
-                Console.WriteLine($"Staff Id:  {item.CustomerId} {item.BarCode} {item.ReceiptNo} ");
-            }
+           
         }
     }
 }

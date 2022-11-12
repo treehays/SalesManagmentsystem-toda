@@ -7,37 +7,24 @@ namespace SMS.implementation
     public class ProductManager : IProductManager
     {
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
-        MySqlConnection connection = new MySqlConnection(connString);
-        public static List<Product> ListOfProduct = new List<Product>();
-        // public string ProductFilePath = @"./Files/product.txt";
         public void CreateProduct(string barCode, string productName, double price, int productQuantity)
         {
-            var id = ListOfProduct.Count() + 1;
             var product = new Product(barCode, productName, price, productQuantity);
-            if (GetProduct(barCode) == null)
+            try
             {
-                ListOfProduct.Add(product);
-                // using (var streamWriter = new StreamWriter(ProductFilePath, append: true))
-                // {
-                //     streamWriter.WriteLine(product.WriteToFIle());
-                // }
-                try
+                using (var connection = new MySqlConnection(connString))
                 {
-                    using (var connection = new MySqlConnection(connString))
+                    connection.Open();
+                    var queryCreateProduction = $"Insert into attendant (barCode,productName,price,productQuantity) values ('{barCode}','{productName}','{price}','{productQuantity}')";
+                    using (var command = new MySqlCommand(queryCreateProduction, connection))
                     {
-                        connection.Open();
-                        var queryCreateProduction = $"Insert into attendant (barCode,productName,price,productQuantity) values ('{barCode}','{productName}','{price}','{productQuantity}')";
-                        var command = new MySqlCommand(queryCreateProduction, connection);
                         command.ExecuteNonQuery();
                     }
                 }
-                catch (Exception ex) { }
-
-                Console.WriteLine($"Product Added Successfully. \nThere are total of {id} product's in the store.");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Product already exist. \nKindly Go to Update to Update Available Quantity");
+                System.Console.WriteLine(ex.Message);
             }
         }
         public void DeleteProduct(string barCode)
@@ -45,9 +32,23 @@ namespace SMS.implementation
             var product = GetProduct(barCode);
             if (product != null)
             {
-                Console.WriteLine($"{product.ProductName} Successfully deleted. ");
-                ListOfProduct.Remove(product);
-                // ReWriteToFile();
+                try
+                {
+                    var deleteSuccessMsg = $"{product.BarCode} {product.ProductName} Successfully deleted. ";
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        connection.Open();
+                        using (var command = new MySqlCommand($"DELETE From product WHERE barCode = '{barCode}'", connection))
+                        {
+                            var reader = command.ExecuteNonQuery();
+                            System.Console.WriteLine(deleteSuccessMsg);
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
             }
             else
             {
@@ -57,79 +58,81 @@ namespace SMS.implementation
 
         public Product GetProduct(string barCode)
         {
-            foreach (var item in ListOfProduct)
+            Product product = null;
+            try
             {
-                if (item.BarCode == barCode)
+                using (var connection = new MySqlConnection(connString))
                 {
-                    return item;
+                    connection.Open();
+                    using (var command = new MySqlCommand($"select * From product WHERE baCOde = '{barCode}'", connection))
+                    {
+                        // connection.Close();
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            product = new Product(reader["barCode"].ToString().ToUpper(), reader["productName"].ToString(), (double)(reader["price"]), Convert.ToInt32((reader["productQuantity"])));
+                            // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                        }
+                    }
                 }
             }
-            return null;
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                // return null;
+            }
+            return product is not null && product.BarCode.ToUpper() == barCode.ToUpper() ? product : null;
         }
         public void UpdateProduct(string barCode, string productName, double price)
         {
             var product = GetProduct(barCode);
             if (product != null)
             {
-                product.BarCode = barCode;
-                product.ProductName = productName;
-                product.Price = price;
+                try
+                {
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        var SuccessMsg = $"{product.BarCode} Updated Successfully. ";
+                        connection.Open();
+                        var queryUpdateA = $"Update product SET productname = '{productName}', price = '{price}'";
+                        using (var command = new MySqlCommand(queryUpdateA, connection))
+                        {
+                            command.ExecuteNonQuery();
+                            System.Console.WriteLine(SuccessMsg);
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
             }
             else
             {
-                Console.WriteLine("Product not found.");
+                Console.WriteLine("User not found.");
             }
         }
         public void ViewAllProduct()
         {
             try
             {
-                using (var command = new MySqlCommand("select * From product", connection))
+                using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
+                    using (var command = new MySqlCommand("select * From product", connection))
                     {
-                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Console.WriteLine($"{reader["barCode"].ToString()}\t{reader["productName"].ToString()}\t{(double)(reader["price"])}\t{Convert.ToInt32((reader["productQuantity"]))}");
+                        }
                     }
                 }
             }
-            catch (System.Exception)
-            { }
-
-
-            // int i = 0;
-            // foreach (var item in ListOfProduct)
-            // {
-            //     Console.WriteLine($"{i++}\t{item.ProductName}\t{item.BarCode}\t{item.Price}\t{item.ProductQuantity}");
-            // }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
-        // public void ReWriteToFile()
-        // {
-        //     File.WriteAllText(ProductFilePath, string.Empty);
-        //     using (var streamWriter = new StreamWriter(ProductFilePath, append: true))
-        //     {
-        //         foreach (var item in ListOfProduct)
-        //         {
-        //             streamWriter.WriteLine(item.WriteToFIle());
-        //         }
-        //     }
-        // }
-        // public void ReadFromFile()
-        // {
-        //     if (!File.Exists(ProductFilePath))
-        //     {
-        //         var fileStream = new FileStream(ProductFilePath, FileMode.CreateNew);
-        //         fileStream.Close();
-        //     }
-        //     using (var streamReader = new StreamReader(ProductFilePath))
-        //     {
-        //         while (streamReader.Peek() != -1)
-        //         {
-        //             var productManager = streamReader.ReadLine();
-        //             ListOfProduct.Add(Product.ConvertToProduct(productManager));
-        //         }
-        //     }
-        // }
     }
 }

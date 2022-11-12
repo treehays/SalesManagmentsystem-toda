@@ -6,18 +6,14 @@ namespace SMS.implementation
 {
     public class TransactionManager : ITransactionManager
     {
-        // public string TransactionFilePath = @"./Files/transaction.txt";
         public int i = 0;
-        public static List<Transactiona> ListOfTransaction = new List<Transactiona>();
-        // public static List<Transactiona> listOfCart = new List<Transactiona>();
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
-        MySqlConnection connection = new MySqlConnection(connString);
         IProductManager _iProductManager = new ProductManager();
         public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
         {
             var product = _iProductManager.GetProduct(barCode);
-            var id = ListOfTransaction.Count() + 1;
-            var receiptNo = "ref" + new Random(id).Next(2323, 1000000);
+            // var id = ListOfTransaction.Count() + 1;
+            var receiptNo = "ref" + new Random(new Random().Next(10)).Next(2323, 1000000);
             var total = product.Price * quantity;
             var xpectedChange = cashTender - total;
             var dateTime = DateTime.Now;
@@ -28,22 +24,23 @@ namespace SMS.implementation
             else
             {
                 var transaction = new Transactiona(receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
-                ListOfTransaction.Add(transaction);
-                // using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
-                // {
-                //     streamWriter.WriteLine(transaction.WriteToFIle());
-                // }
                 try
                 {
                     using (var connection = new MySqlConnection(connString))
                     {
                         connection.Open();
-                        var queryCreateTransaction = $"Insert into transaction (receiptNo,barCode,quantity,total,customerId,dateTime,cashTender) values ('{receiptNo}','{barCode}','{quantity}','{total}','{customerId}','{dateTime}','{cashTender}')";
-                        var command = new MySqlCommand(queryCreateTransaction, connection);
-                        command.ExecuteNonQuery();
+                        var queryCreate = $"Insert into transaction (receiptNo, barCode, quantity, total, customerId, dateTime, cashTender) values ('{receiptNo}', '{barCode}', '{quantity}', '{total}', '{customerId}', '{dateTime}', '{cashTender}')";
+                        using (var command = new MySqlCommand(queryCreate, connection))
+                        {
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
+
                 Console.WriteLine($"\n__________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
             }
 
@@ -51,10 +48,10 @@ namespace SMS.implementation
         public double CalculateTotalSales()
         {
             double totalSales = 0;
-            foreach (var item in ListOfTransaction)
-            {
-                totalSales = item.Total + totalSales;
-            }
+            // foreach (var item in ListOfTransaction)
+            // {
+            //     totalSales = item.Total + totalSales;
+            // }
             return totalSales;
         }
         public void GetAllTransactions()
@@ -63,47 +60,26 @@ namespace SMS.implementation
             Console.WriteLine("\nID\t\tTRANS. DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
             try
             {
-                using (var command = new MySqlCommand("select * From transaction", connection))
+                using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
+                    using (var command = new MySqlCommand("select * From transaction", connection))
                     {
-                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                        var reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Console.WriteLine($"{reader["receiptNo"]}\t{reader["barCode"].ToString()}\t{reader["quantity"].ToString()}\t{reader["total"].ToString()}\t{reader["customerId"].ToString()}\t{reader["dateTime"].ToString()}\t{reader["cashTender"].ToString()}");
+                        }
                     }
                 }
             }
-            catch (System.Exception)
-            { }
-
-
-
-
-
-            // foreach (var item in ListOfTransaction)
-            // {
-
-            //     Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
-            // }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
         }
-
         public double GetAllTransactionsAdmin()
         {
-            try
-            {
-                using (var command = new MySqlCommand("select * From staffs", connection))
-                {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
-                    }
-                }
-            }
-            catch (System.Exception)
-            { }
-
             double cumulativeSum = 0;
             // foreach (var item in ListOfTransaction)
             // {
@@ -111,32 +87,5 @@ namespace SMS.implementation
             // }
             return cumulativeSum;
         }
-        // public void ReWriteToFile()
-        // {
-        //     File.WriteAllText(TransactionFilePath, string.Empty);
-        //     using (var streamWriter = new StreamWriter(TransactionFilePath, append: true))
-        //     {
-        //         foreach (var item in ListOfTransaction)
-        //         {
-        //             streamWriter.WriteLine(item.WriteToFIle());
-        //         }
-        //     }
-        // }
-        // public void ReadFromFile()
-        // {
-        //     if (!File.Exists(TransactionFilePath))
-        //     {
-        //         var fileStream = new FileStream(TransactionFilePath, FileMode.CreateNew);
-        //         fileStream.Close();
-        //     }
-        //     using (var streamReader = new StreamReader(TransactionFilePath))
-        //     {
-        //         while (streamReader.Peek() != -1)
-        //         {
-        //             var transactionManager = streamReader.ReadLine();
-        //             ListOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
-        //         }
-        //     }
-        // }
     }
 }
