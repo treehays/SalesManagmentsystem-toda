@@ -16,29 +16,23 @@ namespace SMS.implementation
             //    Verifying Attendant Email
             // if (GetAttendant(staffId, email) == null)
             // {
-                listOfAttendant.Add(attendant);
-                try
+            try
+            {
+                using (var connection = new MySqlConnection(connString))
                 {
-                    // using (var connection = new MySqlConnection(connString))
-                    // {
-                    //     connection.Open();
-                    //     var queryCreateAttendant = 
-                    //         $"Insert into attendant (staffid, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
-                    //     var command = new MySqlCommand(queryCreateAttendant, connection);
-                    //     command.ExecuteNonQuery();
-                    // }
-
-                    using (var connection = new MySqlConnection(connString))
-                    {
-                        connection.Open();
-                        var queryCreateAdmin =
-                            $"Insert into attendant (staffId, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
-                        var command = new MySqlCommand(queryCreateAdmin, connection);
-                        command.ExecuteNonQuery();
-                    }
+                    connection.Open();
+                    var queryCreate =
+                        $"Insert into attendant (staffId, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                    var command = new MySqlCommand(queryCreate, connection);
+                    command.ExecuteNonQuery();
                 }
-                catch (Exception ex) { }
-                Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {attendant.StaffId} and pint {pin}, \nKeep it Safe.");
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                // ignored
+            }
+            Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {attendant.StaffId} and pint {pin}, \nKeep it Safe.");
             // }
             // else
             // {
@@ -50,12 +44,26 @@ namespace SMS.implementation
             var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
-                Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
-                listOfAttendant.Remove(attendant);
+                try
+                {
+                    var deleteSuccessMsg = $"{attendant.FirstName} {attendant.LastName} Successfully deleted. ";
+                    using (var command = new MySqlCommand($"DELETE From attendant WHERE StaffId = '{staffId}'", connection))
+                    {
+                        connection.Close();
+                        connection.Open();
+                        var reader = command.ExecuteNonQuery();
+                        System.Console.WriteLine(deleteSuccessMsg);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                    // ignored
+                }
             }
             else
             {
-                Console.WriteLine("User not found.");
+                Console.WriteLine("Attendant not found.");
             }
         }
         public Attendant GetAttendant(string staffId)
@@ -63,45 +71,47 @@ namespace SMS.implementation
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From attendant WHERE staffId = {staffId}", connection))
+                using (var command = new MySqlCommand($"select * From attendant WHERE staffId = '{staffId}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        attendant = new Attendant(reader["staffID"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                        attendant = new Attendant(reader["staffId"].ToString().ToUpper(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
                         // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 // return null;
             }
-            return attendant.StaffId == staffId ? attendant : null;
+            return attendant is not null && attendant.StaffId.ToUpper() == staffId.ToUpper() ? attendant : null;
         }
         public Attendant GetAttendant(string staffId, string email)
         {
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From attendant WHERE staffId = {staffId}", connection))
+                using (var command = new MySqlCommand($"select * From attendant WHERE email = '{email}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        attendant = new Attendant(reader["staffID"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
-                        // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                        attendant = new Attendant(reader["staffId"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 // return null;
             }
-            return attendant.StaffId == staffId ? attendant : null;
+            return attendant is not null && attendant.Email.ToUpper() == email.ToUpper() ? attendant : null;
         }
+/*
         public void ViewAttendant(string staffId)
         {
             try
@@ -112,53 +122,70 @@ namespace SMS.implementation
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Console.WriteLine($"{reader["staffID"]}\t{reader["firstName"]}\t{reader["lastName"]}\t{reader["email"]}\t{reader["phonenumber"]}\t{reader["pin"]}\t{reader["post"]}");
+                        // Console.WriteLine($"{reader["id"]}  {reader["firstname"]}\t\t{reader["lastname"]}\t\t{reader["email"]}\t\t{reader["phonenumber"]}\t\t{reader["post"]}");
+                        // Console.WriteLine($"{reader["id"]}\t{reader["staffId"].ToString()}\t{reader["firstName"].ToString()}\t{reader["lastName"].ToString()}\t{reader["email"].ToString()}\t{reader["phonenumber"].ToString()}\t{reader["Pin"].ToString()}\t{reader["post"].ToString()}");
+                        Console.WriteLine($"{reader["id"]}\t{reader["staffId"].ToString()}\t{reader["firstName"].ToString()}\t{reader["lastName"].ToString()}\t{reader["email"].ToString()}\t{reader["phonenumber"].ToString()}\t{reader["post"].ToString()}");
+                        // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
                     }
                 }
             }
-            catch (System.Exception)
-            { }
-
-            // foreach (var item in listOfAttendant)
-            // {
-            //     Console.WriteLine($"{item.FirstName}\t{item.LastName}\t{item.Email}\t{item.StaffId}\t{item.Post}");
-            // }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                // ignored
+            }
         }
+*/
         public Attendant Login(string staffId, string pin)
         {
             Attendant attendant = null;
             try
             {
-                using (var command = new MySqlCommand($"SELECT * From attendant WHERE staffId = {staffId}", connection))
+                using (var command = new MySqlCommand($"select * From attendant WHERE StaffId = '{staffId}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        attendant = new Attendant(reader["staffid"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["iphone"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                        attendant = new Attendant(reader["staffId"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
                         // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
+                        // Console.WriteLine($"{reader["id"]}  {reader["firstname"]}\t\t{reader["lastname"]}\t\t{reader["email"]}\t\t{reader["phonenumber"]}\t\t{reader["post"]}");
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 // ignored
             }
 
-            return attendant.Email.ToUpper() == staffId.ToUpper() && attendant.Pin.ToString() == pin ? attendant : null;
+            return attendant is not null && attendant.StaffId.ToUpper() == staffId.ToUpper() && attendant.Pin == pin ? attendant : null;
         }
         public void UpdateAttendant(string staffId, string firstName, string lastName, string phoneNumber)
         {
             var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
-                attendant.FirstName = firstName;
-                attendant.LastName = lastName;
-                attendant.PhoneNumber = phoneNumber;
+                try
+                {
+                    using (var connection = new MySqlConnection(connString))
+                    {
+                        var SuccessMsg = $"{attendant.StaffId} Updated Successfully. ";
+                        connection.Open();
+                        var queryUpdateA = $"Update attendant SET firstname = '{firstName}', lastName = '{lastName}'";
+                        var command = new MySqlCommand(queryUpdateA, connection);
+                        command.ExecuteNonQuery();
+                        System.Console.WriteLine(SuccessMsg);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
             }
             else
             {
-                Console.WriteLine("User not found.");
+                Console.WriteLine("Attendant not found.");
             }
         }
         public void ViewAllAttendants()

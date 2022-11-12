@@ -13,20 +13,14 @@ namespace SMS.implementation
         {
             var staffId = User.GenerateRandomId();
             var admin = new Admin(staffId, firstName, lastName, email, phoneNumber, pin, post);
-            // ListOfAdmin.Add(admin);
-            // using (var streamWriter = new StreamWriter(AdminFilePath, append: true))
-            // {
-            //     streamWriter.WriteLine(admin.WriteToFIle());
-            // }
-
             try
             {
                 using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    var queryCreateAdmin =
+                    var queryCreate=
                         $"Insert into admin (staffId, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
-                    var command = new MySqlCommand(queryCreateAdmin, connection);
+                    var command = new MySqlCommand(queryCreate, connection);
                     command.ExecuteNonQuery();
                 }
             }
@@ -45,13 +39,13 @@ namespace SMS.implementation
             {
                 try
                 {
-                    var deleteSuccesMsg = $"{admin.FirstName} {admin.LastName} Successfully deleted. ";
+                    var deleteSuccessMsg = $"{admin.FirstName} {admin.LastName} Successfully deleted. ";
                     using (var command = new MySqlCommand($"DELETE From admin WHERE StaffId = '{staffId}'", connection))
                     {
                         connection.Close();
                         connection.Open();
                         var reader = command.ExecuteNonQuery();
-                        System.Console.WriteLine(deleteSuccesMsg);
+                        System.Console.WriteLine(deleteSuccessMsg);
                     }
                 }
                 catch (System.Exception ex)
@@ -99,13 +93,15 @@ namespace SMS.implementation
                     while (reader.Read())
                     {
                         // Console.WriteLine($"{reader["id"]}  {reader["firstname"]}\t\t{reader["lastname"]}\t\t{reader["email"]}\t\t{reader["phonenumber"]}\t\t{reader["post"]}");
-                        Console.WriteLine($"{reader["id"]}\t{reader["staffId"].ToString()}\t{reader["firstName"].ToString()}\t{reader["lastName"].ToString()}\t{reader["email"].ToString()}\t{reader["phonenumber"].ToString()}\t{reader["Pin"].ToString()}\t{reader["post"].ToString()}");
+                        // Console.WriteLine($"{reader["id"]}\t{reader["staffId"].ToString()}\t{reader["firstName"].ToString()}\t{reader["lastName"].ToString()}\t{reader["email"].ToString()}\t{reader["phonenumber"].ToString()}\t{reader["Pin"].ToString()}\t{reader["post"].ToString()}");
+                        Console.WriteLine($"{reader["id"]}\t{reader["staffId"].ToString()}\t{reader["firstName"].ToString()}\t{reader["lastName"].ToString()}\t{reader["email"].ToString()}\t{reader["phonenumber"].ToString()}\t{reader["post"].ToString()}");
                         // Console.WriteLine($"{reader["id"]}  {reader["name"]}\t\t{reader["email"]}\t\t{reader["age"]}");
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
                 // ignored
             }
         }
@@ -114,13 +110,13 @@ namespace SMS.implementation
             Admin admin = null;
             try
             {
-                using (var command = new MySqlCommand($"select * From staffs WHERE email = '{email}'", connection))
+                using (var command = new MySqlCommand($"select * From attendant WHERE email = '{email}'", connection))
                 {
                     connection.Open();
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        admin = new Admin(reader["id"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["pin"].ToString(), reader["post"].ToString());
+                        admin = new Admin(reader["staffId"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
                     }
                 }
             }
@@ -131,7 +127,6 @@ namespace SMS.implementation
             }
             return admin is not null && admin.Email.ToUpper() == email.ToUpper() ? admin : null;
         }
-
         public Admin Login(string staffId, string pin)
         {
             Admin admin = null;
@@ -166,13 +161,12 @@ namespace SMS.implementation
                 {
                     using (var connection = new MySqlConnection(connString))
                     {
-                        var SuccesMsg = $"{admin.StaffId} Updated Successfully. ";
+                        var SuccessMsg = $"{admin.StaffId} Updated Successfully. ";
                         connection.Open();
                         var queryUpdateA = $"Update admin SET firstname = '{firstName}', lastName = '{lastName}'";
                         var command = new MySqlCommand(queryUpdateA, connection);
                         command.ExecuteNonQuery();
-                        System.Console.WriteLine(SuccesMsg);
-
+                        System.Console.WriteLine(SuccessMsg);
                     }
                 }
                 catch (System.Exception ex)
@@ -185,7 +179,6 @@ namespace SMS.implementation
                 Console.WriteLine("User not found.");
             }
         }
-
         public void CreateDataBaseTable()
         {
             // staffId, firstName, lastName, email, phoneNumber, pin, post

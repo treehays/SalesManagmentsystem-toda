@@ -10,7 +10,7 @@ namespace SMS.interfaces
         void UpdateAttendant(string staffId, string firstName, string lastName, string phoneNumber);
         void DeleteAttendant(string staffId);
         Attendant Login(string staffId, string pin);
-        void ViewAttendant(string staffId);
+        // void ViewAttendant(string staffId);
         void ViewAllAttendants();
         // void ReadFromFile();
         // void ReWriteToFile();
