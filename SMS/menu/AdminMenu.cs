@@ -40,9 +40,9 @@ namespace SMS.menu
         {
             Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
             Console.Write("\tStaff ID: ");
-            var staffId = Console.ReadLine();
+            var staffId = "ADU864054"; //Console.ReadLine();
             Console.Write("\tPin: ");
-            var pin = Console.ReadLine();
+            var pin = "password";//Console.ReadLine();
             // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
             var admin = _iAdminManager.Login(staffId, pin);
             if (admin != null)
@@ -52,7 +52,7 @@ namespace SMS.menu
             }
             else
             {
-                Console.WriteLine("Wrong Staff ID or Password!.");
+                Console.WriteLine("\nWrong Staff ID or Password!.");
                 var mainMenu = new MainMenu();
                 mainMenu.LoginMenu();
             }
@@ -171,6 +171,7 @@ namespace SMS.menu
             Console.Write("Enter Product BarCode: ");
             var barCode = Console.ReadLine();
             _iProductManager.DeleteProduct(barCode);
+            
         }
         public void AddProduct()
         {
