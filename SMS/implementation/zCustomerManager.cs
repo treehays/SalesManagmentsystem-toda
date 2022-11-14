@@ -9,7 +9,7 @@ namespace SMS.implementation
     public class CustomerManager : ICustomerManager
     {
         public static List<Customer> listOfCustomer = new List<Customer>();
-        public void CreateCustomer(string firstName, string lastName, string email, string phoneNumber, int pin, string address, double wallet)
+        public void CreateCustomer(string firstName, string lastName, string email, string phoneNumber, int pin, string address, decimal wallet)
         {
             int id = listOfCustomer.Count() + 1;
             string customerId = new Random(id).Next(100000).ToString();

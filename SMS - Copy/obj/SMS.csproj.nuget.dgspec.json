@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj": {}
+    "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj": {
+    "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj",
+        "projectUniqueName": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj",
         "projectName": "SMS",
-        "projectPath": "c:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj",
+        "projectPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\SMS.csproj",
         "packagesPath": "C:\\Users\\Treehays\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\obj\\",
+        "outputPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS - Copy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Treehays\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -21,6 +21,7 @@
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

@@ -93,7 +93,7 @@ namespace SMS.menu
                 } while (!chk);
                 if (Choice == 1)
                 {
-                    Console.WriteLine("\nHome >> Login >> Admin");
+                    Console.WriteLine("\nHome >> Admin");
                     var adminMenu = new AdminMenu();
                     adminMenu.LoginAdminMenu();
                 }

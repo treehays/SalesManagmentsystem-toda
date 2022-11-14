@@ -4,6 +4,6 @@ namespace SMS.interfaces
     {
         void CreateWallet();
         void GetTotalWalletTransaction();
-        double CalculateRemainingBalance(); 
+        decimal CalculateRemainingBalance(); 
     }
 }

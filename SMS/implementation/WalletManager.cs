@@ -5,7 +5,7 @@ namespace SMS.implementation
     public class WalletManager : IWalletManager
     {
         ITransactionManager _transactionManager = new TransactionManager();
-        public double CalculateRemainingBalance()
+        public decimal CalculateRemainingBalance()
         {
             throw new NotImplementedException();
         }

@@ -7,11 +7,11 @@ namespace SMS.model
         public int Id { get; set; }
         public string CustomerId { get; set; }
         public int Quantity { get; set; }
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         public string BarCode { get; set; }
         public DateTime DateTime { get; set; }
-        public double CashTender { get; set; }
-        public Transactiona(int id, string receiptNo, string barCode, int quantity, double total, string customerId, DateTime dateTime, double cashTender)
+        public decimal CashTender { get; set; }
+        public Transactiona(int id, string receiptNo, string barCode, int quantity, decimal total, string customerId, DateTime dateTime, decimal cashTender)
         {
             ReceiptNo = receiptNo;
             Id = id;

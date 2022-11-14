@@ -24,7 +24,7 @@ namespace SMS.menu
             Console.Write("Address: ");
             string address = Console.ReadLine();
             Console.Write("Initial Deposit: ");
-            double wallet = Convert.ToDouble(Console.ReadLine());
+            decimal wallet = Convert.Todecimal(Console.ReadLine());
             iCustomerManager.CreateCustomer(firstName, lastName, email, phoneNumber, pin, address, wallet);
             // LoginAdminMenu();
             mainMenu.LoginMenu();

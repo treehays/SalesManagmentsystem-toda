@@ -1,0 +1,15 @@
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\bin\Debug\net6.0\linqq.exe
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\bin\Debug\net6.0\linqq.deps.json
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\bin\Debug\net6.0\linqq.runtimeconfig.json
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\bin\Debug\net6.0\linqq.dll
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\bin\Debug\net6.0\linqq.pdb
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.csproj.AssemblyReference.cache
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.AssemblyInfoInputs.cache
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.AssemblyInfo.cs
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.csproj.CoreCompileInputs.cache
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.dll
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\refint\linqq.dll
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.pdb
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\linqq.genruntimeconfig.cache
+C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\linqq\obj\Debug\net6.0\ref\linqq.dll

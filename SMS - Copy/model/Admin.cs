@@ -7,7 +7,7 @@ namespace SMS.model
         public string Post { get; set; }
         
 
-        // public double Wallet { get; set; }
+        // public decimal Wallet { get; set; }
         public Admin(string staffId, string firstName, string lastName, string email, string phoneNumber, string pin, string post) : base(firstName, lastName, email, phoneNumber, pin)
         {
             Post = post;

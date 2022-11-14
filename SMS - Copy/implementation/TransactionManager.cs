@@ -7,13 +7,13 @@ namespace SMS.implementation
     {
         // public static List<Transactiona> listOfCart = new List<Transactiona>();
         IProductManager iProductManager = new ProductManager();
-        public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
+        public void CreateTransaction(string barCode, int quantity, string customerId, decimal cashTender)
         {
             Product product = iProductManager.GetProduct(barCode);
             int id = Transactiona.listOfTransaction.Count() + 1;
             string receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
-            double total = product.Price * quantity;
-            double xpectedChange = cashTender - total;
+            decimal total = product.Price * quantity;
+            decimal xpectedChange = cashTender - total;
             DateTime dateTime = DateTime.Now;
             if (xpectedChange < 0)
             {
@@ -27,9 +27,9 @@ namespace SMS.implementation
             }
 
         }
-        public double CalculateTotalSales()
+        public decimal CalculateTotalSales()
         {
-            double totalSales = 0;
+            decimal totalSales = 0;
             foreach (var item in Transactiona.listOfTransaction)
             {
                 totalSales = item.Total + totalSales;

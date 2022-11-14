@@ -4,7 +4,7 @@ namespace SMS.implementation
 {
     public class ProductManager : IProductManager
     {
-        public void CreateProduct(string barCode, string productName, double price, int productQuantity)
+        public void CreateProduct(string barCode, string productName, decimal price, int productQuantity)
         {
             int id = Product.listOfProduct.Count() + 1;
             Product product = new Product(id, barCode, productName, price, productQuantity);
@@ -43,7 +43,7 @@ namespace SMS.implementation
             }
             return null;
         }
-        public void UpdateProduct(string barCode, string productName, double price)
+        public void UpdateProduct(string barCode, string productName, decimal price)
         {
             Product product = GetProduct(barCode);
             if (product != null)

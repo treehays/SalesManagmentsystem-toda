@@ -168,8 +168,8 @@ namespace SMS.menu
             Console.Write("Barcode(Product ID): ");
             string barCode = Console.ReadLine();
             Console.Write("Price: ");
-            double price;
-            while (!double.TryParse(Console.ReadLine(), out price))
+            decimal price;
+            while (!decimal.TryParse(Console.ReadLine(), out price))
             {
                 System.Console.WriteLine("wrong input.. Try again.");
             }

@@ -156,16 +156,16 @@ namespace SMS.implementation
         }
         public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber)
         {
-            var admin = GetAdmin(staffId);
-            if (admin != null)
-            {
+            // var admin = GetAdmin(staffId);
+            // if (admin != null)
+            // {
                 try
                 {
                     using (var connection = new MySqlConnection(connString))
                     {
-                        var SuccessMsg = $"{admin.StaffId} Updated Successfully. ";
+                        var SuccessMsg = $"{staffId} Updated Successfully. ";
                         connection.Open();
-                        var queryUpdateA = $"Update admin SET firstname = '{firstName}', lastName = '{lastName}'";
+                        var queryUpdateA = $"Update admin SET firstName = '{firstName}', lastName = '{lastName}',phoneNumber = '{phoneNumber}' where staffId = '{staffId}'";
                         using (var command = new MySqlCommand(queryUpdateA, connection))
                         {
                             command.ExecuteNonQuery();
@@ -177,11 +177,11 @@ namespace SMS.implementation
                 {
                     System.Console.WriteLine(ex.Message);
                 }
-            }
-            else
-            {
-                Console.WriteLine("User not found.");
-            }
+            // }
+            // else
+            // {
+            //     Console.WriteLine("User not found.");
+            // }
         }
         public void CreateDataBaseTable()
         {

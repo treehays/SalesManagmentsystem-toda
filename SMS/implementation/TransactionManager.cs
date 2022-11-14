@@ -9,7 +9,7 @@ namespace SMS.implementation
         public int i = 0;
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
         IProductManager _iProductManager = new ProductManager();
-        public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
+        public void CreateTransaction(string barCode, int quantity, string customerId, decimal cashTender)
         {
             var product = _iProductManager.GetProduct(barCode);
             // var id = ListOfTransaction.Count() + 1;
@@ -45,9 +45,9 @@ namespace SMS.implementation
             }
 
         }
-        public double CalculateTotalSales()
+        public decimal CalculateTotalSales()
         {
-            double totalSales = 0;
+            decimal totalSales = 0;
             // foreach (var item in ListOfTransaction)
             // {
             //     totalSales = item.Total + totalSales;
@@ -57,7 +57,7 @@ namespace SMS.implementation
         public void GetAllTransactions()
         {
 
-            Console.WriteLine("\nID\t\tTRANS. DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
+            Console.WriteLine("\nID\t\tTRANS.DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
             try
             {
                 using (var connection = new MySqlConnection(connString))
@@ -78,9 +78,9 @@ namespace SMS.implementation
                 System.Console.WriteLine(ex.Message);
             }
         }
-        public double GetAllTransactionsAdmin()
+        public decimal GetAllTransactionsAdmin()
         {
-            double cumulativeSum = 0;
+            decimal cumulativeSum = 0;
             // foreach (var item in ListOfTransaction)
             // {
             //     Console.WriteLine($"{i++}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");

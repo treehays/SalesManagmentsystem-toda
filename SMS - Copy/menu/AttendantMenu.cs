@@ -106,8 +106,8 @@ namespace SMS.menu
             Console.Write("CustomerName: ");
             string customerId = Console.ReadLine();
             Console.Write("Cash Tender: ");
-            double cashTender;
-            while (!double.TryParse(Console.ReadLine(), out cashTender))
+            decimal cashTender;
+            while (!decimal.TryParse(Console.ReadLine(), out cashTender))
             {
                 System.Console.WriteLine("wrong input.. Try again.");
             }

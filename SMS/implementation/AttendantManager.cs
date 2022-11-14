@@ -140,7 +140,7 @@ namespace SMS.implementation
                     {
                         var SuccessMsg = $"{attendant.StaffId} Updated Successfully. ";
                         connection.Open();
-                        var queryUpdateA = $"Update attendant SET firstname = '{firstName}', lastName = '{lastName}'";
+                        var queryUpdateA = $"Update attendant SET firstname = '{firstName}', lastName = '{lastName}' where staffId = '{staffId}'";
                         using (var command = new MySqlCommand(queryUpdateA, connection))
                         {
                             command.ExecuteNonQuery();

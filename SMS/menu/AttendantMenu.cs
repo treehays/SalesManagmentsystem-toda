@@ -11,7 +11,7 @@ namespace SMS.menu
         IProductManager _iProductManager = new ProductManager();
         public void RegisterAttendantPage()
         {
-            Console.WriteLine("\nEnter Valid Details..");
+            // Console.WriteLine("\nEnter Valid Details..");
             Console.WriteLine("\nRegister Attendant..");
             Console.Write("\tFirst name: ");
             var firstName = Console.ReadLine();
@@ -26,13 +26,10 @@ namespace SMS.menu
             Console.Write("\tPost: ");
             var post = Console.ReadLine();
             _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
-            // LoginAdminMenu();
-            var adminMenu = new AdminMenu();
-            adminMenu.AdminSubMenu();
         }
         public void DeleteProduct()
         {
-            Console.Write("\tEnter the Barcode of the Product to be deleted.");
+            Console.Write("\tEnter the Barcode of the Product to be deleted: ");
             var barCode = Console.ReadLine();
             _iProductManager.DeleteProduct(barCode);
         }
@@ -40,9 +37,9 @@ namespace SMS.menu
         {
             Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
             Console.Write("\tStaff ID: ");
-            var staffId = Console.ReadLine();
+            var staffId = "APT899298";//Console.ReadLine();
             Console.Write("\tPin: ");
-            var pin = Console.ReadLine();
+            var pin = "pin";//Console.ReadLine();
             var attendant = _iAttendantManager.Login(staffId, pin);
             if (attendant != null)
             {
@@ -108,9 +105,6 @@ namespace SMS.menu
         {
             // Customer Details
             Console.WriteLine("...Logged >> Attendant >> Payment Page");
-            /*
-            dateTime = DateTime.UtcNow;
-*/
             Console.Write("CustomerName: ");
             var customerId = Console.ReadLine();
             Console.Write("Enter Product Barcode: ");
@@ -124,25 +118,12 @@ namespace SMS.menu
             var product = _iProductManager.GetProduct(barCode);
             Console.WriteLine($"Amount to be Paid: {quantity * product.Price}");
             Console.Write("Cash Tender: ");
-            double cashTender;
-            while (!double.TryParse(Console.ReadLine(), out cashTender))
+            decimal cashTender;
+            while (!decimal.TryParse(Console.ReadLine(), out cashTender))
             {
                 Console.WriteLine("wrong input.. Try again.");
             }
             _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
         }
-
-
-        // public void ZZCustomerCart()
-        // {
-        //     Console.Write("Enter Porduct Barcode: ");
-        //     string barCode = Console.ReadLine();
-        //     Console.Write("Quantity: ");
-        //     int quantity;
-        //     while (!int.TryParse(Console.ReadLine(), out quantity))
-        //     {
-        //         System.Console.WriteLine("wrong input.. Try again.");
-        //     }
-        // }
     }
 }
