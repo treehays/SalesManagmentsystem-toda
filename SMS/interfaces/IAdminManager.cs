@@ -1,7 +1,4 @@
-using SMS.model;
 
-namespace SMS.interfaces
-{
     public interface IAdminManager
     {
         void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post);
@@ -13,4 +10,3 @@ namespace SMS.interfaces
         Admin Login(string staffId, string pin);
         void CreateDataBaseTable();
     }
-}

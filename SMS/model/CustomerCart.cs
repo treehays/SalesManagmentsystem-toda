@@ -1,5 +1,4 @@
-namespace SMS.model
-{
+
     public class CustomerCart
     {
         public int Quantity { get; set; }
@@ -10,4 +9,3 @@ namespace SMS.model
             Quantity = quantity;
         }
     }
-}

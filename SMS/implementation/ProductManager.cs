@@ -1,10 +1,7 @@
-using MySql.Data.MySqlClient;
-using SMS.interfaces;
-using SMS.model;
 
-namespace SMS.implementation
-{
-    public class ProductManager : IProductManager
+using MySql.Data.MySqlClient;
+
+public class ProductManager : IProductManager
     {
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
         public void CreateProduct(string barCode, string productName, decimal price, int quantity)
@@ -137,4 +134,3 @@ namespace SMS.implementation
             }
         }
     }
-}

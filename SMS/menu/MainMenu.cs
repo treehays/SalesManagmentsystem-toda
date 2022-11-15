@@ -1,8 +1,4 @@
-using SMS.implementation;
-using SMS.interfaces;
 
-namespace SMS.menu
-{
     public class MainMenu
     {
         public int Choice;
@@ -126,4 +122,3 @@ namespace SMS.menu
             Console.WriteLine();
         }
     }
-}

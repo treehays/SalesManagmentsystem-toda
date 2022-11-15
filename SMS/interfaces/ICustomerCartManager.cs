@@ -1,5 +1,4 @@
-namespace SMS.interfaces
-{
+
     public interface ICustomerCartManager
     {
         void AddToCart(string barCode, int quantity);
@@ -7,4 +6,3 @@ namespace SMS.interfaces
         void UpdateCart(string barCode, int quantity);
 
     }
-}

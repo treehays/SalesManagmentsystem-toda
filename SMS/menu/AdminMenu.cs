@@ -1,9 +1,7 @@
-using SMS.implementation;
-using SMS.interfaces;
 
-namespace SMS.menu
-{
-    public class AdminMenu
+
+
+public class AdminMenu
     {
         IAdminManager _iAdminManager = new AdminManager();
         IAttendantManager _iAttendantManager = new AttendantManager();
@@ -314,4 +312,4 @@ namespace SMS.menu
         }
 
     }
-}
+

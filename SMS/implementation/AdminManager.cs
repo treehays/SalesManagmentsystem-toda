@@ -1,9 +1,8 @@
+
 using MySql.Data.MySqlClient;
-using SMS.interfaces;
 using SMS.model;
-namespace SMS.implementation
-{
-    public class AdminManager : IAdminManager
+
+public class AdminManager : IAdminManager
     {
         ITransactionManager _iTransactionManager = new TransactionManager();
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
@@ -203,4 +202,3 @@ namespace SMS.implementation
             }
         }
     }
-}

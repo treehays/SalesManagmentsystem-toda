@@ -1,5 +1,3 @@
-namespace SMS.interfaces
-{
     public interface ITransactionManager
     {
         void CreateTransaction(string barCode, int quantity, string customerId, decimal cashTender);
@@ -12,4 +10,3 @@ namespace SMS.interfaces
         // void ReadFromFile();
         // void ReWriteToFile();
     }
-}

@@ -1,10 +1,7 @@
-using MySql.Data.MySqlClient;
-using SMS.interfaces;
-using SMS.model;
 
-namespace SMS.implementation
-{
-    public class TransactionManager : ITransactionManager
+using MySql.Data.MySqlClient;
+
+public class TransactionManager : ITransactionManager
     {
         public int i = 0;
         static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
@@ -29,7 +26,7 @@ namespace SMS.implementation
                     using (var connection = new MySqlConnection(connString))
                     {
                         connection.Open();
-                        var queryCreate = $"Insert into transaction (receiptNo, barCode, quantity, total, customerId, dateTime, cashTender) values ('{receiptNo}', '{barCode}', '{quantity}', '{total}', '{customerId}', '{dateTime}', '{cashTender}')";
+                        var queryCreate = $"Insert into transaction (barcode,productname,price,quantity,receiptno,total,customerid,cashtender,datetimes) values ('{barCode}','{product.ProductName}', '{product.Price}', '{quantity}','{receiptNo}', '{total}', '{customerId}', '{cashTender}','{dateTime}')";
                         using (var command = new MySqlCommand(queryCreate, connection))
                         {
                             command.ExecuteNonQuery();
@@ -68,7 +65,8 @@ namespace SMS.implementation
                         var reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            Console.WriteLine($"{reader["receiptNo"]}\t{reader["barCode"].ToString()}\t{reader["quantity"].ToString()}\t{reader["total"].ToString()}\t{reader["customerId"].ToString()}\t{reader["dateTime"].ToString()}\t{reader["cashTender"].ToString()}");
+                            Console.WriteLine($"{reader["barcode"]}\t{reader["productname"]}\t{reader["price"]}\t{reader["quantity"]}\t{reader["receiptno"]}\t{reader["total"]}\t{reader["customerid"]}\t{reader["cashtender"]}\t{reader["datetimes"]}");
+                            // Console.WriteLine($"{reader["receiptNo"]}\t{reader["barCode"].ToString()}\t{reader["quantity"].ToString()}\t{reader["total"].ToString()}\t{reader["customerId"].ToString()}\t{reader["dateTime"].ToString()}\t{reader["cashTender"].ToString()}");
                         }
                     }
                 }
@@ -88,4 +86,3 @@ namespace SMS.implementation
             return cumulativeSum;
         }
     }
-}

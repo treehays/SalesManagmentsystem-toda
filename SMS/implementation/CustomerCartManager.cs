@@ -1,8 +1,4 @@
-using SMS.interfaces;
-using SMS.model;
 
-namespace SMS.implementation
-{
     public class CustomerCartManager : ICustomerCartManager
     {
         List<CustomerCart> _listOfCustomerCart = new List<CustomerCart>();
@@ -25,4 +21,3 @@ namespace SMS.implementation
             throw new NotImplementedException();
         }
     }
-}

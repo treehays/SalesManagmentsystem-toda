@@ -1,15 +1,7 @@
-﻿using SMS.implementation;
-using SMS.menu;
-using MySql.Data.MySqlClient;
+﻿var mainMenu = new MainMenu();
+mainMenu.AllMainMenu();
 
-namespace SMS
-{
-    class Program
-    {
-        static void Main()
-        {
-            var mainMenu = new MainMenu();
-            mainMenu.AllMainMenu();
+
             // var mainMenu = new MainMenu();
             // mainMenu.AllMainMenu();
             // var adminManager = new AdminManager();
@@ -30,7 +22,7 @@ namespace SMS
             // string staffId ="AXY344973";// Console.ReadLine();
             // adminManager.DeleteAdmin(staffId);
             // adminMenu.ManageAttendantSubMenu();
-        }
+        // }
 
         // public string GenerateRandomId()
         // {
@@ -126,8 +118,4 @@ namespace SMS
 
         // System.Console.Write(x.ToCharArray().Reverse());
 
-
-
-    }
-}
 

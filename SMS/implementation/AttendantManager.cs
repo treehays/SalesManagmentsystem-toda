@@ -1,9 +1,8 @@
+
 using MySql.Data.MySqlClient;
-using SMS.interfaces;
 using SMS.model;
-namespace SMS.implementation
-{
-    public class AttendantManager : IAttendantManager
+
+public class AttendantManager : IAttendantManager
     {
             static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
@@ -181,4 +180,3 @@ namespace SMS.implementation
             }
         }
     }
-}

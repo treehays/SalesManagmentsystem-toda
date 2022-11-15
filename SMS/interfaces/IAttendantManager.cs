@@ -1,7 +1,4 @@
-using SMS.model;
 
-namespace SMS.interfaces
-{
     public interface IAttendantManager
     {
         void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post);
@@ -15,4 +12,3 @@ namespace SMS.interfaces
         // void ReadFromFile();
         // void ReWriteToFile();
     }
-}

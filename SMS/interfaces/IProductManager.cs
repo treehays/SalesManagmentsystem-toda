@@ -1,7 +1,4 @@
-using SMS.model;
 
-namespace SMS.interfaces
-{
     public interface IProductManager
     {
         void CreateProduct(string barCode, string productName, decimal price, int quantity);
@@ -12,4 +9,3 @@ namespace SMS.interfaces
         // void ReadFromFile();
         // void ReWriteToFile();
     }
-}

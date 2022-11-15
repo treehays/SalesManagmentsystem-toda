@@ -2,4 +2,5 @@
 #view product by categories
 #add wallet to track  admin withrawal and 
 # veiw each attendant history
-
+#purchasing multiple product same time
+#

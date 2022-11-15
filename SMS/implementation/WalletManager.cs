@@ -1,7 +1,4 @@
-using SMS.interfaces;
 
-namespace SMS.implementation
-{
     public class WalletManager : IWalletManager
     {
         ITransactionManager _transactionManager = new TransactionManager();
@@ -19,4 +16,3 @@ namespace SMS.implementation
            
         }
     }
-}

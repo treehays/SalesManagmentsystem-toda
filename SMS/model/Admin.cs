@@ -1,6 +1,7 @@
-namespace SMS.model
-{
-    public class Admin : User
+
+using SMS.model;
+
+public class Admin : User
     {
         public string Post { get; set; }
         // public decimal Wallet { get; set; }
@@ -10,4 +11,3 @@ namespace SMS.model
         }
        
     }
-}
