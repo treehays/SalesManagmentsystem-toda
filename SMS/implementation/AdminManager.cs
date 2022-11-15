@@ -167,7 +167,7 @@ public class AdminManager : IAdminManager
                         var queryUpdateA = $"Update admin SET firstName = '{firstName}', lastName = '{lastName}',phoneNumber = '{phoneNumber}' where staffId = '{staffId}'";
                         using (var command = new MySqlCommand(queryUpdateA, connection))
                         {
-                            command.ExecuteNonQuery();
+                           var yes = command.ExecuteNonQuery();
                             System.Console.WriteLine(SuccessMsg);
                         }
                     }
