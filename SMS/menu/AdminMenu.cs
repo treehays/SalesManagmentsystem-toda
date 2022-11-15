@@ -36,9 +36,9 @@ namespace SMS.menu
         {
             Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
             Console.Write("\tStaff ID: ");
-            var staffId = "ADU864054"; //Console.ReadLine();
+            var staffId = Console.ReadLine();
             Console.Write("\tPin: ");
-            var pin = "password";//Console.ReadLine();
+            var pin =Console.ReadLine();
             // var staffId = "ADU864054"; 
             // var pin = "password";
             // // iAdminManager.Login(staffId,pin); waht is this doing not part of the code

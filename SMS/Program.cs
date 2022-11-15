@@ -8,13 +8,13 @@ namespace SMS
     {
         static void Main()
         {
+            var mainMenu = new MainMenu();
+            mainMenu.AllMainMenu();
             // var mainMenu = new MainMenu();
             // mainMenu.AllMainMenu();
             // var adminManager = new AdminManager();
             // adminManager.ReadFromFile();
             // adminManager.CreateDataBaseTable();
-            var mainMenu = new MainMenu();
-            mainMenu.AllMainMenu();
             // var adminMenu = new AdminMenu();
             // adminMenu.LoginAdminMenu(); 
             
