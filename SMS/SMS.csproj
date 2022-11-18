@@ -10,4 +10,9 @@
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.31" />
   </ItemGroup>
+  
+  <!-- <connectionStrings>
+    <add name="ConnectionString" connectionString= "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms"     providerName="System.Data.MySqlClient" />
+  </connectionStrings> -->
+
 </Project>
