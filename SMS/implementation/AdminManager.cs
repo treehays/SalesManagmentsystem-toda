@@ -1,7 +1,6 @@
 
 using MySql.Data.MySqlClient;
 using SMS.model;
-
 public class AdminManager : IAdminManager
     {
         ITransactionManager _iTransactionManager = new TransactionManager();
@@ -26,7 +25,7 @@ public class AdminManager : IAdminManager
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
                 // ignored
             }
             Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
@@ -45,11 +44,11 @@ public class AdminManager : IAdminManager
                         using (var command = new MySqlCommand($"DELETE From admin WHERE StaffId = '{staffId}'", connection))
                         {
                             var reader = command.ExecuteNonQuery();
-                            System.Console.WriteLine(deleteSuccessMsg);
+                            Console.WriteLine(deleteSuccessMsg);
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     System.Console.WriteLine(ex.Message);
                 }
@@ -79,7 +78,7 @@ public class AdminManager : IAdminManager
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return admin is not null && admin.StaffId.ToUpper() == staffId.ToUpper() ? admin : null;
         }
@@ -100,11 +99,12 @@ public class AdminManager : IAdminManager
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
+        
         public Admin GetAdmin(string staffId, string email)
         {
             Admin admin = null;
@@ -123,9 +123,9 @@ public class AdminManager : IAdminManager
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return admin is not null && admin.Email.ToUpper() == email.ToUpper() ? admin : null;
         }
@@ -134,7 +134,7 @@ public class AdminManager : IAdminManager
             Admin admin = null;
             try
             {
-                using (var connection = new MySqlConnection(connString))
+                using (var connection = new MySqlConnection())
                 {
                     connection.Open();
                     using (var command = new MySqlCommand($"select * From admin WHERE StaffId = '{staffId}'", connection))
@@ -142,14 +142,14 @@ public class AdminManager : IAdminManager
                         var reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            admin = new Admin(reader["staffId"].ToString(), reader["firstName"].ToString(), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
+                            admin = new Admin(reader["staffId"].ToString(),reader.GetString(2), reader["lastName"].ToString(), reader["email"].ToString(), reader["phonenumber"].ToString(), reader["Pin"].ToString(), reader["post"].ToString());
                         }
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return admin is not null && admin.StaffId.ToUpper() == staffId.ToUpper() && admin.Pin == pin ? admin : null;
         }
@@ -168,13 +168,13 @@ public class AdminManager : IAdminManager
                         using (var command = new MySqlCommand(queryUpdateA, connection))
                         {
                            var yes = command.ExecuteNonQuery();
-                            System.Console.WriteLine(SuccessMsg);
+                            Console.WriteLine(SuccessMsg);
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    System.Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             // }
             // else
@@ -198,7 +198,7 @@ public class AdminManager : IAdminManager
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
     }

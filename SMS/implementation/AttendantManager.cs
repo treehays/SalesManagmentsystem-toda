@@ -24,7 +24,7 @@ public class AttendantManager : IAttendantManager
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             Console.WriteLine($"Attendant Creation was Successful! \nThe Staff Identity Number is {attendant.StaffId} and pint {pin}, \nKeep it Safe.");
         }
@@ -42,13 +42,13 @@ public class AttendantManager : IAttendantManager
                         using (var command = new MySqlCommand($"DELETE From attendant WHERE StaffId = '{staffId}'", connection))
                         {
                             var reader = command.ExecuteNonQuery();
-                            System.Console.WriteLine(deleteSuccessMsg);
+                            Console.WriteLine(deleteSuccessMsg);
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    System.Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
             else
@@ -74,9 +74,9 @@ public class AttendantManager : IAttendantManager
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return attendant is not null && attendant.StaffId.ToUpper() == staffId.ToUpper() ? attendant : null;
         }
@@ -98,9 +98,9 @@ public class AttendantManager : IAttendantManager
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return attendant is not null && attendant.Email.ToUpper() == email.ToUpper() ? attendant : null;
         }
@@ -122,9 +122,9 @@ public class AttendantManager : IAttendantManager
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
             return attendant is not null && attendant.StaffId.ToUpper() == staffId.ToUpper() && attendant.Pin == pin ? attendant : null;
         }
@@ -143,13 +143,13 @@ public class AttendantManager : IAttendantManager
                         using (var command = new MySqlCommand(queryUpdateA, connection))
                         {
                             command.ExecuteNonQuery();
-                            System.Console.WriteLine(SuccessMsg);
+                            Console.WriteLine(SuccessMsg);
                         }
                     }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    System.Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
             else
@@ -176,7 +176,7 @@ public class AttendantManager : IAttendantManager
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
     }

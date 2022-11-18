@@ -69,7 +69,7 @@ public class AdminMenu
 ################################################################################");
             Console.WriteLine("\nHome >> Admin >>");
             // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-            Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products \n\tEnter 3 to Update My Details. \n\tEnter 4 to View sales Records.\n\tEnter 5 to check Wallet. \n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
+            Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products \n\tEnter 3 to Update Profile. \n\tEnter 4 to View sales Records.\n\tEnter 5 to check Wallet. \n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
             bool chk;
             do
             {
