@@ -1,9 +1,11 @@
 = allow to view product which stock are lower than certain amount // creat a methos that will always check if a stock is lower than certain number 
 #view product by categories
-#add wallet to track  admin withrawal and 
-# veiw each attendant history
+#add wallet to track  admin withdrawal and 
+# view each attendant history
 #purchasing multiple product same time
 #allow customer to view list of product below certain price
+#specify the attendants for particular transaction
+#Admin for different branch
 
 Kindly select one of the following options:
 1. View Profile
@@ -18,6 +20,13 @@ Kindly select one of the following options:
 10. Perform inventory operations
 11. Recall Order
 12. View Order History
+    {
+        Kindly select one of the following options:
+            1. View All Orders
+            2. View Orders by date
+            3. View Orders by attendant
+            0. Go back to previous menu        
+    }
 0. Exit/ Log out
 
 

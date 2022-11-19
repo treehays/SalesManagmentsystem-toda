@@ -8,5 +8,7 @@
         void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber);
         void DeleteAdmin(string staffId);
         Admin Login(string staffId, string pin);
-        void CreateDataBaseTable();
+        void UpdateAdminPassword(string staffId, string pin);
+        // decimal CheckWalletBalance();
+        // void CreateDataBaseTable();
     }

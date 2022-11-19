@@ -5,7 +5,7 @@
         // Transaction UpdateTransaction();
         // void DeleteTransaction(string receiptNo);
         void GetAllTransactions();
-        decimal GetAllTransactionsAdmin();
+        // decimal GetAllTransactionsAdmin();
         decimal CalculateTotalSales();
         // void ReadFromFile();
         // void ReWriteToFile();

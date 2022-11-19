@@ -4,9 +4,44 @@
 var mainMenu = new MainMenu();
 mainMenu.AllMainMenu();
 
+// AdminMenu asss = new AdminMenu ();
+// asss.UpdateAdminPassword();
+
+// IAdminManager asss = new AdminManager();
+// System.Console.WriteLine(asss.CheckWalletBalance());
+// using System.Diagnostics;
+
+// System.Console.WriteLine("\nPress 1 for 'The minion'\npress 2 for Baby SHark");
+// var choice = 0;
+// choice = int.Parse(Console.ReadLine());
+// if (choice == 1)
+// {
+//     Movies();
+// }
 
 
 
+
+// else if (choice == 2)
+// {
+// TreeH();
+// }
+// static void TreeH()
+// {
+//     string _FullUrl1 = @"https://www.youtube.com/watch?v=XqZsoesa55w";
+//     // string _FullUrl = @"https://www.youtube.com/watch?v=6DxjJzmYsXo";
+//     var prc = new ProcessStartInfo(@"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe");
+//     prc.Arguments = _FullUrl1;
+//     Process.Start(prc);
+// }
+// static void Movies()
+// {
+//     // string _FullUrl1 = @"https://www.youtube.com/watch?v=PYnWKSXXyIk&ab_channel=DevNami";
+//     string _FullUrl = @"https://www.youtube.com/watch?v=6DxjJzmYsXo";
+//     var prc = new ProcessStartInfo(@"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe");
+//     prc.Arguments = _FullUrl;
+//     Process.Start(prc);
+// }
 /*
 var ConString ="SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
 using (MySqlConnection connection = new MySqlConnection(ConString))

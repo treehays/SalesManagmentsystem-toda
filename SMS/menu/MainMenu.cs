@@ -20,7 +20,7 @@
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
 ################################################################################");
                 Console.WriteLine("\tHome>>");
-                Console.WriteLine("\tEnter 1 to Register.\n\tEnter 2 to Login.\n\tEnter 0 to Close.");
+                Console.WriteLine("\tEnter 1 to Sign Up.\n\tEnter 2 to Login.\n\tEnter 0 to Close.");
                 bool chk;
                 do
                 {

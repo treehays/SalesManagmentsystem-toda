@@ -32,7 +32,7 @@ public class AttendantMenu
     {
         Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
         Console.Write("\tStaff ID: ");
-        var staffId = "APT899298";//Console.ReadLine();
+        var staffId = "APD310646";//Console.ReadLine();
         Console.Write("\tPin: ");
         var pin = "pin";//Console.ReadLine();
         var attendant = _iAttendantManager.Login(staffId, pin);
@@ -54,7 +54,7 @@ public class AttendantMenu
             // Console.Clear();
             Console.WriteLine("\n...Logged >> Attendant >>");
             Console.WriteLine("AZ Sales Management System. \nEnter valid option.");
-            Console.WriteLine("\tEnter 1 to Record Sales.\n\tEnter 2 to view all products.\n\tEnter 3 to Update My Details. \n\tEnter 4 to View history.\n\tEnter 5 to Logout.\n\tEnter 0 to Close.");
+            Console.WriteLine("\tEnter 1 to Record Sales.\n\tEnter 2 to view all products.\n\tEnter 3 to Update Profile.\n\tEnter 4 to change password \n\tEnter 5 to View Sales history.\n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
             bool chk;
             do
             {
@@ -70,15 +70,21 @@ public class AttendantMenu
             }
             else if (choice == 2)
             {
+                //view all products
                 Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\t\tPRICE\t\tQTY\t");
                 _iProductManager.ViewAllProduct();
             }
             else if (choice == 3)
             {
-                // Update detail
+                // Update profile
                 UpdateAttendantDetails(attendant);
             }
             else if (choice == 4)
+            {
+                //change password
+                UpdateAttendantPassword(attendant);
+            }
+            else if (choice == 5)
             {
                 //View Transaction History
                 // View Sales Sales Records
@@ -86,7 +92,7 @@ public class AttendantMenu
 
                 _iTransactionManager.GetAllTransactions();
             }
-            else if (choice == 5)
+            else if (choice == 6)
             {
                 // logout
                 // LoginAttendantMenu();
@@ -95,9 +101,39 @@ public class AttendantMenu
             }
         } while (choice != 0);
     }
+    public void UpdateAttendantPassword(Attendant attendant)
+    {
+        Console.Write("Enter Staffid: ");
+        string staffId = Console.ReadLine().Trim();
+        Console.Write("Enter Old Password: ");
+        string pin = Console.ReadLine();
+        attendant = _iAttendantManager.Login(staffId, pin);
+        if (attendant != null)
+        {
+            bool isSame = true;
+            while (isSame)
+            {
+                Console.WriteLine("\nEnter a matching Password.");
+                Console.Write("Enter new Password: ");
+                pin = Console.ReadLine();
+                Console.Write("Re-Enter new Password: ");
+                string rePin = Console.ReadLine();
+                isSame = pin == rePin ? false : true;
+            }
+            _iAttendantManager.UpdateAttendantPassword(staffId, pin);
+            AttendantSubMenu(attendant);
+        }
+        else
+        {
+            Console.WriteLine("\nWrong staff Id or old Password!.");
+            var mainMenu = new MainMenu();
+            AttendantSubMenu(attendant);
+        }
+    }
+
     public void UpdateAttendantDetails(Attendant attendant)
     {
-        Console.WriteLine("\nWelcome.\nEnter D");
+        Console.WriteLine("\nWelcome.");
         Console.Write("First Name: ");
         var firstName = Console.ReadLine();
         Console.Write("Last Name: ");

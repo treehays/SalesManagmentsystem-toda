@@ -26,7 +26,7 @@ public class ProductManager : IProductManager
                 System.Console.WriteLine(ex.Message);
             }
         }
-        public void DeleteProduct(string barCode)
+public void DeleteProduct(string barCode)
         {
             var product = GetProduct(barCode);
             if (product != null)
