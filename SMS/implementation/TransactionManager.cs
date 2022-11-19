@@ -7,7 +7,7 @@ public class TransactionManager : ITransactionManager
     public int i = 0;
     private readonly static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
     IProductManager _iProductManager = new ProductManager();
-    public void CreateTransaction(string barCode, int quantity, string customerId, decimal cashTender)
+    public void CreateTransaction(string staffId, string barCode, int quantity, string customerId, decimal cashTender)
     {
         var product = _iProductManager.GetProduct(barCode);
         // var id = ListOfTransaction.Count() + 1;
@@ -28,7 +28,7 @@ public class TransactionManager : ITransactionManager
                 using (var connection = new MySqlConnection(connString))
                 {
                     connection.Open();
-                    var queryCreate = $"Insert into transaction (barcode,productname,price,quantity,receiptno,total,customerid,cashtender,datetimes) values ('{barCode}','{product.ProductName}', '{product.Price}', '{quantity}','{receiptNo}', '{total}', '{customerId}', '{cashTender}','{dateTime}')";
+                    var queryCreate = $"Insert into transaction (staffId,barcode,productname,price,quantity,receiptno,total,customerid,cashtender,datetimes) values ('{staffId}','{barCode}','{product.ProductName}', '{product.Price}', '{quantity}','{receiptNo}', '{total}', '{customerId}', '{cashTender}','{dateTime}')";
                     using (var command = new MySqlCommand(queryCreate, connection))
                     {
                         command.ExecuteNonQuery();
@@ -40,7 +40,7 @@ public class TransactionManager : ITransactionManager
                 System.Console.WriteLine(ex.Message);
             }
             UpdateInventoryQuantity(product, quantity,barCode);
-            Console.WriteLine($"\n__________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
+            Console.WriteLine($"\n_________________________________________________________________________________________________\n_________________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode}\t\t\t\t\tATTENDANT ID{staffId}\n_________________________________________________________________________________________________\n_________________________________________________________________________________________________ \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
         }
 
     }
@@ -118,6 +118,35 @@ public class TransactionManager : ITransactionManager
         }
     }
 
+
+    public void GenerateTransactionHTML()
+    {
+        try
+        {
+            using (var connection = new MySqlConnection(connString))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand("select * From transaction", connection))
+                {
+                    string dateSaved = DateTime.Now.ToString();//to be used,,the Menu can be accepting date as parameters and sending itto this place in order to have same date
+                    var reader = command.ExecuteReader();
+                    var outLines = new List<string>();//saving to list
+                    outLines.Add(@"");
+                    while (reader.Read())
+                    {
+                        // Console.WriteLine($"{reader["id"].ToString()}\t{reader["barCode"].ToString()}\t{reader["productName"].ToString()}\t{(decimal)(reader["price"])}\t{Convert.ToInt32((reader["productQuantity"]))}");
+                        outLines.Add($"{reader["id"].ToString()},{reader["dateTimes"].ToString()},{reader["receiptNo"].ToString()},{reader["barCode"].ToString()},{reader["productName"].ToString()},{(decimal)(reader["price"])},{Convert.ToInt32((reader["Quantity"]))},{(decimal)(reader["total"])},{reader["customerId"].ToString()}");
+                    }
+                    File.WriteAllLines("./AZtransact.csv", outLines.ToArray());
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
     public void ViewTransactionAsExcel()
     {
         GenerateTransactionCSV();
@@ -126,6 +155,16 @@ public class TransactionManager : ITransactionManager
         prc.Arguments = csvPath;
         Process.Start(prc);
     }
+
+    public void ViewTransactionAsHTML()
+    {
+        GenerateTransactionCSV();
+        string csvPath = @"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/AZtransact.csv";
+        var prc = new ProcessStartInfo(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE");
+        prc.Arguments = csvPath;
+        Process.Start(prc);
+    }
+
     public void GetAllTransactions()
     {
 

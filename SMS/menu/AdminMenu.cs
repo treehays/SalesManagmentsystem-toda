@@ -10,7 +10,7 @@ public class AdminMenu
     private int _choice;
 
 
-    public void AdminSubMenu()
+    public void AdminSubMenu(Admin admin)
     {
         // int choice;
         // Console.Clear();
@@ -43,18 +43,18 @@ public class AdminMenu
                 break;
             case 1:
                 // Manage Attendant
-                ManageAttendantSubMenu();
+                ManageAttendantSubMenu(admin);
 
                 break;
             case 2:
                 // Manage Products 
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
 
                 break;
             case 3:
                 // Manage Inventory
-                ManageInventorySubMenu();
-                AdminSubMenu();
+                ManageInventorySubMenu(admin);
+                AdminSubMenu(admin);
                 break;
             case 4:
                 // View Sales Record
@@ -76,25 +76,31 @@ public class AdminMenu
                 {
                     Console.WriteLine("Generating the report....");
                     _iTransactionManager.ViewTransactionAsExcel();
-                    AdminSubMenu();
+                    AdminSubMenu(admin);
+                }
+                else if (_choice == 3)
+                {
+                    Console.WriteLine("Generating the report....");
+                    _iTransactionManager.ViewTransactionAsExcel();
+                    AdminSubMenu(admin);
                 }
                 // iTransactionManager.GetAllTransactionsAdmin();
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 5:
                 // Update detail
                 UpdateAdminDetails();
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 6:
                 // Update password
                 UpdateAdminPassword();
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 7:
                 // Check Wallet Balance
                 Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 8:
                 // logout
@@ -102,13 +108,13 @@ public class AdminMenu
                 mainMenu.LoginMenu();
                 break;
             default:
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
         }
     }
 
 
-    public void ManageAttendantSubMenu()
+    public void ManageAttendantSubMenu(Admin admin)
     {
         Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
         // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
@@ -131,33 +137,33 @@ public class AdminMenu
                 // Add new Attendant
                 var attendantMenu = new AttendantMenu();
                 attendantMenu.RegisterAttendantPage();
-                ManageAttendantSubMenu();
+                ManageAttendantSubMenu(admin);
                 break;
             case 2:
                 //view for attendan
-                ViewAnAttendant();
-                ManageAttendantSubMenu();
+                ViewAnAttendant(admin);
+                ManageAttendantSubMenu(admin);
                 break;
             case 3:
                 //view all attendant
                 Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
                 _iAttendantManager.ViewAllAttendants();
-                ManageAttendantSubMenu();
+                ManageAttendantSubMenu(admin);
                 break;
             case 4:
                 //update attendant profile
-                UpdateAttendantDetails();
-                ManageAttendantSubMenu();
+                UpdateAttendantDetails(admin);
+                ManageAttendantSubMenu(admin);
                 break;
             case 5:
                 // reset attendant password
-                ResetAttendantPassword();
-                ManageAttendantSubMenu();
+                ResetAttendantPassword(admin);
+                ManageAttendantSubMenu(admin);
                 break;
             case 6:
                 // Delete Attendants
                 DeleteAttendantMenu();
-                ManageAttendantSubMenu();
+                ManageAttendantSubMenu(admin);
                 break;
             case 7:
                 // logout
@@ -165,16 +171,16 @@ public class AdminMenu
                 mainMenu.LoginMenu();
                 break;
             case 8:
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             default:
-                ManageAttendantSubMenu();
+                ManageAttendantSubMenu(admin);
                 break;
         }
     }
 
 
-    public void ManageProductSubMenu()
+    public void ManageProductSubMenu(Admin admin)
     {
         Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
         Console.WriteLine("...>> Admin >> Manage Product >>");
@@ -197,27 +203,27 @@ public class AdminMenu
             case 1:
                 // Add Product
                 AddProduct();
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
                 break;
             case 2:
                 // Modify product
                 Console.WriteLine("Modify Product Details.");
                 UpdateProductDetails();
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
                 break;
             case 3:
                 // View All products
                 // iAdminManager.DeleteAdmin();
                 Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
                 _iProductManager.ViewAllProduct();
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
                 break;
             case 4:
                 DeleteProductMenu();
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
                 break;
             case 5:
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 6:
                 // logout
@@ -225,12 +231,12 @@ public class AdminMenu
                 mainMenu.LoginMenu();
                 break;
             default:
-                ManageProductSubMenu();
+                ManageProductSubMenu(admin);
                 break;
         }
     }
 
-    public void ManageInventorySubMenu()
+    public void ManageInventorySubMenu(Admin admin)
     {
         Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
         Console.WriteLine("...>> Admin >> Manage Inventory >>");
@@ -254,21 +260,21 @@ public class AdminMenu
                 // Restock product.
                 Console.WriteLine("Restock Product.");
                 RestockProduct();
-                ManageInventorySubMenu();
+                ManageInventorySubMenu(admin);
                 break;
             case 2:
                 // View all products expected to be Reordered. .
                 System.Console.WriteLine("List of products.");
                 SortedProductBy();
-                ManageInventorySubMenu();
+                ManageInventorySubMenu(admin);
                 break;
             case 3:
                 // view Product lower than certain number.
-                ManageInventorySubMenu();
+                ManageInventorySubMenu(admin);
                 break;
             case 4:
                 // Go Back to Admin Menu
-                AdminSubMenu();
+                AdminSubMenu(admin);
                 break;
             case 5:
                 // logout
@@ -276,7 +282,7 @@ public class AdminMenu
                 mainMenu.LoginMenu();
                 break;
             default:
-                ManageInventorySubMenu();
+                ManageInventorySubMenu(admin);
                 break;
         }
     }
@@ -315,7 +321,7 @@ public class AdminMenu
         if (admin != null)
         {
             Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
-            AdminSubMenu();
+            AdminSubMenu(admin);
         }
         else
         {
@@ -325,7 +331,7 @@ public class AdminMenu
         }
     }
 
-    public void ViewAnAttendant()
+    public void ViewAnAttendant(Admin admin)
     {
         Console.Write("Staff id of the attendant : ");
         var staffId = Console.ReadLine();
@@ -341,11 +347,11 @@ public class AdminMenu
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu();
+            ManageAttendantSubMenu(admin);
         }
     }
 
-    public void ResetAttendantPassword()
+    public void ResetAttendantPassword(Admin admin)
     {
         Console.WriteLine("Reset Attendant password.");
         Console.Write("Staff id of the attendant : ");
@@ -360,10 +366,10 @@ public class AdminMenu
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu();
+            ManageAttendantSubMenu(admin);
         }
     }
-    public void UpdateAttendantDetails()
+    public void UpdateAttendantDetails(Admin admin)
     {
         Console.WriteLine("\nWelcome.");
         Console.Write("Staff id of the attendant to be updated: ");
@@ -382,7 +388,7 @@ public class AdminMenu
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu();
+            ManageAttendantSubMenu(admin);
         }
 
     }
@@ -435,13 +441,13 @@ public class AdminMenu
                 isSame = pin == rePin ? false : true;
             }
             _iAdminManager.UpdateAdminPassword(staffId, pin);
-            AdminSubMenu();
+            AdminSubMenu(admin);
         }
         else
         {
             Console.WriteLine("\nWrong staff Id or old Password!.");
             var mainMenu = new MainMenu();
-            AdminSubMenu();
+            AdminSubMenu(admin);
         }
     }
     public void AddProduct()

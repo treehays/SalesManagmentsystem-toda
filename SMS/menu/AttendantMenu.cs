@@ -22,12 +22,12 @@ public class AttendantMenu
         var post = Console.ReadLine();
         _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
     }
-    public void DeleteProduct()
-    {
-        Console.Write("\tEnter the Barcode of the Product to be deleted: ");
-        var barCode = Console.ReadLine();
-        _iProductManager.DeleteProduct(barCode);
-    }
+    // public void DeleteProduct()
+    // {
+    //     Console.Write("\tEnter the Barcode of the Product to be deleted: ");
+    //     var barCode = Console.ReadLine();
+    //     _iProductManager.DeleteProduct(barCode);
+    // }
     public void LoginAttendantMenu()
     {
         Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
@@ -65,7 +65,7 @@ public class AttendantMenu
             if (choice == 1)
             {
                 // Record Sales
-                MakeProductPayment();
+                MakeProductPayment(attendant);
                 AttendantSubMenu(attendant);
             }
             else if (choice == 2)
@@ -143,7 +143,7 @@ public class AttendantMenu
         _iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
 
     }
-    public void MakeProductPayment()
+    public void MakeProductPayment(Attendant attendant)
     {
         // Customer Details
         Console.WriteLine("...Logged >> Attendant >> Payment Page");
@@ -167,7 +167,7 @@ public class AttendantMenu
             {
                 Console.WriteLine("wrong input.. Try again.");
             }
-            _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
+            _iTransactionManager.CreateTransaction( attendant.StaffId + "\tAttendant Name: " + attendant.FirstName,barCode, quantity, customerId, cashTender);
         }
         else
         {
