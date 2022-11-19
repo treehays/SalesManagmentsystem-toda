@@ -1,8 +1,46 @@
 ﻿// using MySql.Data.MySqlClient;
-
+using System.Diagnostics;
 
 var mainMenu = new MainMenu();
 mainMenu.AllMainMenu();
+// var refs = Guid.NewGuid();
+// string newaa = refs.ToString().Remove(11);
+// System.Console.WriteLine(newaa);
+// IProductManager ip = new ProductManager();
+// ip.ViewAllProductCSV();
+// TreeH();
+
+/*
+// working for me
+
+static void TreeH()
+{
+    // string _FullUrl1 = @"C:\Users\Treehays\Documents\CLH\New folder\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\SMS\outFile.csv";
+    string _FullUrl1 = @"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/outFile.csv";
+    var prc = new ProcessStartInfo(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE");
+    prc.Arguments = _FullUrl1;
+    Process.Start(prc);
+}
+
+*/
+
+
+
+
+//  static void DataSetToExcel(DataSet dataSet, string filePath)
+//     {
+//         using (ExcelPackage pck = new ExcelPackage())
+//         {
+//             foreach (DataTable dataTable in dataSet.Tables)
+//             {
+//                 ExcelWorksheet workSheet = pck.Workbook.Worksheets.Add(dataTable.TableName);
+//                 workSheet.Cells["A1"].LoadFromDataTable(dataTable, true);
+//             }
+
+//             pck.SaveAs(new FileInfo(filePath));
+//         }
+//     }
+
 
 // AdminMenu asss = new AdminMenu ();
 // asss.UpdateAdminPassword();
@@ -24,12 +62,11 @@ mainMenu.AllMainMenu();
 
 // else if (choice == 2)
 // {
-// TreeH();
-// }
+// // TreeH();
+// // }
 // static void TreeH()
 // {
-//     string _FullUrl1 = @"https://www.youtube.com/watch?v=XqZsoesa55w";
-//     // string _FullUrl = @"https://www.youtube.com/watch?v=6DxjJzmYsXo";
+//     string _FullUrl1 = @"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/outFile.csv.html";
 //     var prc = new ProcessStartInfo(@"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe");
 //     prc.Arguments = _FullUrl1;
 //     Process.Start(prc);

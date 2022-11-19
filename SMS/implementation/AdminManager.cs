@@ -4,7 +4,7 @@ using SMS.model;
 public class AdminManager : IAdminManager
 {
     ITransactionManager _iTransactionManager = new TransactionManager();
-    static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+    private readonly static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
     public void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
     {
         var staffId = User.GenerateRandomId();

@@ -25,7 +25,7 @@ public class AdminMenu
 ################################################################################");
         Console.WriteLine("\nHome >> Admin >>");
         // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-        Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
+        Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
         bool chk;
         do
         {
@@ -58,8 +58,26 @@ public class AdminMenu
                 break;
             case 4:
                 // View Sales Record
-                Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
-                _iTransactionManager.GetAllTransactions();
+                System.Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report.");
+                bool chec;
+                do
+                {
+                    Console.Write("Enter Operation No: ");
+                    chec = int.TryParse(Console.ReadLine(), out _choice);
+                    Console.WriteLine(chec ? "" : "Invalid Input.");
+
+                } while (!chk);
+                if (_choice == 1)
+                {
+                    Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
+                    _iTransactionManager.GetAllTransactions();
+                }
+                else if (_choice == 2)
+                {
+                    Console.WriteLine("Generating the report....");
+                    _iTransactionManager.ViewTransactionAsExcel();
+                    AdminSubMenu();
+                }
                 // iTransactionManager.GetAllTransactionsAdmin();
                 AdminSubMenu();
                 break;
@@ -193,7 +211,6 @@ public class AdminMenu
                 Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
                 _iProductManager.ViewAllProduct();
                 ManageProductSubMenu();
-
                 break;
             case 4:
                 DeleteProductMenu();
@@ -201,7 +218,6 @@ public class AdminMenu
                 break;
             case 5:
                 AdminSubMenu();
-
                 break;
             case 6:
                 // logout
@@ -236,10 +252,14 @@ public class AdminMenu
                 break;
             case 1:
                 // Restock product.
+                Console.WriteLine("Restock Product.");
+                RestockProduct();
                 ManageInventorySubMenu();
                 break;
             case 2:
                 // View all products expected to be Reordered. .
+                System.Console.WriteLine("List of products.");
+                SortedProductBy();
                 ManageInventorySubMenu();
                 break;
             case 3:
@@ -445,7 +465,29 @@ public class AdminMenu
         }
         _iProductManager.CreateProduct(barCode, productName, price, productQuantity);
     }
-
+    public void SortedProductBy()
+    {
+        Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
+        System.Console.Write("Enter reorder point: ");
+        int quantity = int.Parse(Console.ReadLine());
+        _iProductManager.SortedProductByQuantity(quantity);
+    }
+    public void RestockProduct()
+    {
+        Console.Write("Enter product Barcode: ");
+        string barCode = Console.ReadLine().Trim();
+        var product = _iProductManager.GetProduct(barCode);
+        if (product != null)
+        {
+            Console.Write("How many to be added: ");
+            int quantity = int.Parse(Console.ReadLine());
+            _iProductManager.RestockProduct(barCode, quantity);
+        }
+        else
+        {
+            Console.WriteLine($"{barCode} not found");
+        }
+    }
     public void UpdateProductDetails()
     {
         Console.Write("Enter product Barcode: ");
@@ -457,9 +499,9 @@ public class AdminMenu
             string productName = Console.ReadLine();
             Console.Write("Enter new price Name: ");
             decimal price = decimal.Parse(Console.ReadLine());
-            Console.Write("Enter new quantity: ");
-            int quantity = int.Parse(Console.ReadLine());
-            _iProductManager.UpdateProduct(barCode, productName, price, quantity);
+            // Console.Write("Enter new quantity: ");
+            // int quantity = int.Parse(Console.ReadLine());
+            _iProductManager.UpdateProduct(barCode, productName, price);
             Console.WriteLine($"{barCode} successfully updated.");
         }
         else

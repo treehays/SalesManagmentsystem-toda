@@ -1,0 +1,4 @@
+id,dateTimes,recieptNo,barCode,productName,price,Quantity,total,customerId
+2,11/15/2022 3:09:53 AM,ref861118,111112,Rechargable Lamp ,10000.00,1,10000.00,treer
+3,11/15/2022 3:30:00 AM,ref905864,174530,Just trying to update the data,1.00,23,23.00,Taechale Mathiew
+4,11/15/2022 3:30:59 AM,ref384653,455350,Sanus 30 - 50 Full-Motion Flat Panel TV Black Wall Mount - LRF118B1,349.00,234,81666.00,michale jordan

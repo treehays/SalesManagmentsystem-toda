@@ -158,13 +158,21 @@ public class AttendantMenu
             Console.WriteLine("wrong input.. Try again.");
         }
         var product = _iProductManager.GetProduct(barCode);
-        Console.WriteLine($"Amount to be Paid: {quantity * product.Price}");
-        Console.Write("Cash Tender: ");
-        decimal cashTender;
-        while (!decimal.TryParse(Console.ReadLine(), out cashTender))
+        if (product.ProductQuantity >= quantity)
         {
-            Console.WriteLine("wrong input.. Try again.");
+            Console.WriteLine($"Amount to be Paid: {quantity * product.Price}");
+            Console.Write("Cash Tender: ");
+            decimal cashTender;
+            while (!decimal.TryParse(Console.ReadLine(), out cashTender))
+            {
+                Console.WriteLine("wrong input.. Try again.");
+            }
+            _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
         }
-        _iTransactionManager.CreateTransaction(barCode, quantity, customerId, cashTender);
+        else
+        {
+            System.Console.WriteLine($"Out of stock!!!. \nStock remaining: {product.ProductQuantity}");
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wreE7KEcBrtx0dLqZgFVeY8UQRctIAQLXlQ5QlbIhUczMjs1kDZ6JWZM9NCPARMm0SrDVT7TFKpKd83j6WGNrQ==",
+  "dgSpecHash": "pm8qewF0m7OeipHcY16GCCKv/46VxjoJVVRLjjKSzBZs9xAywbuqSebB5wD32PD87hph4wvFfVyBJDTqGH5Maw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS\\SMS.csproj",
   "expectedPackageFiles": [
@@ -8,17 +8,10 @@
     "C:\\Users\\Treehays\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\k4os.compression.lz4.streams\\1.2.6\\k4os.compression.lz4.streams.1.2.6.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\k4os.hash.xxhash\\1.0.6\\k4os.hash.xxhash.1.0.6.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.data.edm\\5.8.5\\microsoft.data.edm.5.8.5.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.data.odata\\5.8.5\\microsoft.data.odata.5.8.5.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.odata.core\\7.9.4\\microsoft.odata.core.7.9.4.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.odata.edm\\7.9.4\\microsoft.odata.edm.7.9.4.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.spatial\\7.9.4\\microsoft.spatial.7.9.4.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\mysql.data\\8.0.31\\mysql.data.8.0.31.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\simple.odata.client\\6.0.1\\simple.odata.client.6.0.1.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.1\\system.configuration.configurationmanager.4.4.1.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
@@ -28,10 +21,7 @@
     "C:\\Users\\Treehays\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\system.security.cryptography.protecteddata.4.4.0.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\system.spatial\\5.8.5\\system.spatial.5.8.5.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.text.encoding.codepages\\4.4.0\\system.text.encoding.codepages.4.4.0.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\system.text.encodings.web\\4.7.2\\system.text.encodings.web.4.7.2.nupkg.sha512",
-    "C:\\Users\\Treehays\\.nuget\\packages\\system.text.json\\4.6.0\\system.text.json.4.6.0.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []
