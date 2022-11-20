@@ -167,7 +167,7 @@ public class AttendantMenu
             {
                 Console.WriteLine("wrong input.. Try again.");
             }
-            _iTransactionManager.CreateTransaction( attendant.StaffId + "\tAttendant Name: " + attendant.FirstName,barCode, quantity, customerId, cashTender);
+            _iTransactionManager.CreateTransaction( attendant.StaffId + "\\" + attendant.FirstName,barCode, quantity, customerId, cashTender);
         }
         else
         {

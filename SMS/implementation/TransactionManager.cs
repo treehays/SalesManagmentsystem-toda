@@ -39,12 +39,12 @@ public class TransactionManager : ITransactionManager
             {
                 System.Console.WriteLine(ex.Message);
             }
-            UpdateInventoryQuantity(product, quantity,barCode);
+            UpdateInventoryQuantity(product, quantity, barCode);
             Console.WriteLine($"\n_________________________________________________________________________________________________\n_________________________________________________________________________________________________\nTransaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode}\t\t\t\t\tATTENDANT ID{staffId}\n_________________________________________________________________________________________________\n_________________________________________________________________________________________________ \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
         }
 
     }
-    private static void UpdateInventoryQuantity(Product product, int quantity,string barCode)
+    private static void UpdateInventoryQuantity(Product product, int quantity, string barCode)
     {
         try//updating inventory
         {
@@ -89,9 +89,10 @@ public class TransactionManager : ITransactionManager
 
     }
 
-
-    public void GenerateTransactionCSV()
+    
+    public void GenerateTransactionCSV(string datedNow)
     {
+
         try
         {
             using (var connection = new MySqlConnection(connString))
@@ -106,9 +107,9 @@ public class TransactionManager : ITransactionManager
                     while (reader.Read())
                     {
                         // Console.WriteLine($"{reader["id"].ToString()}\t{reader["barCode"].ToString()}\t{reader["productName"].ToString()}\t{(decimal)(reader["price"])}\t{Convert.ToInt32((reader["productQuantity"]))}");
-                        outLines.Add($"{reader["id"].ToString()},{reader["dateTimes"].ToString()},{reader["receiptNo"].ToString()},{reader["barCode"].ToString()},{reader["productName"].ToString()},{(decimal)(reader["price"])},{Convert.ToInt32((reader["Quantity"]))},{(decimal)(reader["total"])},{reader["customerId"].ToString()}");
+                        outLines.Add($"{reader["staffId"].ToString().Remove(10)},{reader["id"].ToString()},{reader["dateTimes"].ToString()},{reader["receiptNo"].ToString()},{reader["barCode"].ToString()},{reader["productName"].ToString()},{(decimal)(reader["price"])},{Convert.ToInt32((reader["Quantity"]))},{(decimal)(reader["total"])},{reader["customerId"].ToString()}");
                     }
-                    File.WriteAllLines("./AZtransact.csv", outLines.ToArray());
+                    File.WriteAllLines($"./File/AZtransact"+datedNow.Trim()+".csv", outLines.ToArray());
                 }
             }
         }
@@ -119,8 +120,9 @@ public class TransactionManager : ITransactionManager
     }
 
 
-    public void GenerateTransactionHTML()
+    public void GenerateTransactionHTML(string datedNow)
     {
+
         try
         {
             using (var connection = new MySqlConnection(connString))
@@ -131,13 +133,14 @@ public class TransactionManager : ITransactionManager
                     string dateSaved = DateTime.Now.ToString();//to be used,,the Menu can be accepting date as parameters and sending itto this place in order to have same date
                     var reader = command.ExecuteReader();
                     var outLines = new List<string>();//saving to list
-                    outLines.Add(@"");
+                    outLines.Add(@"<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style> <table style=""width: 100%""><tr><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th></tr>");
                     while (reader.Read())
                     {
                         // Console.WriteLine($"{reader["id"].ToString()}\t{reader["barCode"].ToString()}\t{reader["productName"].ToString()}\t{(decimal)(reader["price"])}\t{Convert.ToInt32((reader["productQuantity"]))}");
-                        outLines.Add($"{reader["id"].ToString()},{reader["dateTimes"].ToString()},{reader["receiptNo"].ToString()},{reader["barCode"].ToString()},{reader["productName"].ToString()},{(decimal)(reader["price"])},{Convert.ToInt32((reader["Quantity"]))},{(decimal)(reader["total"])},{reader["customerId"].ToString()}");
+                        outLines.Add($"<tr><td>{reader["staffId"].ToString().Remove(10)}</td><td>{reader["id"].ToString()}</td><td>{reader["dateTimes"].ToString()}</td><td>{reader["receiptNo"].ToString()}</td><td>{reader["barCode"].ToString()}</td><td>{reader["productName"].ToString()}</td><td>{(decimal)(reader["price"])}</td><td>{Convert.ToInt32((reader["Quantity"]))}</td><td>{(decimal)(reader["total"])}</td><td>{reader["customerId"].ToString()}</td></tr>");
                     }
-                    File.WriteAllLines("./AZtransact.csv", outLines.ToArray());
+                    outLines.Add("</table>");
+                    File.WriteAllLines($"./File/AZtransact"+datedNow.Trim()+".html", outLines.ToArray());
                 }
             }
         }
@@ -147,20 +150,23 @@ public class TransactionManager : ITransactionManager
         }
     }
 
-    public void ViewTransactionAsExcel()
+    public void ViewTransactionAsExcel(string datedNow)
     {
-        GenerateTransactionCSV();
-        string csvPath = @"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/AZtransact.csv";
+       
+        GenerateTransactionCSV(datedNow);
+        string csvPath = $"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/File/AZtransact"+datedNow.Trim()+".csv";
         var prc = new ProcessStartInfo(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE");
         prc.Arguments = csvPath;
         Process.Start(prc);
     }
 
-    public void ViewTransactionAsHTML()
+    public void ViewTransactionAsHTML(string datedNow)
     {
-        GenerateTransactionCSV();
-        string csvPath = @"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/AZtransact.csv";
-        var prc = new ProcessStartInfo(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE");
+       
+        GenerateTransactionHTML(datedNow);
+        string csvPath = $@"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/File/AZtransact"+datedNow.Trim()+".html";
+        // var prc = new ProcessStartInfo(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
+        var prc = new ProcessStartInfo(@"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe");
         prc.Arguments = csvPath;
         Process.Start(prc);
     }

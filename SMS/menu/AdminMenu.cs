@@ -58,7 +58,7 @@ public class AdminMenu
                 break;
             case 4:
                 // View Sales Record
-                System.Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report.");
+                System.Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
                 bool chec;
                 do
                 {
@@ -74,14 +74,16 @@ public class AdminMenu
                 }
                 else if (_choice == 2)
                 {
-                    Console.WriteLine("Generating the report....");
-                    _iTransactionManager.ViewTransactionAsExcel();
+                    Console.WriteLine("Generating the report to spreed sheet....");
+                     var datedNow = FileDate();
+                    _iTransactionManager.ViewTransactionAsExcel(datedNow);
                     AdminSubMenu(admin);
                 }
                 else if (_choice == 3)
                 {
-                    Console.WriteLine("Generating the report....");
-                    _iTransactionManager.ViewTransactionAsExcel();
+                    Console.WriteLine("Generating the report to your browser....");
+                     var datedNow = FileDate();
+                    _iTransactionManager.ViewTransactionAsHTML(datedNow);
                     AdminSubMenu(admin);
                 }
                 // iTransactionManager.GetAllTransactionsAdmin();
@@ -524,5 +526,11 @@ public class AdminMenu
 
     }
 
+    private string FileDate()
+    {
+        var dateSave = string.Join("", DateTime.Now.ToShortDateString().Split('/'));
+        var dateSave1 = string.Join("", DateTime.Now.ToShortTimeString().Split(':')).Remove(4);
+        return dateSave + dateSave1;
+    }
 }
 

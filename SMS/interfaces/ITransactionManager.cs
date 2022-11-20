@@ -7,7 +7,10 @@
         void GetAllTransactions();
         // decimal GetAllTransactionsAdmin();
         decimal CalculateTotalSales();
-        void ViewTransactionAsExcel();
+        void ViewTransactionAsExcel(string datedNow);
+        void ViewTransactionAsHTML(string datedNow);
+        
+
         // void ReadFromFile();
         // void ReWriteToFile();
     }

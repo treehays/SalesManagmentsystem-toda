@@ -6,8 +6,13 @@ mainMenu.AllMainMenu();
 // var refs = Guid.NewGuid();
 // string newaa = refs.ToString().Remove(11);
 // System.Console.WriteLine(newaa);
-// IProductManager ip = new ProductManager();
-// ip.ViewAllProductCSV();
+// var ip = new TransactionManager();
+// ip.ViewTransactionAsHTML();
+// var dateSaved = DateTime.Now.ToShortDateString().Split('/');
+// var dateSave=string.Join("",DateTime.Now.ToShortDateString().Split('/'));
+// var dateSave1=string.Join("",DateTime.Now.ToShortTimeString().Split(':')).Remove(4);
+// var fileDate = dateSave+dateSave1;
+// System.Console.WriteLine(fileDate);
 // TreeH();
 
 /*
