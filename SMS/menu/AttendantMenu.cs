@@ -32,9 +32,11 @@ public class AttendantMenu
     {
         Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
         Console.Write("\tStaff ID: ");
-        var staffId = "APD310646";//Console.ReadLine();
+        var staffId = Console.ReadLine();
         Console.Write("\tPin: ");
-        var pin = "pin";//Console.ReadLine();
+        var pin = Console.ReadLine();
+        // staffId = "APD310646"; 
+        // pin = "pin";
         var attendant = _iAttendantManager.Login(staffId, pin);
         if (attendant != null)
         {

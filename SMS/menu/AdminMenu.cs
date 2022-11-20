@@ -313,11 +313,11 @@ public class AdminMenu
     {
         Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
         Console.Write("\tStaff ID: ");
-        var staffId = "ALD841804";//Console.ReadLine();
+        var staffId = Console.ReadLine();
         Console.Write("\tPin: ");
-        var pin = "1234"; //Console.ReadLine();
-        // var staffId = "ADU864054"; 
-        // var pin = "password";
+        var pin = Console.ReadLine();
+        // staffId = "ALD841804"; 
+        // pin = "1234";
         // // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
         var admin = _iAdminManager.Login(staffId, pin);
         if (admin != null)
