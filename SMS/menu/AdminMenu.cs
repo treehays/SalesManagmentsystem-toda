@@ -120,7 +120,7 @@ public class AdminMenu
     {
         Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
         // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
-        Console.WriteLine("\tEnter 1 to Add new attendant.\n\tEnter 2 to view an attendant details.\n\tEnter 3 to View all attendants.\n\tEnter to 4 Update Attendant profile.\n\tEnter 5 to Reset Attendant password.  \n\tEnter 6 to Delete Attendant.\n\tEnter 7 to Logout.\n\tEnter 8 to go back \n\tEnter 0 to Close.");
+        Console.WriteLine("\tEnter 1 to Add new attendant.\n\tEnter 2 to view an attendant details.\n\tEnter 3 to View all attendants.\n\tEnter 4 to Update Attendant profile.\n\tEnter 5 to Reset Attendant password.  \n\tEnter 6 to Delete Attendant.\n\tEnter 7 to Logout.\n\tEnter 8 to go back \n\tEnter 0 to Close.");
         bool chk;
         do
         {
