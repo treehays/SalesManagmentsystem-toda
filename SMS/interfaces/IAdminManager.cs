@@ -9,6 +9,4 @@
         void DeleteAdmin(string staffId);
         Admin Login(string staffId, string pin);
         void UpdateAdminPassword(string staffId, string pin);
-        // decimal CheckWalletBalance();
-        // void CreateDataBaseTable();
-    }
+      }

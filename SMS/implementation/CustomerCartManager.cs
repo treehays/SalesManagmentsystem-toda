@@ -5,7 +5,7 @@
         IProductManager _iProductManager = new ProductManager();
         public void AddToCart(string barCode, int quantity)
         {
-            var product = _iProductManager.GetProduct(barCode);
+            _iProductManager.GetProduct(barCode);
 
             var customerCart = new CustomerCart(barCode, quantity);
             _listOfCustomerCart.Add(customerCart);

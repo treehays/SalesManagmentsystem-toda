@@ -4,14 +4,14 @@ using SMS.model;
 
 public class AttendantManager : IAttendantManager
 {
-    private readonly static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+    private readonly static String ConnString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
     public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
     {
         var staffId = User.GenerateRandomId();
         var attendant = new Attendant(staffId, firstName, lastName, email, phoneNumber, pin, post);
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 var queryCreate =
@@ -35,13 +35,13 @@ public class AttendantManager : IAttendantManager
         {
             try
             {
-                using (var connection = new MySqlConnection(connString))
+                using (var connection = new MySqlConnection(ConnString))
                 {
                     var deleteSuccessMsg = $"{attendant.FirstName} {attendant.LastName} Successfully deleted. ";
                     connection.Open();
                     using (var command = new MySqlCommand($"DELETE From attendant WHERE StaffId = '{staffId}'", connection))
                     {
-                        var reader = command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                         Console.WriteLine(deleteSuccessMsg);
                     }
                 }
@@ -61,7 +61,7 @@ public class AttendantManager : IAttendantManager
         Attendant attendant = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"SELECT * From attendant WHERE staffId = '{staffId}'", connection))
@@ -85,7 +85,7 @@ public class AttendantManager : IAttendantManager
         Attendant attendant = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"SELECT * From attendant WHERE email = '{email}'", connection))
@@ -109,7 +109,7 @@ public class AttendantManager : IAttendantManager
         Attendant attendant = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"SELECT * From attendant WHERE StaffId = '{staffId}'", connection))
@@ -132,15 +132,15 @@ public class AttendantManager : IAttendantManager
     {
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
-                var SuccessMsg = $"password successfully updated. ";
+                var successMsg = $"password successfully updated. ";
                 connection.Open();
                 var queryUpdateA = $"Update attendant SET pin = '{pin}'where staffId = '{staffId}'";
                 using (var command = new MySqlCommand(queryUpdateA, connection))
                 {
-                    var yes = command.ExecuteNonQuery();
-                    Console.WriteLine(SuccessMsg);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine(successMsg);
                 }
             }
         }
@@ -156,15 +156,15 @@ public class AttendantManager : IAttendantManager
         {
             try
             {
-                using (var connection = new MySqlConnection(connString))
+                using (var connection = new MySqlConnection(ConnString))
                 {
-                    var SuccessMsg = $"{attendant.StaffId} Updated Successfully. ";
+                    var successMsg = $"{attendant.StaffId} Updated Successfully. ";
                     connection.Open();
                     var queryUpdateA = $"Update attendant SET firstname = '{firstName}', lastName = '{lastName}' where staffId = '{staffId}'";
                     using (var command = new MySqlCommand(queryUpdateA, connection))
                     {
                         command.ExecuteNonQuery();
-                        Console.WriteLine(SuccessMsg);
+                        Console.WriteLine(successMsg);
                     }
                 }
             }
@@ -182,7 +182,7 @@ public class AttendantManager : IAttendantManager
     {
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand("SELECT * From attendant", connection))

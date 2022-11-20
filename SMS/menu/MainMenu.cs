@@ -1,13 +1,9 @@
 
     public class MainMenu
     {
-        public int Choice;
+        private int _choice;
         public void AllMainMenu()
         {
-            IAdminManager adminManager = new AdminManager();
-            IAttendantManager attendantManager = new AttendantManager();
-            IProductManager productManager = new ProductManager();
-            ITransactionManager transactionManager = new TransactionManager();
             do
             {
                 // Console.Clear();
@@ -25,25 +21,26 @@
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out Choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (Choice == 1)
+                switch (_choice)
                 {
-                    RegistrationMenu();
+                    case 1:
+                        RegistrationMenu();
+                        break;
+                    case 2:
+                        Console.WriteLine("\nMain Menu >> Login >> ");
+                        LoginMenu();
+                        break;
+                    default:
+                        Console.Write("Invalid Input.");
+                        break;
                 }
-                else if (Choice == 2)
-                {
-                    Console.WriteLine("\nMain Menu >> Login >> ");
-                    LoginMenu();
-                }
-                else
-                {
-                    Console.Write("Invalid Input.");
-                }
-            } while (Choice != 0);
+            } while (_choice != 0);
         }
-        public void RegistrationMenu()
+
+        private void RegistrationMenu()
         {
             do
             {
@@ -53,26 +50,28 @@
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out Choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
 
                 } while (!chk);
-                if (Choice == 2546)
+                switch (_choice)
                 {
-                                        var adminMenu = new AdminMenu();
-                    adminMenu.RegisterAdminPage();
-                }
-                else if (Choice == 1)
-                {
-                    AllMainMenu();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Input.\n");
-                    RegistrationMenu();
+                    case 2546:
+                    {
+                        var adminMenu = new AdminMenu();
+                        adminMenu.RegisterAdminPage();
+                        break;
+                    }
+                    case 1:
+                        AllMainMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input.\n");
+                        RegistrationMenu();
+                        break;
                 }
 
-            } while (Choice != 0);
+            } while (_choice != 0);
         }
         public void LoginMenu()
         {
@@ -84,41 +83,43 @@
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out Choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (Choice == 1)
+                switch (_choice)
                 {
-                    Console.WriteLine("\nHome >> Admin");
-                    var adminMenu = new AdminMenu();
-                    adminMenu.LoginAdminMenu();
-                }
-                else if (Choice == 2)
-                {
-                    Console.WriteLine("\nMain Menu >> Login >> Attendant");
-                    var attendantMenu = new AttendantMenu();
-                    attendantMenu.LoginAttendantMenu();
-                }
-                else if (Choice == 3)
-                {
-                    /* OUT OFF THE PROGRAM FOR SUSTOMER
+                    case 1:
+                    {
+                        Console.WriteLine("\nHome >> Admin");
+                        var adminMenu = new AdminMenu();
+                        adminMenu.LoginAdminMenu();
+                        break;
+                    }
+                    case 2:
+                    {
+                        Console.WriteLine("\nMain Menu >> Login >> Attendant");
+                        var attendantMenu = new AttendantMenu();
+                        attendantMenu.LoginAttendantMenu();
+                        break;
+                    }
+                    case 3:
+                        /* OUT OFF THE PROGRAM FOR SUSTOMER
                     // Customer
                     Console.WriteLine("\nMain Menu >> Login >> Customer");
                     CustomerMenu customerMenu = new CustomerMenu();
                     customerMenu.LoginCUstomerMenu();
                     */
-                }
-                else if (Choice == 4)
-                {
-                    AllMainMenu();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Input.\n");
-                    LoginMenu();
+                        break;
+                    case 4:
+                        AllMainMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input.\n");
+                        LoginMenu();
+                        break;
                 }
 
-            } while (Choice != 0);
+            } while (_choice != 0);
             Console.WriteLine();
         }
     }

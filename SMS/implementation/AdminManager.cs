@@ -4,14 +4,14 @@ using SMS.model;
 public class AdminManager : IAdminManager
 {
     ITransactionManager _iTransactionManager = new TransactionManager();
-    private readonly static String connString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+    private readonly static String ConnString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
     public void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
     {
         var staffId = User.GenerateRandomId();
         var admin = new Admin(staffId, firstName, lastName, email, phoneNumber, pin, post);
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 var queryCreate =
@@ -25,8 +25,7 @@ public class AdminManager : IAdminManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
-            // ignored
+            Console.WriteLine(ex.Message); 
         }
         Console.WriteLine($"Dear {firstName}, Registration Successful! \nYour Staff Identity Number is {admin.StaffId}, \nKeep it Safe.\n");
     }
@@ -38,12 +37,12 @@ public class AdminManager : IAdminManager
             try
             {
                 var deleteSuccessMsg = $"{admin.FirstName} {admin.LastName} Successfully deleted. ";
-                using (var connection = new MySqlConnection(connString))
+                using (var connection = new MySqlConnection(ConnString))
                 {
                     connection.Open();
                     using (var command = new MySqlCommand($"DELETE From admin WHERE StaffId = '{staffId}'", connection))
                     {
-                        var reader = command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                         Console.WriteLine(deleteSuccessMsg);
                     }
                 }
@@ -63,7 +62,7 @@ public class AdminManager : IAdminManager
         Admin admin = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"select * From admin WHERE staffId = '{staffId}'", connection))
@@ -76,7 +75,7 @@ public class AdminManager : IAdminManager
                 }
             }
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
@@ -86,7 +85,7 @@ public class AdminManager : IAdminManager
     {
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand("select * From admin", connection))
@@ -104,36 +103,12 @@ public class AdminManager : IAdminManager
             Console.WriteLine(ex.Message);
         }
     }
-    // public decimal CheckWalletBalance()
-    // {
-    //     decimal walletBalance = 0;
-    //     try
-    //     {
-    //         using (var connection = new MySqlConnection(connString))
-    //         {
-    //             connection.Open();
-    //             using (var command = new MySqlCommand($"SELECT sum(total) FROM transaction", connection))
-    //             {
-    //                 var reader = command.ExecuteReader();
-    //                while (reader.Read())
-    //                {
-    //                 walletBalance = Convert.ToDecimal(reader[0]);  
-    //                }
-    //             }
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine(ex.Message);
-    //     }
-    //     return walletBalance;
-    // }
     public Admin GetAdmin(string staffId, string email)
     {
         Admin admin = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"select * From attendant WHERE email = '{email}'", connection))
@@ -157,7 +132,7 @@ public class AdminManager : IAdminManager
         Admin admin = null;
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
                 using (var command = new MySqlCommand($"select * From admin WHERE StaffId = '{staffId}'", connection))
@@ -180,15 +155,15 @@ public class AdminManager : IAdminManager
     {
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
-                var SuccessMsg = $"password successfully updated. ";
+                const string successMsg = $"password successfully updated. ";
                 connection.Open();
                 var queryUpdateA = $"Update admin SET pin = '{pin}'where staffId = '{staffId}'";
                 using (var command = new MySqlCommand(queryUpdateA, connection))
                 {
-                    var yes = command.ExecuteNonQuery();
-                    Console.WriteLine(SuccessMsg);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine(successMsg);
                 }
             }
         }
@@ -201,15 +176,15 @@ public class AdminManager : IAdminManager
     {
         try
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new MySqlConnection(ConnString))
             {
-                var SuccessMsg = $"{staffId} Updated Successfully. ";
+                var successMsg = $"{staffId} Updated Successfully. ";
                 connection.Open();
                 var queryUpdateA = $"Update admin SET firstName = '{firstName}', lastName = '{lastName}',phoneNumber = '{phoneNumber}' where staffId = '{staffId}'";
                 using (var command = new MySqlCommand(queryUpdateA, connection))
                 {
-                    var yes = command.ExecuteNonQuery();
-                    Console.WriteLine(SuccessMsg);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine(successMsg);
                 }
             }
         }
@@ -217,29 +192,5 @@ public class AdminManager : IAdminManager
         {
             Console.WriteLine(ex.Message);
         }
-        // }
-        // else
-        // {
-        //     Console.WriteLine("User not found.");
-        // }
     }
-    // public void CreateDataBaseTable()
-    // {
-    //     var AdminQuery = "CREATE TABLE attendant (ID int auto_increment NOT NULL, StaffId VARCHAR (25) NOT NULL UNIQUE ,FirstName varchar(255) NOT NULL , LastName varchar(255) NOT NULL , Email varchar(100) NOT NULL UNIQUE, PhoneNumber VARCHAR (25) NOT NULL UNIQUE, Pin VARCHAR (50) DEFAULT '0000', Post VARCHAR (50) DEFAULT 'Attendant', primary Key(id,StaffId))";
-    //     try
-    //     {
-    //         using (var connection = new MySqlConnection(connString))
-    //         {
-    //             connection.Open();
-    //             using (var command = new MySqlCommand(AdminQuery, connection))
-    //             {
-    //                 var result = command.ExecuteNonQuery();
-    //             }
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine(ex.Message);
-    //     }
-    // }
 }

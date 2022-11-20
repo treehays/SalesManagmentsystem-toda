@@ -1,6 +1,3 @@
-
-
-
 public class AdminMenu
 {
     IAdminManager _iAdminManager = new AdminManager();
@@ -10,11 +7,13 @@ public class AdminMenu
     private int _choice;
 
 
-    public void AdminSubMenu(Admin admin)
+    private void AdminSubMenu(Admin admin)
     {
-        // int choice;
-        // Console.Clear();
-        Console.WriteLine(@"
+        while (true)
+        {
+            // int choice;
+            // Console.Clear();
+            Console.WriteLine(@"
 
 ################################################################################
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
@@ -23,275 +22,273 @@ public class AdminMenu
 ####------------------------------------------------------------------------####
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
 ################################################################################");
-        Console.WriteLine("\nHome >> Admin >>");
-        // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-        Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
-        bool chk;
-        do
+            Console.WriteLine("\nHome >> Admin >>");
+            // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+            Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
+            bool chk;
+            do
+            {
+                Console.Write("Enter Operation No: ");
+                chk = int.TryParse(Console.ReadLine(), out _choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+            } while (!chk);
+
+            switch (_choice)
+            {
+                case 0:
+                    //close program
+
+                    Console.WriteLine("Closing...");
+                    break;
+                case 1:
+                    // Manage Attendant
+                    ManageAttendantSubMenu(admin);
+
+                    break;
+                case 2:
+                    // Manage Products 
+                    ManageProductSubMenu(admin);
+
+                    break;
+                case 3:
+                    // Manage Inventory
+                    ManageInventorySubMenu(admin);
+                    continue;
+                case 4:
+                    // View Sales Record
+                    Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
+                    bool chec;
+                    do
+                    {
+                        Console.Write("Enter Operation No: ");
+                        chec = int.TryParse(Console.ReadLine(), out _choice);
+                        Console.WriteLine(chec ? "" : "Invalid Input.");
+                    } while (!chk);
+
+                    switch (_choice)
+                    {
+                        case 1:
+                            Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
+                            _iTransactionManager.GetAllTransactions();
+                            break;
+                        case 2:
+                        {
+                            Console.WriteLine("Generating the report to spreed sheet....");
+                            var datedNow = FileDate();
+                            _iTransactionManager.ViewTransactionAsExcel(datedNow);
+                            AdminSubMenu(admin);
+                            break;
+                        }
+                        case 3:
+                        {
+                            Console.WriteLine("Generating the report to your browser....");
+                            var datedNow = FileDate();
+                            _iTransactionManager.ViewTransactionAsHtml(datedNow);
+                            AdminSubMenu(admin);
+                            break;
+                        }
+                    }
+
+                    continue;
+                case 5:
+                    // Update detail
+                    UpdateAdminDetails();
+                    continue;
+                case 6:
+                    // Update password
+                    UpdateAdminPassword();
+                    continue;
+                case 7:
+                    // Check Wallet Balance
+                    Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
+                    continue;
+                case 8:
+                    // logout
+                    var mainMenu = new MainMenu();
+                    mainMenu.LoginMenu();
+                    break;
+                default:
+                    continue;
+            }
+
+            break;
+        }
+    }
+
+
+    private void ManageAttendantSubMenu(Admin admin)
+    {
+        while (true)
         {
-            Console.Write("Enter Operation No: ");
-            chk = int.TryParse(Console.ReadLine(), out _choice);
-            Console.WriteLine(chk ? "" : "Invalid Input.");
+            Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
+            // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
+            Console.WriteLine("\tEnter 1 to Add new attendant.\n\tEnter 2 to view an attendant details.\n\tEnter 3 to View all attendants.\n\tEnter 4 to Update Attendant profile.\n\tEnter 5 to Reset Attendant password.  \n\tEnter 6 to Delete Attendant.\n\tEnter 7 to Logout.\n\tEnter 8 to go back \n\tEnter 0 to Close.");
+            bool chk;
+            do
+            {
+                Console.Write("Enter Operation No: ");
+                chk = int.TryParse(Console.ReadLine(), out _choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+            } while (!chk);
 
-        } while (!chk);
-        switch (_choice)
-        {
-            case 0:
-                //close program
-
-                Console.WriteLine("Closing...");
-                break;
-            case 1:
-                // Manage Attendant
-                ManageAttendantSubMenu(admin);
-
-                break;
-            case 2:
-                // Manage Products 
-                ManageProductSubMenu(admin);
-
-                break;
-            case 3:
-                // Manage Inventory
-                ManageInventorySubMenu(admin);
-                AdminSubMenu(admin);
-                break;
-            case 4:
-                // View Sales Record
-                System.Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
-                bool chec;
-                do
-                {
-                    Console.Write("Enter Operation No: ");
-                    chec = int.TryParse(Console.ReadLine(), out _choice);
-                    Console.WriteLine(chec ? "" : "Invalid Input.");
-
-                } while (!chk);
-                if (_choice == 1)
-                {
-                    Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
-                    _iTransactionManager.GetAllTransactions();
-                }
-                else if (_choice == 2)
-                {
-                    Console.WriteLine("Generating the report to spreed sheet....");
-                     var datedNow = FileDate();
-                    _iTransactionManager.ViewTransactionAsExcel(datedNow);
+            switch (_choice)
+            {
+                case 0:
+                    //close
+                    Console.WriteLine("Closed.");
+                    // return;
+                    break;
+                case 1:
+                    // Add new Attendant
+                    var attendantMenu = new AttendantMenu();
+                    attendantMenu.RegisterAttendantPage();
+                    continue;
+                case 2:
+                    //view for attendan
+                    ViewAnAttendant(admin);
+                    continue;
+                case 3:
+                    //view all attendant
+                    Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
+                    _iAttendantManager.ViewAllAttendants();
+                    continue;
+                case 4:
+                    //update attendant profile
+                    UpdateAttendantDetails(admin);
+                    continue;
+                case 5:
+                    // reset attendant password
+                    ResetAttendantPassword(admin);
+                    continue;
+                case 6:
+                    // Delete Attendants
+                    DeleteAttendantMenu();
+                    continue;
+                case 7:
+                    // logout
+                    var mainMenu = new MainMenu();
+                    mainMenu.LoginMenu();
+                    break;
+                case 8:
                     AdminSubMenu(admin);
-                }
-                else if (_choice == 3)
-                {
-                    Console.WriteLine("Generating the report to your browser....");
-                     var datedNow = FileDate();
-                    _iTransactionManager.ViewTransactionAsHTML(datedNow);
+                    break;
+                default:
+                    continue;
+            }
+
+            break;
+        }
+    }
+
+
+    private void ManageProductSubMenu(Admin admin)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+            Console.WriteLine("...>> Admin >> Manage Product >>");
+            Console.WriteLine("Enter 1 to Add a product. \nEnter 2 to Modify products detail. \nEnter 3 to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
+
+            bool chk;
+            do
+            {
+                chk = int.TryParse(Console.ReadLine(), out _choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+            } while (!chk);
+
+            switch (_choice)
+            {
+                case 0:
+                    Console.WriteLine("Closed.");
+                    // return;
+                    break;
+                case 1:
+                    // Add Product
+                    AddProduct();
+                    continue;
+                case 2:
+                    // Modify product
+                    Console.WriteLine("Modify Product Details.");
+                    UpdateProductDetails();
+                    continue;
+                case 3:
+                    // View All products
+                    Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
+                    _iProductManager.ViewAllProduct();
+                    continue;
+                case 4:
+                    DeleteProductMenu();
+                    continue;
+                case 5:
                     AdminSubMenu(admin);
-                }
-                // iTransactionManager.GetAllTransactionsAdmin();
-                AdminSubMenu(admin);
-                break;
-            case 5:
-                // Update detail
-                UpdateAdminDetails();
-                AdminSubMenu(admin);
-                break;
-            case 6:
-                // Update password
-                UpdateAdminPassword();
-                AdminSubMenu(admin);
-                break;
-            case 7:
-                // Check Wallet Balance
-                Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
-                AdminSubMenu(admin);
-                break;
-            case 8:
-                // logout
-                var mainMenu = new MainMenu();
-                mainMenu.LoginMenu();
-                break;
-            default:
-                AdminSubMenu(admin);
-                break;
+                    break;
+                case 6:
+                    // logout
+                    var mainMenu = new MainMenu();
+                    mainMenu.LoginMenu();
+                    break;
+                default:
+                    continue;
+            }
+
+            break;
         }
     }
 
-
-    public void ManageAttendantSubMenu(Admin admin)
+    private void ManageInventorySubMenu(Admin admin)
     {
-        Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
-        // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
-        Console.WriteLine("\tEnter 1 to Add new attendant.\n\tEnter 2 to view an attendant details.\n\tEnter 3 to View all attendants.\n\tEnter 4 to Update Attendant profile.\n\tEnter 5 to Reset Attendant password.  \n\tEnter 6 to Delete Attendant.\n\tEnter 7 to Logout.\n\tEnter 8 to go back \n\tEnter 0 to Close.");
-        bool chk;
-        do
+        while (true)
         {
-            Console.Write("Enter Operation No: ");
-            chk = int.TryParse(Console.ReadLine(), out _choice);
-            Console.WriteLine(chk ? "" : "Invalid Input.");
-        } while (!chk);
-        switch (_choice)
-        {
-            case 0:
-                //close
-                Console.WriteLine("Closed.");
-                // return;
-                break;
-            case 1:
-                // Add new Attendant
-                var attendantMenu = new AttendantMenu();
-                attendantMenu.RegisterAttendantPage();
-                ManageAttendantSubMenu(admin);
-                break;
-            case 2:
-                //view for attendan
-                ViewAnAttendant(admin);
-                ManageAttendantSubMenu(admin);
-                break;
-            case 3:
-                //view all attendant
-                Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
-                _iAttendantManager.ViewAllAttendants();
-                ManageAttendantSubMenu(admin);
-                break;
-            case 4:
-                //update attendant profile
-                UpdateAttendantDetails(admin);
-                ManageAttendantSubMenu(admin);
-                break;
-            case 5:
-                // reset attendant password
-                ResetAttendantPassword(admin);
-                ManageAttendantSubMenu(admin);
-                break;
-            case 6:
-                // Delete Attendants
-                DeleteAttendantMenu();
-                ManageAttendantSubMenu(admin);
-                break;
-            case 7:
-                // logout
-                var mainMenu = new MainMenu();
-                mainMenu.LoginMenu();
-                break;
-            case 8:
-                AdminSubMenu(admin);
-                break;
-            default:
-                ManageAttendantSubMenu(admin);
-                break;
+            Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+            Console.WriteLine("...>> Admin >> Manage Inventory >>");
+            Console.WriteLine("Enter 1 to Restock product. \nEnter 2 to View all products expected to be Reordered. \nEnter 3 to view Product lower than certain number.\nEnter 4 to Go Back to Admin Menu\nEnter 5 to Logout.\nEnter 0 to Close.");
+
+            bool chk;
+            do
+            {
+                chk = int.TryParse(Console.ReadLine(), out _choice);
+                Console.WriteLine(chk ? "" : "Invalid Input.");
+            } while (!chk);
+
+            switch (_choice)
+            {
+                case 0:
+                    Console.WriteLine("Closed.");
+                    // return;
+                    break;
+                case 1:
+                    // Restock product.
+                    Console.WriteLine("Restock Product.");
+                    RestockProduct();
+                    continue;
+                case 2:
+                    // View all products expected to be Reordered. .
+                    Console.WriteLine("List of products.");
+                    SortedProductBy();
+                    continue;
+                case 3:
+                    // view Product lower than certain number.
+                    continue;
+                case 4:
+                    // Go Back to Admin Menu
+                    AdminSubMenu(admin);
+                    break;
+                case 5:
+                    // logout
+                    var mainMenu = new MainMenu();
+                    mainMenu.LoginMenu();
+                    break;
+                default:
+                    continue;
+            }
+
+            break;
         }
     }
 
-
-    public void ManageProductSubMenu(Admin admin)
-    {
-        Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-        Console.WriteLine("...>> Admin >> Manage Product >>");
-        Console.WriteLine("Enter 1 to Add a product. \nEnter 2 to Modify products detail. \nEnter 3 to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
-
-        bool chk;
-        do
-        {
-            chk = int.TryParse(Console.ReadLine(), out _choice);
-            Console.WriteLine(chk ? "" : "Invalid Input.");
-
-        } while (!chk);
-
-        switch (_choice)
-        {
-            case 0:
-                Console.WriteLine("Closed.");
-                // return;
-                break;
-            case 1:
-                // Add Product
-                AddProduct();
-                ManageProductSubMenu(admin);
-                break;
-            case 2:
-                // Modify product
-                Console.WriteLine("Modify Product Details.");
-                UpdateProductDetails();
-                ManageProductSubMenu(admin);
-                break;
-            case 3:
-                // View All products
-                // iAdminManager.DeleteAdmin();
-                Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
-                _iProductManager.ViewAllProduct();
-                ManageProductSubMenu(admin);
-                break;
-            case 4:
-                DeleteProductMenu();
-                ManageProductSubMenu(admin);
-                break;
-            case 5:
-                AdminSubMenu(admin);
-                break;
-            case 6:
-                // logout
-                var mainMenu = new MainMenu();
-                mainMenu.LoginMenu();
-                break;
-            default:
-                ManageProductSubMenu(admin);
-                break;
-        }
-    }
-
-    public void ManageInventorySubMenu(Admin admin)
-    {
-        Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-        Console.WriteLine("...>> Admin >> Manage Inventory >>");
-        Console.WriteLine("Enter 1 to Restock product. \nEnter 2 to View all products expected to be Reordered. \nEnter 3 to view Product lower than certain number.\nEnter 4 to Go Back to Admin Menu\nEnter 5 to Logout.\nEnter 0 to Close.");
-
-        bool chk;
-        do
-        {
-            chk = int.TryParse(Console.ReadLine(), out _choice);
-            Console.WriteLine(chk ? "" : "Invalid Input.");
-
-        } while (!chk);
-
-        switch (_choice)
-        {
-            case 0:
-                Console.WriteLine("Closed.");
-                // return;
-                break;
-            case 1:
-                // Restock product.
-                Console.WriteLine("Restock Product.");
-                RestockProduct();
-                ManageInventorySubMenu(admin);
-                break;
-            case 2:
-                // View all products expected to be Reordered. .
-                System.Console.WriteLine("List of products.");
-                SortedProductBy();
-                ManageInventorySubMenu(admin);
-                break;
-            case 3:
-                // view Product lower than certain number.
-                ManageInventorySubMenu(admin);
-                break;
-            case 4:
-                // Go Back to Admin Menu
-                AdminSubMenu(admin);
-                break;
-            case 5:
-                // logout
-                var mainMenu = new MainMenu();
-                mainMenu.LoginMenu();
-                break;
-            default:
-                ManageInventorySubMenu(admin);
-                break;
-        }
-    }
     public void RegisterAdminPage()
     {
         Console.WriteLine("\n\tHome >> Register >> Admin");
-        // Console.WriteLine("Welcome...");
         Console.Write("\tFirst name: ");
         var firstName = Console.ReadLine();
         Console.Write("\tLast name: ");
@@ -318,7 +315,6 @@ public class AdminMenu
         var pin = Console.ReadLine();
         // staffId = "ALD841804"; 
         // pin = "1234";
-        // // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
         var admin = _iAdminManager.Login(staffId, pin);
         if (admin != null)
         {
@@ -333,7 +329,7 @@ public class AdminMenu
         }
     }
 
-    public void ViewAnAttendant(Admin admin)
+    private void ViewAnAttendant(Admin admin)
     {
         Console.Write("Staff id of the attendant : ");
         var staffId = Console.ReadLine();
@@ -353,7 +349,7 @@ public class AdminMenu
         }
     }
 
-    public void ResetAttendantPassword(Admin admin)
+    private void ResetAttendantPassword(Admin admin)
     {
         Console.WriteLine("Reset Attendant password.");
         Console.Write("Staff id of the attendant : ");
@@ -362,7 +358,7 @@ public class AdminMenu
         if (attendant != null)
         {
             Console.Write("Enter new Password: ");
-            string pin = Console.ReadLine();
+            var pin = Console.ReadLine();
             _iAttendantManager.UpdateAttendantPassword(staffId, pin);
         }
         else
@@ -371,7 +367,8 @@ public class AdminMenu
             ManageAttendantSubMenu(admin);
         }
     }
-    public void UpdateAttendantDetails(Admin admin)
+
+    private void UpdateAttendantDetails(Admin admin)
     {
         Console.WriteLine("\nWelcome.");
         Console.Write("Staff id of the attendant to be updated: ");
@@ -395,26 +392,26 @@ public class AdminMenu
 
     }
 
-    public void DeleteAttendantMenu()
+    private void DeleteAttendantMenu()
     {
         Console.Write("Enter Staff ID of the Attendant.");
         var staffId = Console.ReadLine();
         _iAttendantManager.DeleteAttendant(staffId);
     }
 
-    public void UpdateAdminDetails()
+    private void UpdateAdminDetails()
     {
         Console.Write("Enter StaffId: ");
-        string staffId = Console.ReadLine().Trim();
+        var staffId = Console.ReadLine().Trim();
         var admin = _iAdminManager.GetAdmin(staffId);
         if (admin != null)
         {
             Console.Write("Enter new admin first Name: ");
-            string firstName = Console.ReadLine();
+            var firstName = Console.ReadLine();
             Console.Write("Enter new admin last Name: ");
-            string lastName = Console.ReadLine();
+            var lastName = Console.ReadLine();
             Console.Write("Enter new PhoneNumber: ");
-            string phoneNumber = Console.ReadLine();
+            var phoneNumber = Console.ReadLine();
             _iAdminManager.UpdateAdmin(staffId, firstName, lastName, phoneNumber);
             Console.WriteLine($"{staffId} successfully updated. ");
         }
@@ -423,24 +420,25 @@ public class AdminMenu
             Console.WriteLine($"{staffId} not found");
         }
     }
-    public void UpdateAdminPassword()
+
+    private void UpdateAdminPassword()
     {
         Console.Write("Enter Staffid: ");
-        string staffId = Console.ReadLine().Trim();
+        var staffId = Console.ReadLine().Trim();
         Console.Write("Enter Old Password: ");
-        string pin = Console.ReadLine();
+        var pin = Console.ReadLine();
         var admin = _iAdminManager.Login(staffId, pin);
         if (admin != null)
         {
-            bool isSame = true;
+            var isSame = true;
             while (isSame)
             {
                 Console.WriteLine("\nEnter a matching Password.");
                 Console.Write("Enter new Password: ");
                 pin = Console.ReadLine();
                 Console.Write("Re-Enter new Password: ");
-                string rePin = Console.ReadLine();
-                isSame = pin == rePin ? false : true;
+                var rePin = Console.ReadLine();
+                isSame = pin != rePin;
             }
             _iAdminManager.UpdateAdminPassword(staffId, pin);
             AdminSubMenu(admin);
@@ -448,11 +446,11 @@ public class AdminMenu
         else
         {
             Console.WriteLine("\nWrong staff Id or old Password!.");
-            var mainMenu = new MainMenu();
             AdminSubMenu(admin);
         }
     }
-    public void AddProduct()
+
+    private void AddProduct()
     {
         Console.Write("Product Name: ");
         var productName = Console.ReadLine();
@@ -473,22 +471,24 @@ public class AdminMenu
         }
         _iProductManager.CreateProduct(barCode, productName, price, productQuantity);
     }
-    public void SortedProductBy()
+
+    private void SortedProductBy()
     {
         Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
-        System.Console.Write("Enter reorder point: ");
-        int quantity = int.Parse(Console.ReadLine());
+        Console.Write("Enter reorder point: ");
+        var quantity = int.Parse(Console.ReadLine());
         _iProductManager.SortedProductByQuantity(quantity);
     }
-    public void RestockProduct()
+
+    private void RestockProduct()
     {
         Console.Write("Enter product Barcode: ");
-        string barCode = Console.ReadLine().Trim();
+        var barCode = Console.ReadLine().Trim();
         var product = _iProductManager.GetProduct(barCode);
         if (product != null)
         {
             Console.Write("How many to be added: ");
-            int quantity = int.Parse(Console.ReadLine());
+            var quantity = int.Parse(Console.ReadLine());
             _iProductManager.RestockProduct(barCode, quantity);
         }
         else
@@ -496,17 +496,18 @@ public class AdminMenu
             Console.WriteLine($"{barCode} not found");
         }
     }
-    public void UpdateProductDetails()
+
+    private void UpdateProductDetails()
     {
         Console.Write("Enter product Barcode: ");
-        string barCode = Console.ReadLine().Trim();
+        var barCode = Console.ReadLine().Trim();
         var product = _iProductManager.GetProduct(barCode);
         if (product != null)
         {
             Console.Write("Enter new product Name: ");
-            string productName = Console.ReadLine();
+            var productName = Console.ReadLine();
             Console.Write("Enter new price Name: ");
-            decimal price = decimal.Parse(Console.ReadLine());
+            var price = decimal.Parse(Console.ReadLine());
             // Console.Write("Enter new quantity: ");
             // int quantity = int.Parse(Console.ReadLine());
             _iProductManager.UpdateProduct(barCode, productName, price);
@@ -518,7 +519,7 @@ public class AdminMenu
         }
     }
 
-    public void DeleteProductMenu()
+    private void DeleteProductMenu()
     {
         Console.Write("Enter Product BarCode: ");
         var barCode = Console.ReadLine();
@@ -526,7 +527,7 @@ public class AdminMenu
 
     }
 
-    private string FileDate()
+    private static string FileDate()
     {
         var dateSave = string.Join("", DateTime.Now.ToShortDateString().Split('/'));
         var dateSave1 = string.Join("", DateTime.Now.ToShortTimeString().Split(':')).Remove(4);

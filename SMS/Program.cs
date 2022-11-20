@@ -1,8 +1,12 @@
 ﻿// using MySql.Data.MySqlClient;
-using System.Diagnostics;
+// using System.Diagnostics;
 
 var mainMenu = new MainMenu();
 mainMenu.AllMainMenu();
+
+
+
+
 // var refs = Guid.NewGuid();
 // string newaa = refs.ToString().Remove(11);
 // System.Console.WriteLine(newaa);

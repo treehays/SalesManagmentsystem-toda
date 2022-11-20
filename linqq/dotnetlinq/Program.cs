@@ -13,6 +13,7 @@ class Program
             new Student (){Id=7,Name="crocodied Simoas",Gender="Male",Age=32}
 
         };
+        
 
 
 
