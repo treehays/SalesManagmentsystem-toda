@@ -105,12 +105,11 @@ public class AttendantMenu
     }
     public void UpdateAttendantPassword(Attendant attendant)
     {
-        Console.Write("Enter Staffid: ");
-        string staffId = Console.ReadLine().Trim();
+        // Console.Write("Enter Staffid: ");
+        // string staffId = Console.ReadLine().Trim();
         Console.Write("Enter Old Password: ");
         string pin = Console.ReadLine();
-        attendant = _iAttendantManager.Login(staffId, pin);
-        if (attendant != null)
+        if (attendant.Pin == pin)
         {
             bool isSame = true;
             while (isSame)
@@ -122,7 +121,7 @@ public class AttendantMenu
                 string rePin = Console.ReadLine();
                 isSame = pin == rePin ? false : true;
             }
-            _iAttendantManager.UpdateAttendantPassword(staffId, pin);
+            _iAttendantManager.UpdateAttendantPassword(attendant.StaffId, pin);
             AttendantSubMenu(attendant);
         }
         else
