@@ -32,3 +32,7 @@ Kindly select one of the following options:
 
 
 
+vLIDte check email
+admin should not Change attendant pasw
+reorder poin handle excetio pres2
+create list of barcodes

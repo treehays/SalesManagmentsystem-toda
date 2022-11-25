@@ -1,0 +1,4 @@
+id,dateTimes,recieptNo,barCode,productName,price,Quantity,total,customerId
+APD310646	,13,11/19/2022 10:55:56 PM,A837e43a3-37,111112,Rechargable Lamp ,10000.00,1,10000.00,beyponce
+APD310646	,14,11/19/2022 10:57:06 PM,A2662a7d0-8e,111112,Rechargable Lamp ,10000.00,12,120000.00,sjifhkjd
+APD310646	,15,11/19/2022 10:58:21 PM,Ab802b096-2f,111112,Rechargable Lamp ,10000.00,2,20000.00,111112

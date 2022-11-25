@@ -4,7 +4,7 @@ using SMS.model;
 public class AdminManager : IAdminManager
 {
     ITransactionManager _iTransactionManager = new TransactionManager();
-    private readonly static String ConnString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
+    private static String ConnString = "SERVER=localhost; User Id=root; Password=1234; DATABASE=sms";
     public void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
     {
         var staffId = User.GenerateRandomId();
@@ -15,7 +15,7 @@ public class AdminManager : IAdminManager
             {
                 connection.Open();
                 var queryCreate =
-                    $"Insert into admin (staffId, firstname, lastname, email, phonenumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
+                    $"Insert into admin (staffId, firstname, lastname, email, phoneNumber, pin, post) values ('{staffId}','{firstName}','{lastName}','{email}','{phoneNumber}','{pin}','{post}')";
 
                 using (var command = new MySqlCommand(queryCreate, connection))
                 {

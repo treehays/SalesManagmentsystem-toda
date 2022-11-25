@@ -7,6 +7,62 @@ public class AdminMenu
     private int _choice;
 
 
+
+    public void RegisterAdminPage()
+    {
+        Console.WriteLine("\n\tHome >> Register >> Admin");
+        Console.Write("\tEmail: ");
+        var email = Console.ReadLine();
+        var admin = _iAdminManager.GetAdmin(email);
+        if (admin == null)
+        {
+            Console.Write("\tFirst name: ");
+            var firstName = Console.ReadLine();
+            Console.Write("\tLast name: ");
+            var lastName = Console.ReadLine();
+            Console.Write("\tPhone Number: ");
+            var phoneNumber = Console.ReadLine();
+            Console.Write("\tpin: ");
+            var pin = Console.ReadLine();
+            Console.Write("\tPost: ");
+            var post = Console.ReadLine();
+            _iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
+
+        } 
+        else
+        {
+            Console.WriteLine("Email already exist...");
+        }
+        var mainMenu = new MainMenu();
+        mainMenu.LoginMenu();
+    }
+
+
+    public void LoginAdminMenu()
+    {
+        Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
+        Console.Write("\tStaff ID: ");
+        var staffId = Console.ReadLine();
+        Console.Write("\tPin: ");
+        var pin = Console.ReadLine();
+        // staffId = "ALD841804"; 
+        // pin = "1234";
+        var admin = _iAdminManager.Login(staffId, pin);
+        if (admin != null)
+        {
+            Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
+            AdminSubMenu(admin);
+        }
+        else
+        {
+            Console.WriteLine("\nWrong Staff ID or Password!.");
+            var mainMenu = new MainMenu();
+            mainMenu.LoginMenu();
+        }
+    }
+
+
+
     private void AdminSubMenu(Admin admin)
     {
         while (true)
@@ -56,43 +112,11 @@ public class AdminMenu
                     continue;
                 case 4:
                     // View Sales Record
-                    Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
-                    bool chec;
-                    do
-                    {
-                        Console.Write("Enter Operation No: ");
-                        chec = int.TryParse(Console.ReadLine(), out _choice);
-                        Console.WriteLine(chec ? "" : "Invalid Input.");
-                    } while (!chk);
-
-                    switch (_choice)
-                    {
-                        case 1:
-                            Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
-                            _iTransactionManager.GetAllTransactions();
-                            break;
-                        case 2:
-                        {
-                            Console.WriteLine("Generating the report to spreed sheet....");
-                            var datedNow = FileDate();
-                            _iTransactionManager.ViewTransactionAsExcel(datedNow);
-                            AdminSubMenu(admin);
-                            break;
-                        }
-                        case 3:
-                        {
-                            Console.WriteLine("Generating the report to your browser....");
-                            var datedNow = FileDate();
-                            _iTransactionManager.ViewTransactionAsHtml(datedNow);
-                            AdminSubMenu(admin);
-                            break;
-                        }
-                    }
-
+                    ViewSalesRecord(admin);
                     continue;
                 case 5:
                     // Update detail
-                    UpdateAdminDetails();
+                    UpdateAdminDetails(admin);
                     continue;
                 case 6:
                     // Update password
@@ -144,7 +168,7 @@ public class AdminMenu
                     attendantMenu.RegisterAttendantPage();
                     continue;
                 case 2:
-                    //view for attendan
+                    //view for attendant
                     ViewAnAttendant(admin);
                     continue;
                 case 3:
@@ -285,50 +309,6 @@ public class AdminMenu
             break;
         }
     }
-
-    public void RegisterAdminPage()
-    {
-        Console.WriteLine("\n\tHome >> Register >> Admin");
-        Console.Write("\tFirst name: ");
-        var firstName = Console.ReadLine();
-        Console.Write("\tLast name: ");
-        var lastName = Console.ReadLine();
-        Console.Write("\tEmail: ");
-        var email = Console.ReadLine();
-        Console.Write("\tPhone Number: ");
-        var phoneNumber = Console.ReadLine();
-        Console.Write("\tpin: ");
-        var pin = Console.ReadLine();
-        Console.Write("\tPost: ");
-        var post = Console.ReadLine();
-        _iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
-        var mainMenu = new MainMenu();
-        mainMenu.LoginMenu();
-    }
-
-    public void LoginAdminMenu()
-    {
-        Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
-        Console.Write("\tStaff ID: ");
-        var staffId = Console.ReadLine();
-        Console.Write("\tPin: ");
-        var pin = Console.ReadLine();
-        // staffId = "ALD841804"; 
-        // pin = "1234";
-        var admin = _iAdminManager.Login(staffId, pin);
-        if (admin != null)
-        {
-            Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
-            AdminSubMenu(admin);
-        }
-        else
-        {
-            Console.WriteLine("\nWrong Staff ID or Password!.");
-            var mainMenu = new MainMenu();
-            mainMenu.LoginMenu();
-        }
-    }
-
     private void ViewAnAttendant(Admin admin)
     {
         Console.Write("Staff id of the attendant : ");
@@ -399,31 +379,23 @@ public class AdminMenu
         _iAttendantManager.DeleteAttendant(staffId);
     }
 
-    private void UpdateAdminDetails()
+    private void UpdateAdminDetails(Admin admin)
     {
         Console.Write("Enter StaffId: ");
         var staffId = Console.ReadLine().Trim();
-        var admin = _iAdminManager.GetAdmin(staffId);
-        if (admin != null)
-        {
-            Console.Write("Enter new admin first Name: ");
-            var firstName = Console.ReadLine();
-            Console.Write("Enter new admin last Name: ");
-            var lastName = Console.ReadLine();
-            Console.Write("Enter new PhoneNumber: ");
-            var phoneNumber = Console.ReadLine();
-            _iAdminManager.UpdateAdmin(staffId, firstName, lastName, phoneNumber);
-            Console.WriteLine($"{staffId} successfully updated. ");
-        }
-        else
-        {
-            Console.WriteLine($"{staffId} not found");
-        }
+        Console.Write("Enter new admin first Name: ");
+        var firstName = Console.ReadLine();
+        Console.Write("Enter new admin last Name: ");
+        var lastName = Console.ReadLine();
+        Console.Write("Enter new PhoneNumber: ");
+        var phoneNumber = Console.ReadLine();
+        _iAdminManager.UpdateAdmin(staffId, firstName, lastName, phoneNumber);
+        Console.WriteLine($"{staffId} successfully updated. ");
     }
 
     private void UpdateAdminPassword()
     {
-        Console.Write("Enter Staffid: ");
+        Console.Write("Enter StaffId: ");
         var staffId = Console.ReadLine().Trim();
         Console.Write("Enter Old Password: ");
         var pin = Console.ReadLine();
@@ -448,6 +420,43 @@ public class AdminMenu
             Console.WriteLine("\nWrong staff Id or old Password!.");
             AdminSubMenu(admin);
         }
+    }
+
+    private void ViewSalesRecord(Admin admin)
+    {
+        bool chec = false;
+        Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
+        do
+        {
+            Console.Write("Enter Operation No: ");
+            chec = int.TryParse(Console.ReadLine(), out _choice);
+            Console.WriteLine(chec ? "" : "Invalid Input.");
+        } while (!chec);
+
+        switch (_choice)
+        {
+            case 1:
+                Console.WriteLine("\nID\t TRANS. DATE \t\t\tCUSTOMER NAME\tAMOUNT\tBARCODE\tRECEIPT NO\tQTY\tTOTAL\tBALANCE");
+                _iTransactionManager.GetAllTransactions();
+                break;
+            case 2:
+                {
+                    Console.WriteLine("Generating the report to spreed sheet....");
+                    var datedNow = FileDate();
+                    _iTransactionManager.ViewTransactionAsExcel(datedNow);
+                    AdminSubMenu(admin);
+                    break;
+                }
+            case 3:
+                {
+                    Console.WriteLine("Generating the report to your browser....");
+                    var datedNow = FileDate();
+                    _iTransactionManager.ViewTransactionAsHtml(datedNow);
+                    AdminSubMenu(admin);
+                    break;
+                }
+        }
+
     }
 
     private void AddProduct()

@@ -7,19 +7,23 @@ public class AttendantMenu
     public void RegisterAttendantPage()
     {
         Console.WriteLine("\nRegister Attendant..");
-        Console.Write("\tFirst name: ");
-        var firstName = Console.ReadLine();
-        Console.Write("\tLast name: ");
-        var lastName = Console.ReadLine();
         Console.Write("\tEmail: ");
         var email = Console.ReadLine();
-        Console.Write("\tPhone Number: ");
-        var phoneNumber = Console.ReadLine();
-        Console.Write("\tpin: ");
-        var pin = Console.ReadLine();
-        Console.Write("\tPost: ");
-        var post = Console.ReadLine();
-        _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
+        var attendant = _iAttendantManager.GetAttendant(email);
+        if (attendant == null)
+        {
+            Console.Write("\tFirst name: ");
+            var firstName = Console.ReadLine();
+            Console.Write("\tLast name: ");
+            var lastName = Console.ReadLine();
+            Console.Write("\tPhone Number: ");
+            var phoneNumber = Console.ReadLine();
+            Console.Write("\tpin: ");
+            var pin = Console.ReadLine();
+            Console.Write("\tPost: ");
+            var post = Console.ReadLine();
+            _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
+        }
     }
 
     public void LoginAttendantMenu()
@@ -85,12 +89,12 @@ public class AttendantMenu
                     _iTransactionManager.GetAllTransactions();
                     break;
                 case 6:
-                {
-                    // logout
-                    var mainMenu = new MainMenu();
-                    mainMenu.LoginMenu();
-                    break;
-                }
+                    {
+                        // logout
+                        var mainMenu = new MainMenu();
+                        mainMenu.LoginMenu();
+                        break;
+                    }
             }
         } while (choice != 0);
     }
@@ -157,7 +161,7 @@ public class AttendantMenu
             {
                 Console.WriteLine("wrong input.. Try again.");
             }
-            _iTransactionManager.CreateTransaction( attendant.StaffId + "\\" + attendant.FirstName,barCode, quantity, customerId, cashTender);
+            _iTransactionManager.CreateTransaction(attendant.StaffId + "\\" + attendant.FirstName, barCode, quantity, customerId, cashTender);
         }
         else
         {

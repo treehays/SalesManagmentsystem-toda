@@ -6,6 +6,25 @@ mainMenu.AllMainMenu();
 
 
 
+/*
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Specify your gender");
+        // var gender = (Gender)int.Parse(Console.ReadLine());
+        // var genders = Enum.Parse(typeof(Gender), Console.ReadLine());
+        var gender = (int)Gender.male;
+        System.Console.WriteLine(gender);
+    }
+}
+ public enum Gender
+ {
+    male,
+    female,
+    amaphrodite
+ }
+*/
 
 // var refs = Guid.NewGuid();
 // string newaa = refs.ToString().Remove(11);
