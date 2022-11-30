@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pm8qewF0m7OeipHcY16GCCKv/46VxjoJVVRLjjKSzBZs9xAywbuqSebB5wD32PD87hph4wvFfVyBJDTqGH5Maw==",
+  "dgSpecHash": "Xc7ouiDeoHD5eV4r12PwvjsIDwdG+Xq5v2h4yjWvlVMNYfMLoKtlZWQ2d+KQjYPydOJrUjfzFphnLBX6K3U1xg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS\\SMS.csproj",
+  "projectFilePath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\SMS_ADONET\\SMS\\SMS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Treehays\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
     "C:\\Users\\Treehays\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",

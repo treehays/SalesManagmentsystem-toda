@@ -7,8 +7,9 @@ namespace SMS.model
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Pin { get; set; }
-        public string StaffId;
-        public User(string staffId, string firstName, string lastName, string email, string phoneNumber, string pin)
+        public string StaffId {get;set;}
+        public int UserRole {get;set;}
+        public User(string staffId, string firstName, string lastName, string email, string phoneNumber, string pin, int userRole)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -16,6 +17,7 @@ namespace SMS.model
             Email = email;
             PhoneNumber = phoneNumber;
             Pin = pin;
+            UserRole = userRole;
         }
          public static string GenerateRandomId()
         {

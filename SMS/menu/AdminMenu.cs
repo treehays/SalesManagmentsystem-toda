@@ -1,7 +1,10 @@
+using SMS.interfaces;
+using SMS.model;
+
 public class AdminMenu
 {
-    IAdminManager _iAdminManager = new AdminManager();
-    IAttendantManager _iAttendantManager = new AttendantManager();
+    IUserManager _iAdminManager = new AdminManager();
+    IUserManager _iAttendantManager = new AttendantManager();
     IProductManager _iProductManager = new ProductManager();
     ITransactionManager _iTransactionManager = new TransactionManager();
     private int _choice;
@@ -13,7 +16,7 @@ public class AdminMenu
         Console.WriteLine("\n\tHome >> Register >> Admin");
         Console.Write("\tEmail: ");
         var email = Console.ReadLine();
-        var admin = _iAdminManager.GetAdmin(email);
+        var admin = _iAdminManager.GetUser(email);
         if (admin == null)
         {
             Console.Write("\tFirst name: ");
@@ -24,11 +27,11 @@ public class AdminMenu
             var phoneNumber = Console.ReadLine();
             Console.Write("\tpin: ");
             var pin = Console.ReadLine();
-            Console.Write("\tPost: ");
-            var post = Console.ReadLine();
-            _iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
+            // Console.Write("\tUser Role: ");
+            var userRole = 1;//int.Parse(Console.ReadLine());
+            _iAdminManager.CreateUser(firstName, lastName, email, phoneNumber, pin, userRole);
 
-        } 
+        }
         else
         {
             Console.WriteLine("Email already exist...");
@@ -38,38 +41,38 @@ public class AdminMenu
     }
 
 
-    public void LoginAdminMenu()
+    // private void LoginAdminMenu()
+    // {
+    //     Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
+    //     Console.Write("\tStaff ID: ");
+    //     var staffId = Console.ReadLine();
+    //     Console.Write("\tPin: ");
+    //     var pin = Console.ReadLine();
+    //     // staffId = "ALD841804"; 
+    //     // pin = "1234";
+    //     var user = _iAdminManager.Login(staffId, pin);
+    //     if (user != null)
+    //     {
+    //         Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
+    //         AdminSubMenu(user);
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("\nWrong Staff ID or Password!.");
+    //         var mainMenu = new MainMenu();
+    //         mainMenu.LoginMenu();
+    //     }
+    // }
+
+
+
+    public void AdminSubMenu(User user)
     {
-        Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
-        Console.Write("\tStaff ID: ");
-        var staffId = Console.ReadLine();
-        Console.Write("\tPin: ");
-        var pin = Console.ReadLine();
-        // staffId = "ALD841804"; 
-        // pin = "1234";
-        var admin = _iAdminManager.Login(staffId, pin);
-        if (admin != null)
-        {
-            Console.WriteLine($"Welcome {admin.FirstName}, you've successfully Logged in!");
-            AdminSubMenu(admin);
-        }
-        else
-        {
-            Console.WriteLine("\nWrong Staff ID or Password!.");
-            var mainMenu = new MainMenu();
-            mainMenu.LoginMenu();
-        }
-    }
-
-
-
-    private void AdminSubMenu(Admin admin)
-    {
-        while (true)
-        {
-            // int choice;
-            // Console.Clear();
-            Console.WriteLine(@"
+        // while (true)
+        // {
+        // int choice;
+        // Console.Clear();
+        Console.WriteLine(@"
 
 ################################################################################
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
@@ -78,69 +81,71 @@ public class AdminMenu
 ####------------------------------------------------------------------------####
 ####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
 ################################################################################");
-            Console.WriteLine("\nHome >> Admin >>");
-            // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-            Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
-            bool chk;
-            do
-            {
-                Console.Write("Enter Operation No: ");
-                chk = int.TryParse(Console.ReadLine(), out _choice);
-                Console.WriteLine(chk ? "" : "Invalid Input.");
-            } while (!chk);
+        Console.WriteLine("\nHome >> Admin >>");
+        // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+        Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
+        bool chk;
+        do
+        {
+            Console.Write("Enter Operation No: ");
+            chk = int.TryParse(Console.ReadLine(), out _choice);
+            Console.WriteLine(chk ? "" : "Invalid Input.");
+        } while (!chk);
 
-            switch (_choice)
-            {
-                case 0:
-                    //close program
+        switch (_choice)
+        {
+            case 0:
+                //close program
+                // System.Console.WriteLine("seen");
+                // MainMenu.GoodBye();
+                Console.WriteLine("Closing...");
+                break;
+            case 1:
+                // Manage Attendant
+                ManageAttendantSubMenu(user);
 
-                    Console.WriteLine("Closing...");
-                    break;
-                case 1:
-                    // Manage Attendant
-                    ManageAttendantSubMenu(admin);
+                break;
+            case 2:
+                // Manage Products 
+                ManageProductSubMenu(user);
 
-                    break;
-                case 2:
-                    // Manage Products 
-                    ManageProductSubMenu(admin);
-
-                    break;
-                case 3:
-                    // Manage Inventory
-                    ManageInventorySubMenu(admin);
-                    continue;
-                case 4:
-                    // View Sales Record
-                    ViewSalesRecord(admin);
-                    continue;
-                case 5:
-                    // Update detail
-                    UpdateAdminDetails(admin);
-                    continue;
-                case 6:
-                    // Update password
-                    UpdateAdminPassword();
-                    continue;
-                case 7:
-                    // Check Wallet Balance
-                    Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
-                    continue;
-                case 8:
-                    // logout
-                    var mainMenu = new MainMenu();
-                    mainMenu.LoginMenu();
-                    break;
-                default:
-                    continue;
-            }
-
-            break;
+                break;
+            case 3:
+                // Manage Inventory
+                ManageInventorySubMenu(user);
+                break;
+            case 4:
+                // View Sales Record
+                ViewSalesRecord(user);
+                break;
+            case 5:
+                // Update detail
+                UpdateAdminDetails(user);
+                break;
+            case 6:
+                // Update password
+                UpdateAdminPassword();
+                break;
+            case 7:
+                // Check Wallet Balance
+                Console.WriteLine($"Booked Balance: {_iTransactionManager.CalculateTotalSales()}");
+                AdminSubMenu(user);
+                break;
+            case 8:
+                // logout
+                var mainMenu = new MainMenu();
+                mainMenu.LoginMenu();
+                break;
+            default:
+                break;
         }
+
+        // break;
+        // }
     }
 
 
-    private void ManageAttendantSubMenu(Admin admin)
+    private void ManageAttendantSubMenu(User user)
     {
         while (true)
         {
@@ -160,8 +165,9 @@ public class AdminMenu
                 case 0:
                     //close
                     Console.WriteLine("Closed.");
-                    // return;
-                    break;
+                    MainMenu.GoodBye();
+                    return;
+                // break;
                 case 1:
                     // Add new Attendant
                     var attendantMenu = new AttendantMenu();
@@ -169,20 +175,20 @@ public class AdminMenu
                     continue;
                 case 2:
                     //view for attendant
-                    ViewAnAttendant(admin);
+                    ViewAnAttendant(user);
                     continue;
                 case 3:
                     //view all attendant
                     Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
-                    _iAttendantManager.ViewAllAttendants();
+                    _iAttendantManager.GetAllUser();
                     continue;
                 case 4:
                     //update attendant profile
-                    UpdateAttendantDetails(admin);
+                    UpdateAttendantDetails(user);
                     continue;
                 case 5:
                     // reset attendant password
-                    ResetAttendantPassword(admin);
+                    ResetAttendantPassword(user);
                     continue;
                 case 6:
                     // Delete Attendants
@@ -194,7 +200,7 @@ public class AdminMenu
                     mainMenu.LoginMenu();
                     break;
                 case 8:
-                    AdminSubMenu(admin);
+                    AdminSubMenu(user);
                     break;
                 default:
                     continue;
@@ -205,7 +211,7 @@ public class AdminMenu
     }
 
 
-    private void ManageProductSubMenu(Admin admin)
+    private void ManageProductSubMenu(User user)
     {
         while (true)
         {
@@ -244,7 +250,7 @@ public class AdminMenu
                     DeleteProductMenu();
                     continue;
                 case 5:
-                    AdminSubMenu(admin);
+                    AdminSubMenu(user);
                     break;
                 case 6:
                     // logout
@@ -259,7 +265,7 @@ public class AdminMenu
         }
     }
 
-    private void ManageInventorySubMenu(Admin admin)
+    private void ManageInventorySubMenu(User user)
     {
         while (true)
         {
@@ -295,7 +301,7 @@ public class AdminMenu
                     continue;
                 case 4:
                     // Go Back to Admin Menu
-                    AdminSubMenu(admin);
+                    AdminSubMenu(user);
                     break;
                 case 5:
                     // logout
@@ -309,51 +315,51 @@ public class AdminMenu
             break;
         }
     }
-    private void ViewAnAttendant(Admin admin)
+    private void ViewAnAttendant(User user)
     {
         Console.Write("Staff id of the attendant : ");
         var staffId = Console.ReadLine();
-        var attendant = _iAttendantManager.GetAttendant(staffId);
+        var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
             Console.WriteLine($"Staff ID: {attendant.StaffId}");
             Console.WriteLine($"Name: {attendant.FirstName} {attendant.LastName}");
             Console.WriteLine($"Email: {attendant.Email}");
             Console.WriteLine($"Phone Number: {attendant.PhoneNumber}");
-            Console.WriteLine($"Post: {attendant.Post}");
+            Console.WriteLine($"Post: {attendant.UserRole}");
         }
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu(admin);
+            ManageAttendantSubMenu(user);
         }
     }
 
-    private void ResetAttendantPassword(Admin admin)
+    private void ResetAttendantPassword(User user)
     {
         Console.WriteLine("Reset Attendant password.");
         Console.Write("Staff id of the attendant : ");
         var staffId = Console.ReadLine();
-        var attendant = _iAttendantManager.GetAttendant(staffId);
+        var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
             Console.Write("Enter new Password: ");
             var pin = Console.ReadLine();
-            _iAttendantManager.UpdateAttendantPassword(staffId, pin);
+            _iAttendantManager.UpdateUserPassword(staffId, pin);
         }
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu(admin);
+            ManageAttendantSubMenu(user);
         }
     }
 
-    private void UpdateAttendantDetails(Admin admin)
+    private void UpdateAttendantDetails(User user)
     {
         Console.WriteLine("\nWelcome.");
         Console.Write("Staff id of the attendant to be updated: ");
         var staffId = Console.ReadLine();
-        var attendant = _iAttendantManager.GetAttendant(staffId);
+        var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
             Console.Write("First Name: ");
@@ -362,12 +368,12 @@ public class AdminMenu
             var lastName = Console.ReadLine();
             Console.Write("Phone Number: ");
             var phoneNumber = Console.ReadLine();
-            _iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
+            _iAttendantManager.UpdateUser(attendant.StaffId, firstName, lastName, phoneNumber);
         }
         else
         {
             Console.WriteLine("Attendant not found.");
-            ManageAttendantSubMenu(admin);
+            ManageAttendantSubMenu(user);
         }
 
     }
@@ -376,10 +382,10 @@ public class AdminMenu
     {
         Console.Write("Enter Staff ID of the Attendant.");
         var staffId = Console.ReadLine();
-        _iAttendantManager.DeleteAttendant(staffId);
+        _iAttendantManager.DeleteUser(staffId);
     }
 
-    private void UpdateAdminDetails(Admin admin)
+    private void UpdateAdminDetails(User user)
     {
         Console.Write("Enter StaffId: ");
         var staffId = Console.ReadLine().Trim();
@@ -389,7 +395,7 @@ public class AdminMenu
         var lastName = Console.ReadLine();
         Console.Write("Enter new PhoneNumber: ");
         var phoneNumber = Console.ReadLine();
-        _iAdminManager.UpdateAdmin(staffId, firstName, lastName, phoneNumber);
+        _iAdminManager.UpdateUser(staffId, firstName, lastName, phoneNumber);
         Console.WriteLine($"{staffId} successfully updated. ");
     }
 
@@ -399,8 +405,8 @@ public class AdminMenu
         var staffId = Console.ReadLine().Trim();
         Console.Write("Enter Old Password: ");
         var pin = Console.ReadLine();
-        var admin = _iAdminManager.Login(staffId, pin);
-        if (admin != null)
+        var user = _iAdminManager.Login(staffId, pin);
+        if (user != null)
         {
             var isSame = true;
             while (isSame)
@@ -412,17 +418,17 @@ public class AdminMenu
                 var rePin = Console.ReadLine();
                 isSame = pin != rePin;
             }
-            _iAdminManager.UpdateAdminPassword(staffId, pin);
-            AdminSubMenu(admin);
+            _iAdminManager.UpdateUserPassword(staffId, pin);
+            AdminSubMenu(user);
         }
         else
         {
             Console.WriteLine("\nWrong staff Id or old Password!.");
-            AdminSubMenu(admin);
+            AdminSubMenu(user);
         }
     }
 
-    private void ViewSalesRecord(Admin admin)
+    private void ViewSalesRecord(User user)
     {
         bool chec = false;
         Console.WriteLine("\n\tEnter 1 to view on Console.\n\tEnter 2 to generate report on SpreedSheet..\n\tEnter 3 to view report on browser.");
@@ -444,7 +450,7 @@ public class AdminMenu
                     Console.WriteLine("Generating the report to spreed sheet....");
                     var datedNow = FileDate();
                     _iTransactionManager.ViewTransactionAsExcel(datedNow);
-                    AdminSubMenu(admin);
+                    AdminSubMenu(user);
                     break;
                 }
             case 3:
@@ -452,7 +458,7 @@ public class AdminMenu
                     Console.WriteLine("Generating the report to your browser....");
                     var datedNow = FileDate();
                     _iTransactionManager.ViewTransactionAsHtml(datedNow);
-                    AdminSubMenu(admin);
+                    AdminSubMenu(user);
                     break;
                 }
         }

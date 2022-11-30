@@ -4,6 +4,11 @@
 var mainMenu = new MainMenu();
 mainMenu.AllMainMenu();
 
+// static void GoodBye()
+// {
+System.Console.WriteLine("Good bye");
+// }
+
 
 
 /*

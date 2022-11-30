@@ -1,7 +1,10 @@
 
+using SMS.interfaces;
+using SMS.model;
+
 public class AttendantMenu
 {
-    IAttendantManager _iAttendantManager = new AttendantManager();
+    IUserManager _iAttendantManager = new AttendantManager();
     ITransactionManager _iTransactionManager = new TransactionManager();
     IProductManager _iProductManager = new ProductManager();
     public void RegisterAttendantPage()
@@ -9,7 +12,7 @@ public class AttendantMenu
         Console.WriteLine("\nRegister Attendant..");
         Console.Write("\tEmail: ");
         var email = Console.ReadLine();
-        var attendant = _iAttendantManager.GetAttendant(email);
+        var attendant = _iAttendantManager.GetUser(email);
         if (attendant == null)
         {
             Console.Write("\tFirst name: ");
@@ -20,34 +23,34 @@ public class AttendantMenu
             var phoneNumber = Console.ReadLine();
             Console.Write("\tpin: ");
             var pin = Console.ReadLine();
-            Console.Write("\tPost: ");
-            var post = Console.ReadLine();
-            _iAttendantManager.CreateAttendant(firstName, lastName, email, phoneNumber, pin, post);
+            // Console.Write("\tuser role: ");
+            var userRole = 2;//Convert.ToInt32(Console.ReadLine());
+            _iAttendantManager.CreateUser(firstName, lastName, email, phoneNumber, pin, userRole);
         }
     }
 
-    public void LoginAttendantMenu()
-    {
-        Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
-        Console.Write("\tStaff ID: ");
-        var staffId = Console.ReadLine();
-        Console.Write("\tPin: ");
-        var pin = Console.ReadLine();
-        // staffId = "APD310646"; 
-        // pin = "pin";
-        var attendant = _iAttendantManager.Login(staffId, pin);
-        if (attendant != null)
-        {
-            Console.WriteLine($"Welcome {attendant.FirstName}, you've successfully Logged in!");
-            AttendantSubMenu(attendant);
-        }
-        else
-        {
-            Console.WriteLine("Wrong Email or Password!.");
-        }
-    }
+    // private void LoginAttendantMenu()
+    // {
+    //     Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
+    //     Console.Write("\tStaff ID: ");
+    //     var staffId = Console.ReadLine();
+    //     Console.Write("\tPin: ");
+    //     var pin = Console.ReadLine();
+    //     // staffId = "APD310646"; 
+    //     // pin = "pin";
+    //     var attendant = _iAttendantManager.Login(staffId, pin);
+    //     if (attendant != null)
+    //     {
+    //         Console.WriteLine($"Welcome {attendant.FirstName}, you've successfully Logged in!");
+    //         AttendantSubMenu(attendant);
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("Wrong Email or Password!.");
+    //     }
+    // }
 
-    private void AttendantSubMenu(Attendant attendant)
+    public void AttendantSubMenu(User user)
     {
         int choice;
         do
@@ -66,8 +69,8 @@ public class AttendantMenu
             {
                 case 1:
                     // Record Sales
-                    MakeProductPayment(attendant);
-                    AttendantSubMenu(attendant);
+                    MakeProductPayment(user);
+                    AttendantSubMenu(user);
                     break;
                 case 2:
                     //view all products
@@ -76,11 +79,11 @@ public class AttendantMenu
                     break;
                 case 3:
                     // Update profile
-                    UpdateAttendantDetails(attendant);
+                    UpdateAttendantDetails(user);
                     break;
                 case 4:
                     //change password
-                    UpdateAttendantPassword(attendant);
+                    UpdateAttendantPassword(user);
                     break;
                 case 5:
                     // View Sales Sales Records
@@ -99,11 +102,11 @@ public class AttendantMenu
         } while (choice != 0);
     }
 
-    private void UpdateAttendantPassword(Attendant attendant)
+    private void UpdateAttendantPassword(User user)
     {
         Console.Write("Enter Old Password: ");
         var pin = Console.ReadLine();
-        if (attendant.Pin == pin)
+        if (user.Pin == pin)
         {
             var isSame = true;
             while (isSame)
@@ -115,17 +118,17 @@ public class AttendantMenu
                 var rePin = Console.ReadLine();
                 isSame = pin != rePin;
             }
-            _iAttendantManager.UpdateAttendantPassword(attendant.StaffId, pin);
-            AttendantSubMenu(attendant);
+            _iAttendantManager.UpdateUserPassword(user.StaffId, pin);
+            AttendantSubMenu(user);
         }
         else
         {
             Console.WriteLine("\nWrong staff Id or old Password!.");
-            AttendantSubMenu(attendant);
+            AttendantSubMenu(user);
         }
     }
 
-    private void UpdateAttendantDetails(Attendant attendant)
+    private void UpdateAttendantDetails(User user)
     {
         Console.WriteLine("\nWelcome.");
         Console.Write("First Name: ");
@@ -134,11 +137,11 @@ public class AttendantMenu
         var lastName = Console.ReadLine();
         Console.Write("Phone Number: ");
         var phoneNumber = Console.ReadLine();
-        _iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
+        _iAttendantManager.UpdateUser(user.StaffId, firstName, lastName, phoneNumber);
 
     }
 
-    private void MakeProductPayment(Attendant attendant)
+    private void MakeProductPayment(User user)
     {
         Console.WriteLine("...Logged >> Attendant >> Payment Page");
         Console.Write("CustomerName: ");
@@ -161,7 +164,7 @@ public class AttendantMenu
             {
                 Console.WriteLine("wrong input.. Try again.");
             }
-            _iTransactionManager.CreateTransaction(attendant.StaffId + "\\" + attendant.FirstName, barCode, quantity, customerId, cashTender);
+            _iTransactionManager.CreateTransaction(user.StaffId + "\\" + user.FirstName, barCode, quantity, customerId, cashTender);
         }
         else
         {
