@@ -1,3 +1,4 @@
+using SMS.Enum;
 using SMS.interfaces;
 using SMS.model;
 
@@ -28,7 +29,7 @@ public class AdminMenu
             Console.Write("\tpin: ");
             var pin = Console.ReadLine();
             // Console.Write("\tUser Role: ");
-            var userRole = 1;//int.Parse(Console.ReadLine());
+            var userRole = (int)Staffs.Admin;//int.Parse(Console.ReadLine());
             _iAdminManager.CreateUser(firstName, lastName, email, phoneNumber, pin, userRole);
 
         }
@@ -36,42 +37,12 @@ public class AdminMenu
         {
             Console.WriteLine("Email already exist...");
         }
-        var mainMenu = new MainMenu();
-        mainMenu.LoginMenu();
+       
     }
-
-
-    // private void LoginAdminMenu()
-    // {
-    //     Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
-    //     Console.Write("\tStaff ID: ");
-    //     var staffId = Console.ReadLine();
-    //     Console.Write("\tPin: ");
-    //     var pin = Console.ReadLine();
-    //     // staffId = "ALD841804"; 
-    //     // pin = "1234";
-    //     var user = _iAdminManager.Login(staffId, pin);
-    //     if (user != null)
-    //     {
-    //         Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
-    //         AdminSubMenu(user);
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine("\nWrong Staff ID or Password!.");
-    //         var mainMenu = new MainMenu();
-    //         mainMenu.LoginMenu();
-    //     }
-    // }
-
-
+    
 
     public void AdminSubMenu(User user)
     {
-        // while (true)
-        // {
-        // int choice;
-        // Console.Clear();
         Console.WriteLine(@"
 
 ################################################################################
@@ -83,6 +54,10 @@ public class AdminMenu
 ################################################################################");
         Console.WriteLine("\nHome >> Admin >>");
         // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+        // int quantity = 100;//to be remove
+        // Console.WriteLine("This shoild show");
+        _iProductManager.InventoryQuantityAlert();
+        Console.WriteLine("\n");
         Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products.\n\tEnter 3 to Manage Inventory.  \n\tEnter 4 to View or Download sales Records.\n\tEnter 5 to Update Profile. \n\tEnter 6 to Update Password.\n\tEnter 7 to check Wallet Balance. \n\tEnter 8 to Logout.\n\tEnter 0 to Close.");
         bool chk;
         do
@@ -107,11 +82,13 @@ public class AdminMenu
                 break;
             case 2:
                 // Manage Products 
+                _iProductManager.InventoryQuantityAlert();
                 ManageProductSubMenu(user);
 
                 break;
             case 3:
                 // Manage Inventory
+                _iProductManager.InventoryQuantityAlert();
                 ManageInventorySubMenu(user);
                 break;
             case 4:
@@ -318,7 +295,7 @@ public class AdminMenu
     private void ViewAnAttendant(User user)
     {
         Console.Write("Staff id of the attendant : ");
-        var staffId = Console.ReadLine();
+        var staffId = Console.ReadLine().Trim();
         var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
@@ -326,7 +303,7 @@ public class AdminMenu
             Console.WriteLine($"Name: {attendant.FirstName} {attendant.LastName}");
             Console.WriteLine($"Email: {attendant.Email}");
             Console.WriteLine($"Phone Number: {attendant.PhoneNumber}");
-            Console.WriteLine($"Post: {attendant.UserRole}");
+            Console.WriteLine($"Post: {(Staffs)Convert.ToInt32(attendant.UserRole)}");
         }
         else
         {
@@ -339,7 +316,7 @@ public class AdminMenu
     {
         Console.WriteLine("Reset Attendant password.");
         Console.Write("Staff id of the attendant : ");
-        var staffId = Console.ReadLine();
+        var staffId = Console.ReadLine().Trim();
         var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
@@ -358,16 +335,19 @@ public class AdminMenu
     {
         Console.WriteLine("\nWelcome.");
         Console.Write("Staff id of the attendant to be updated: ");
-        var staffId = Console.ReadLine();
+        var staffId = Console.ReadLine().Trim();
         var attendant = _iAttendantManager.GetUser(staffId);
         if (attendant != null)
         {
             Console.Write("First Name: ");
             var firstName = Console.ReadLine();
+            firstName = string.IsNullOrWhiteSpace(firstName) ? attendant.FirstName : firstName;
             Console.Write("Last Name: ");
             var lastName = Console.ReadLine();
+            lastName = string.IsNullOrWhiteSpace(lastName) ? attendant.LastName : lastName;
             Console.Write("Phone Number: ");
             var phoneNumber = Console.ReadLine();
+            phoneNumber = string.IsNullOrWhiteSpace(phoneNumber) ? phoneNumber : attendant.PhoneNumber;
             _iAttendantManager.UpdateUser(attendant.StaffId, firstName, lastName, phoneNumber);
         }
         else
@@ -381,7 +361,7 @@ public class AdminMenu
     private void DeleteAttendantMenu()
     {
         Console.Write("Enter Staff ID of the Attendant.");
-        var staffId = Console.ReadLine();
+        var staffId = Console.ReadLine().Trim();
         _iAttendantManager.DeleteUser(staffId);
     }
 
@@ -414,8 +394,10 @@ public class AdminMenu
                 Console.WriteLine("\nEnter a matching Password.");
                 Console.Write("Enter new Password: ");
                 pin = Console.ReadLine();
+                pin = string.IsNullOrWhiteSpace(pin) ? user.Pin : pin;
                 Console.Write("Re-Enter new Password: ");
                 var rePin = Console.ReadLine();
+                rePin = string.IsNullOrWhiteSpace(rePin) ? user.Pin : rePin;
                 isSame = pin != rePin;
             }
             _iAdminManager.UpdateUserPassword(staffId, pin);
@@ -491,7 +473,11 @@ public class AdminMenu
     {
         Console.WriteLine("\nID\tPRODUCT NAME\tBARCODE\tPRICE\tQTY\t");
         Console.Write("Enter reorder point: ");
-        var quantity = int.Parse(Console.ReadLine());
+        int quantity ;//= int.Parse(Console.ReadLine());
+        while (!int.TryParse(Console.ReadLine(), out quantity))
+        {
+            Console.WriteLine("wrong input.. Try again.");
+        }
         _iProductManager.SortedProductByQuantity(quantity);
     }
 
@@ -503,7 +489,11 @@ public class AdminMenu
         if (product != null)
         {
             Console.Write("How many to be added: ");
-            var quantity = int.Parse(Console.ReadLine());
+            int quantity;// = int.Parse(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out quantity))
+            {
+                Console.WriteLine("wrong input.. Try again.");
+            }
             _iProductManager.RestockProduct(barCode, quantity);
         }
         else
@@ -522,7 +512,11 @@ public class AdminMenu
             Console.Write("Enter new product Name: ");
             var productName = Console.ReadLine();
             Console.Write("Enter new price Name: ");
-            var price = decimal.Parse(Console.ReadLine());
+            decimal price ;//= decimal.Parse(Console.ReadLine());
+            while (!decimal.TryParse(Console.ReadLine(), out price))
+            {
+                Console.WriteLine("wrong input.. Try again.");
+            }
             // Console.Write("Enter new quantity: ");
             // int quantity = int.Parse(Console.ReadLine());
             _iProductManager.UpdateProduct(barCode, productName, price);

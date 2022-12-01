@@ -86,7 +86,7 @@ public class MainMenu
     {
         Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
         Console.Write("\tStaff ID: ");
-        var staffId = Console.ReadLine();
+        var staffId = Console.ReadLine().Trim();
         Console.Write("\tPin: ");
         var pin = Console.ReadLine();
         // staffId = "ALD841804"; 
@@ -94,24 +94,26 @@ public class MainMenu
         var user = _iAdminManager.Login(staffId, pin);
         if (user != null)
         {
-            if (user.UserRole == 1)
+            switch (user.UserRole)
             {
-                Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
-                var adminMenu = new AdminMenu();
-                adminMenu.AdminSubMenu(user);
+                case 1:
+                {
+                    Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
+                    var adminMenu = new AdminMenu();
+                    adminMenu.AdminSubMenu(user);
+                    break;
+                }
+                case 2:
+                {
+                    Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
+                    var attendantMenu = new AttendantMenu();
+                    attendantMenu.AttendantSubMenu(user);
+                    break;
+                }
+                default:
+                    Console.WriteLine("Your account has been deactivated...");
+                    break;
             }
-            else if (user.UserRole == 2)
-            {
-                Console.WriteLine($"Welcome {user.FirstName}, you've successfully Logged in!");
-                var attendantMenu = new AttendantMenu();
-                attendantMenu.AttendantSubMenu(user);
-
-            }
-            else
-            {
-                System.Console.WriteLine("Your account has been deactivated...");
-            }
-
         }
         else
         {
@@ -120,60 +122,9 @@ public class MainMenu
         }
     }
 
-    // public void LoginMenu()
-    // {
-    //     do
-    //     {
-    //         Console.WriteLine("\n\tHome>> Login >> ");
-    //         Console.WriteLine("\tEnter 1 for Admin.\n\tEnter 2 for Attendant. \n\tEnter 3 for Customer. \n\tEnter 4 to go back to Main Menu.\n\tEnter 0 to Close");
-    //         bool chk;
-    //         do
-    //         {
-    //             Console.Write("Enter Operation No: ");
-    //             chk = int.TryParse(Console.ReadLine(), out _choice);
-    //             Console.WriteLine(chk ? "" : "Invalid Input.");
-    //         } while (!chk);
-    //         switch (_choice)
-    //         {
-    //             case 1:
-    //                 {
-    //                     Console.WriteLine("\nHome >> Admin");
-    //                     var adminMenu = new AdminMenu();
-    //                     adminMenu.LoginAdminMenu();
-    //                     break;
-    //                 }
-    //             case 2:
-    //                 {
-    //                     Console.WriteLine("\nMain Menu >> Login >> Attendant");
-    //                     var attendantMenu = new AttendantMenu();
-    //                     attendantMenu.LoginAttendantMenu();
-    //                     break;
-    //                 }
-    //             case 3:
-    //                 /* OUT OFF THE PROGRAM FOR SUSTOMER
-    //             // Customer
-    //             Console.WriteLine("\nMain Menu >> Login >> Customer");
-    //             CustomerMenu customerMenu = new CustomerMenu();
-    //             customerMenu.LoginCUstomerMenu();
-    //             */
-    //                 break;
-    //             case 4:
-    //                 AllMainMenu();
-    //                 break;
-    //             default:
-    //                 Console.WriteLine("Invalid Input.\n");
-    //                 LoginMenu();
-    //                 break;
-    //         }
-
-    //     } while (_choice != 0);
-    //     Console.WriteLine();
-    // }
-
-
    public static void GoodBye()
     {
-        System.Console.WriteLine("Good bye");
+        Console.WriteLine("Good bye");
     }
 
 }

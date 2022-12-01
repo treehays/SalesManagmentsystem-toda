@@ -1,4 +1,5 @@
 
+using SMS.Enum;
 using SMS.interfaces;
 using SMS.model;
 
@@ -24,7 +25,7 @@ public class AttendantMenu
             Console.Write("\tpin: ");
             var pin = Console.ReadLine();
             // Console.Write("\tuser role: ");
-            var userRole = 2;//Convert.ToInt32(Console.ReadLine());
+            var userRole = (int)Staffs.Attendant;//Convert.ToInt32(Console.ReadLine());
             _iAttendantManager.CreateUser(firstName, lastName, email, phoneNumber, pin, userRole);
         }
     }
@@ -69,6 +70,7 @@ public class AttendantMenu
             {
                 case 1:
                     // Record Sales
+                    _iProductManager.InventoryQuantityAlert();
                     MakeProductPayment(user);
                     AttendantSubMenu(user);
                     break;

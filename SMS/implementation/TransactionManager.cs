@@ -127,7 +127,7 @@ public class TransactionManager : ITransactionManager
                 {
                     var reader = command.ExecuteReader();
                     var outLines = new List<string>();//saving to list
-                    outLines.Add(@"<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style> <table style=""width: 100%""><tr><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th><th>headin</th></tr>");
+                    outLines.Add(@"<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style> <table style=""width: 100%""><tr><th>Staff ID</th><th>headin</th><th>Trans. Date</th><th>Ref. No.</th><th>Barcode</th><th>Prod. Name</th><th>Amount</th><th> </th><th>Tender Amount</th><th>Custoner Na</th></tr>");
                     while (reader.Read())
                     {
                         outLines.Add($"<tr><td>{reader["staffId"].ToString().Remove(10)}</td><td>{reader["id"].ToString()}</td><td>{reader["dateTimes"].ToString()}</td><td>{reader["receiptNo"].ToString()}</td><td>{reader["barCode"].ToString()}</td><td>{reader["productName"].ToString()}</td><td>{(decimal)(reader["price"])}</td><td>{Convert.ToInt32((reader["Quantity"]))}</td><td>{(decimal)(reader["total"])}</td><td>{reader["customerId"].ToString()}</td></tr>");
@@ -146,8 +146,9 @@ public class TransactionManager : ITransactionManager
     public void ViewTransactionAsExcel(string datedNow)
     {
        
+    //    C:\Users\Treehays\Documents\CLH\New folder\SMS_ADONET\SMS\File
         GenerateTransactionCsv(datedNow);
-        var csvPath = $"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/File/AZtransact"+datedNow.Trim()+".csv";
+        var csvPath = $"file:///C:/Users/Treehays/Documents/CLH/New%20folder/SMS_ADONET/SMS/File/AZtransact"+datedNow.Trim()+".csv";
         var prc = new ProcessStartInfo(@"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE");
         prc.Arguments = csvPath;
         Process.Start(prc);
@@ -155,7 +156,7 @@ public class TransactionManager : ITransactionManager
     public void ViewTransactionAsHtml(string datedNow)
     {
         GenerateTransactionHtml(datedNow);
-        var csvPath = $@"file:///C:/Users/Treehays/Documents/CLH/New%20folder/Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc/SMS/File/AZtransact"+datedNow.Trim()+".html";
+        var csvPath = $@"file:///C:/Users/Treehays/Documents/CLH/New%20folder/SMS_ADONET/SMS/File/AZtransact"+datedNow.Trim()+".html";
         // var prc = new ProcessStartInfo(@"C:\Program Files\Google\Chrome\Application\chrome.exe");
         var prc = new ProcessStartInfo(@"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe");
         prc.Arguments = csvPath;

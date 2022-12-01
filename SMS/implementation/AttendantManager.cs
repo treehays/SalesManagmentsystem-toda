@@ -40,7 +40,7 @@ public class AttendantManager : IUserManager
                 {
                     var deleteSuccessMsg = $"{user.FirstName} {user.LastName} Successfully deleted. ";
                     connection.Open();
-                    using (var command = new MySqlCommand($"DELETE From user WHERE StaffId = '{staffId}'", connection))
+                    using (var command = new MySqlCommand($"DELETE From user WHERE StaffId = '{staffId.Trim()}' and userRole = 2", connection))
                     {
                         command.ExecuteNonQuery();
                         Console.WriteLine(deleteSuccessMsg);
@@ -65,7 +65,7 @@ public class AttendantManager : IUserManager
             using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
-                using (var command = new MySqlCommand($"SELECT * From user WHERE staffId = '{staffId}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From user WHERE staffId = '{staffId.Trim()}' and userRole = 2", connection))
                 {
                     var reader = command.ExecuteReader();
                     while (reader.Read())
@@ -89,7 +89,7 @@ public class AttendantManager : IUserManager
             using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
-                using (var command = new MySqlCommand($"SELECT * From user WHERE email = '{email}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From user WHERE email = '{email.Trim()}' and userRole = 2", connection))
                 {
                     var reader = command.ExecuteReader();
                     while (reader.Read())
@@ -113,7 +113,7 @@ public class AttendantManager : IUserManager
             using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
-                using (var command = new MySqlCommand($"SELECT * From user WHERE StaffId = '{staffId}'", connection))
+                using (var command = new MySqlCommand($"SELECT * From user WHERE StaffId = '{staffId.Trim()}' and userRole = 2", connection))
                 {
                     var reader = command.ExecuteReader();
                     while (reader.Read())
@@ -137,7 +137,7 @@ public class AttendantManager : IUserManager
             {
                 var successMsg = $"password successfully updated. ";
                 connection.Open();
-                var queryUpdateA = $"Update user SET pin = '{pin}'where staffId = '{staffId}'";
+                var queryUpdateA = $"Update user SET pin = '{pin}'where staffId = '{staffId.Trim()}'";
                 using (var command = new MySqlCommand(queryUpdateA, connection))
                 {
                     command.ExecuteNonQuery();
@@ -152,7 +152,7 @@ public class AttendantManager : IUserManager
     }
     public void UpdateUser(string staffId, string firstName, string lastName, string phoneNumber)
     {
-        var user = GetUser(staffId);
+        var user = GetUser(staffId.Trim());
         if (user != null)
         {
             try
@@ -186,7 +186,7 @@ public class AttendantManager : IUserManager
             using (var connection = new MySqlConnection(ConnString))
             {
                 connection.Open();
-                using (var command = new MySqlCommand("SELECT * From user", connection))
+                using (var command = new MySqlCommand("SELECT * From user where userRole = 2", connection))
                 {
                     var reader = command.ExecuteReader();
                     while (reader.Read())

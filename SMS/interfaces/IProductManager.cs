@@ -8,4 +8,5 @@
         void DeleteProduct(string barCode);
         void SortedProductByQuantity(int quantity);
         void ViewAllProduct();
+        void InventoryQuantityAlert();
     }
